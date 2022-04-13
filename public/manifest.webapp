@@ -1,20 +1,37 @@
 {
-  "id": "com.garredow.svelte-starter",
-  "name": "Svelte App",
-  "description": "A starter template for Svelte and TypeScript.",
+  "id": "com.garredow.vulpine-fm",
+  "name": "SoundCloud",
+  "description": "A SoundCloud client for KaiOS",
   "version": "0.1.0",
   "launch_path": "/index.html",
   "icons": {
-    "256": "/images/icon-256.png",
-    "128": "/images/icon-128.png",
-    "64": "/images/icon-64.png",
-    "48": "/images/icon-48.png"
+    "128": "/images/icon_128.png",
+    "112": "/images/icon_112.png",
+    "56": "/images/icon_56.png"
   },
-  "theme_color": "#FFFFFF",
+  "theme_color": "#ec5817",
   "developer": {
     "name": "Garrett Downs",
     "url": "https://garrettdowns.com"
   },
   "type": "privileged",
-  "default_locale": "en"
+  "permissions": {
+    "audio-channel-content": {
+      "description": "Required to play audio in the background."
+    },
+    "systemXHR": {
+      "description": "Required to download songs and perform other vital functions."
+    },
+    "device-storage:music": {
+      "access": "readwrite",
+      "description": "Required to read and write songs."
+    }
+  },
+  "locales": {
+    "en-US": {
+      "name": "SoundCloud",
+      "description": "A SoundCloud client for KaiOS"
+    }
+  },
+  "default_locale": "en-US"
 }
