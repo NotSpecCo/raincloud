@@ -8,23 +8,20 @@
   import { DataStatus } from 'onyx-ui/enums';
   import { registerView, updateView } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
-  import { SoundCloud } from '../lib/soundcloud';
 
   registerView({});
 
-  let me = null;
   onMount(async () => {
     updateView({ dataStatus: DataStatus.Loaded });
-    me = await new SoundCloud({}).me();
   });
 </script>
 
 <View>
   <ViewContent>
     <Card>
-      <CardHeader title="Home" />
+      <CardHeader title="Stream" />
       <CardContent>
-        <Typography>Hello, {me?.first_name}</Typography>
+        <Typography>Hello.</Typography>
       </CardContent>
     </Card>
   </ViewContent>

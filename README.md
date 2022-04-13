@@ -1,6 +1,6 @@
-# kaios-svelte-starter
+# RainCloud
 
-A simple starter template for building a KaiOS app using Svelte and TypeScript.
+A SoundCloud client for KaiOS.
 
 ### Development and testing
 

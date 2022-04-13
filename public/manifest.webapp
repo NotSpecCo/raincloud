@@ -1,6 +1,6 @@
 {
-  "id": "com.garredow.vulpine-fm",
-  "name": "SoundCloud",
+  "id": "com.garredow.raincloud",
+  "name": "RainCloud",
   "description": "A SoundCloud client for KaiOS",
   "version": "0.1.0",
   "launch_path": "/index.html",
@@ -9,7 +9,7 @@
     "112": "/images/icon_112.png",
     "56": "/images/icon_56.png"
   },
-  "theme_color": "#ec5817",
+  "theme_color": "#e4572e",
   "developer": {
     "name": "Garrett Downs",
     "url": "https://garrettdowns.com"
@@ -29,7 +29,7 @@
   },
   "locales": {
     "en-US": {
-      "name": "SoundCloud",
+      "name": "RainCloud",
       "description": "A SoundCloud client for KaiOS"
     }
   },
