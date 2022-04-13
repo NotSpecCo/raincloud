@@ -3,16 +3,26 @@
   import OnyxApp from 'onyx-ui/components/app/OnyxApp.svelte';
   import { Priority } from 'onyx-ui/enums';
   import { KeyManager, Onyx } from 'onyx-ui/services';
-  import Router, { location, pop } from 'svelte-spa-router';
+  import Router, { location, pop, replace } from 'svelte-spa-router';
   import AppMenu from './components/AppMenu.svelte';
+  import { Auth } from './lib/auth';
   import Home from './routes/Home.svelte';
   import Redirect from './routes/Redirect.svelte';
+  import SignIn from './routes/SignIn.svelte';
+  import Stream from './routes/Stream.svelte';
   import { settings } from './stores/settings';
 
   const routes = {
-    '/': Home,
+    '/home': Home,
+    '/signin': SignIn,
+    '/stream': Stream,
     '*': Redirect,
   };
+
+  new Auth().getTokens().catch(() => {
+    console.log('Not signed in. Redirecting...');
+    replace('/signin');
+  });
 
   const keyMan = KeyManager.subscribe(
     {

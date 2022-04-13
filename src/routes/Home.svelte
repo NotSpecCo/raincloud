@@ -8,11 +8,13 @@
   import { DataStatus } from 'onyx-ui/enums';
   import { registerView, updateView } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
+  import { SoundCloud } from '../lib/soundcloud';
 
   registerView({});
 
   onMount(async () => {
     updateView({ dataStatus: DataStatus.Loaded });
+    new SoundCloud({}).me().then((res) => console.log('me', res));
   });
 </script>
 
