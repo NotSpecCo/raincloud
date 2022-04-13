@@ -1,15 +1,15 @@
 import { Animations, Density, TextSize, TextWeight } from 'onyx-ui/enums';
 import { Storage } from 'onyx-ui/services';
-import { themes } from 'onyx-ui/themes';
 import { writable } from 'svelte/store';
 import type { Settings } from '../models';
+import { themes } from '../themes';
 
 const defaultSettings: Settings = {
   themeId: themes[0].id,
   textSize: TextSize.Medium,
   textWeight: TextWeight.Medium,
   displayDensity: Density.Normal,
-  borderRadius: 0,
+  borderRadius: 6,
   animationSpeed: Animations.Fast,
   showHelpText: true,
   // Shortcuts
