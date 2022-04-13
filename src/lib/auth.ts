@@ -8,7 +8,7 @@ export class Auth {
 
   constructor(options: Partial<Options> = {}) {
     this.options = {
-      apiBaseUrl: 'http://localhost:3005',
+      apiBaseUrl: 'https://api.raincloud.fm',
       ...options,
     };
   }

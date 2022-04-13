@@ -33,5 +33,11 @@
       "description": "A SoundCloud client for KaiOS"
     }
   },
-  "default_locale": "en-US"
+  "default_locale": "en-US",
+  "redirects": [
+    {
+      "from": "https://app.vulpine.fm/oauth",
+      "to": "/index.html"
+    }
+  ]
 }

@@ -5,6 +5,7 @@
   import { Onyx } from 'onyx-ui/services';
   import { updateView } from 'onyx-ui/stores/view';
   import { getShortcutFromIndex } from 'onyx-ui/utils/getShortcutFromIndex';
+  import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
   import MdHome from 'svelte-icons/md/MdHome.svelte';
   import { push } from 'svelte-spa-router';
 
@@ -14,11 +15,14 @@
     route: string;
     icon: any | null;
   };
-  const menuItems: MenuItem[] = [{ id: 'home', text: 'Home', route: '/home', icon: MdHome }];
+  const menuItems: MenuItem[] = [
+    { id: 'home', text: 'Home', route: '/home', icon: MdHome },
+    { id: 'likedTracks', text: 'Liked Tracks', route: '/likes/tracks', icon: MdFavorite },
+  ];
 </script>
 
 <NavGroup groupId="app-menu">
-  <div class="header">OnyxUI Demo</div>
+  <div class="header">RainCloud</div>
   <div class="scroller" data-nav-scroller>
     {#each menuItems as item, i}
       <ListItem
