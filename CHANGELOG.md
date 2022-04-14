@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/garredow/raincloud/compare/v1.0.0...v1.1.0) (2022-04-14)
+
+
+### Features
+
+* **dashboard:** add basic player to dashboard ([91c58ad](https://github.com/garredow/raincloud/commit/91c58ad3efd67844b54c4f21a67cc89048dc3cdf))
+
 # 1.0.0 (2022-04-14)
 
 
