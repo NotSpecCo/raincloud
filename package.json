@@ -2,6 +2,10 @@
   "name": "raincloud",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/garredow/raincloud.git"
+  },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
