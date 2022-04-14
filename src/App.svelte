@@ -32,6 +32,8 @@
     replace('/signin');
   });
 
+  let dashboardOpen = false;
+
   const keyMan = KeyManager.subscribe(
     {
       onBackspace: () => {
@@ -45,7 +47,12 @@
         return true;
       },
       onArrowUpLong: () => {
-        console.log('player track', $player.track);
+        if (!$player.track) return true;
+        dashboardOpen = true;
+        return true;
+      },
+      onArrowDownLong: () => {
+        dashboardOpen = false;
         return true;
       },
     },
@@ -57,10 +64,10 @@
 
 <OnyxApp>
   <AppMenu slot="app-menu" />
-  <Router {routes} slot="content" />
+  <Router {routes} />
   <div slot="dashboard">
     {#if $player.track}
-      <Dashboard />
+      <Dashboard open={dashboardOpen} />
     {/if}
   </div>
   <AudioPlayer />

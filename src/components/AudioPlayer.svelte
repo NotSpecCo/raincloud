@@ -62,6 +62,12 @@
     updateStatus({ currentTime: newTime });
   }
 
+  export function skipTo(seconds: number) {
+    const newTime = clamp(seconds, 0, audio.duration);
+    audio.currentTime = seconds;
+    updateStatus({ currentTime: newTime });
+  }
+
   function updateStatus(changes: Partial<PlaybackProgress>) {
     player.update((a) => ({
       ...a,
