@@ -1,12 +1,13 @@
 {
-  "name": "kaios-svelte-starter",
+  "name": "raincloud",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "commit": "cz"
   },
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
@@ -17,14 +18,20 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-replace": "^3.1.0",
     "@rollup/plugin-typescript": "^8.0.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@tsconfig/svelte": "^2.0.0",
     "babel-plugin-transform-async-to-promises": "^0.8.18",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
     "rollup": "^2.3.4",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
+    "semantic-release": "^19.0.2",
     "svelte": "^3.0.0",
     "svelte-check": "^2.0.0",
     "svelte-preprocess": "^4.0.0",
@@ -38,5 +45,10 @@
     "sirv-cli": "^1.0.0",
     "svelte-icons": "^2.1.0",
     "svelte-spa-router": "^3.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
