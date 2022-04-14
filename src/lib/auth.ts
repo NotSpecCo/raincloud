@@ -38,7 +38,12 @@ export class Auth {
   fetchTokensFromCode(code: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
-      xhr.addEventListener('load', () => resolve(JSON.parse(xhr.responseText)));
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 400) {
+          return reject(new Error(`API call failed: ${xhr.statusText}`));
+        }
+        resolve(JSON.parse(xhr.responseText));
+      });
       xhr.addEventListener('error', () => reject(new Error('Failed to fetch tokens')));
       xhr.open('POST', `${this.options.apiBaseUrl}/getTokens`);
       xhr.setRequestHeader('Content-Type', 'application/json');
@@ -53,7 +58,12 @@ export class Auth {
   private refresh(refreshToken: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
-      xhr.addEventListener('load', () => resolve(JSON.parse(xhr.responseText)));
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 400) {
+          return reject(new Error(`API call failed: ${xhr.statusText}`));
+        }
+        resolve(JSON.parse(xhr.responseText));
+      });
       xhr.addEventListener('error', () => reject(new Error('Failed to refresh tokens')));
       xhr.open('POST', `${this.options.apiBaseUrl}/refreshTokens`);
       xhr.setRequestHeader('Content-Type', 'application/json');
