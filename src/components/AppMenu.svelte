@@ -7,6 +7,7 @@
   import { getShortcutFromIndex } from 'onyx-ui/utils/getShortcutFromIndex';
   import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
   import MdHome from 'svelte-icons/md/MdHome.svelte';
+  import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
   import { push } from 'svelte-spa-router';
 
   type MenuItem = {
@@ -18,6 +19,7 @@
   const menuItems: MenuItem[] = [
     { id: 'home', text: 'Home', route: '/home', icon: MdHome },
     { id: 'likedTracks', text: 'Liked Tracks', route: '/likes/tracks', icon: MdFavorite },
+    { id: 'player', text: 'Player', route: '/player', icon: MdPlayArrow },
   ];
 </script>
 

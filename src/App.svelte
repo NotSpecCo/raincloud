@@ -9,6 +9,7 @@
   import { Auth } from './lib/auth';
   import Home from './routes/Home.svelte';
   import LikedTracks from './routes/LikedTracks.svelte';
+  import Player from './routes/Player.svelte';
   import Redirect from './routes/Redirect.svelte';
   import SignIn from './routes/SignIn.svelte';
   import Stream from './routes/Stream.svelte';
@@ -19,6 +20,7 @@
     '/home': Home,
     '/signin': SignIn,
     '/stream': Stream,
+    '/player': Player,
     '/likes/tracks': LikedTracks,
     '*': Redirect,
   };
@@ -40,8 +42,12 @@
         pop();
         return true;
       },
+      onArrowUpLong: () => {
+        console.log('player track', $player.track);
+        return true;
+      },
     },
-    Priority.Low
+    Priority.High
   );
 
   $: Onyx.settings.update($settings);
