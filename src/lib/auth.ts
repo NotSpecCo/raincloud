@@ -3,6 +3,7 @@ import type { Tokens } from '../models';
 
 type Options = {
   apiBaseUrl: string;
+  clientId: string;
 };
 export class Auth {
   private options: Options;
@@ -10,6 +11,10 @@ export class Auth {
   constructor(options: Partial<Options> = {}) {
     this.options = {
       apiBaseUrl: 'https://api.raincloud.fm',
+      clientId:
+        process.env.NODE_ENV === 'production'
+          ? 'ttmRWSTGJ7pzm1s8znU3CSJ5mXSjtS0l'
+          : 'Gbv3N4cjTjVMwfaHVbCdEB7W5Y3JQM28',
       ...options,
     };
   }
@@ -56,6 +61,7 @@ export class Auth {
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send(
         JSON.stringify({
+          clientId: this.options.clientId,
           code,
         })
       );
@@ -76,6 +82,7 @@ export class Auth {
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send(
         JSON.stringify({
+          clientId: this.options.clientId,
           refreshToken,
         })
       );

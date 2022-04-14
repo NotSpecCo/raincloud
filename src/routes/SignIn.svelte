@@ -34,8 +34,18 @@
   function signinWeb() {
     const url = new URL('https://api.soundcloud.com/connect');
     url.searchParams.append('response_type', 'code');
-    url.searchParams.append('client_id', 'Gbv3N4cjTjVMwfaHVbCdEB7W5Y3JQM28');
-    url.searchParams.append('redirect_uri', 'http://localhost:3000');
+    url.searchParams.append(
+      'client_id',
+      process.env.NODE_ENV === 'production'
+        ? 'ttmRWSTGJ7pzm1s8znU3CSJ5mXSjtS0l'
+        : 'Gbv3N4cjTjVMwfaHVbCdEB7W5Y3JQM28'
+    );
+    url.searchParams.append(
+      'redirect_uri',
+      process.env.NODE_ENV === 'production'
+        ? 'https://app.vulpine.fm/oauth'
+        : 'http://localhost:3000'
+    );
 
     const windowRef = window.open(url.toString());
 

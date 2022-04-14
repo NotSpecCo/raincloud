@@ -43,6 +43,9 @@ export default {
   },
   context: 'window',
   plugins: [
+    replace({
+      'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development'),
+    }),
     svelte({
       preprocess: sveltePreprocess({
         sourceMap: !production,

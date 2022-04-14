@@ -16,6 +16,8 @@
   import { player } from './stores/player';
   import { settings } from './stores/settings';
 
+  console.log(`Env: ${process.env.NODE_ENV}`);
+
   const routes = {
     '/home': Home,
     '/signin': SignIn,
