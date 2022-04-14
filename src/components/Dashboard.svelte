@@ -62,7 +62,6 @@
           </div>
           <span class="time">{formatTime($player.duration)}</span>
         </div>
-        >
       </div>
     {:else}
       <div class="closed">
