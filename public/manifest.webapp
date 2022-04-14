@@ -10,6 +10,7 @@
     "56": "/images/icon_56.png"
   },
   "theme_color": "#e4572e",
+  "focus_color": "#e4572e",
   "developer": {
     "name": "Garrett Downs",
     "url": "https://garrettdowns.com"
