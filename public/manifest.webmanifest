@@ -39,6 +39,9 @@
       "device-storage:music": {
         "access": "readwrite",
         "description": "Required to read and write songs."
+      },
+      "video-capture": {
+        "description": "Read QR codes"
       }
     },
     "type": "privileged",

@@ -1,3 +1,4 @@
+import KaiOS from 'kaios-lib';
 import type { Tokens } from '../models';
 
 type Options = {
@@ -33,6 +34,12 @@ export class Auth {
     }
 
     return tokens;
+  }
+
+  async fetchTokensFromQRCode(): Promise<void> {
+    const qrCode = new KaiOS.QRCode();
+    const text = await qrCode.readAsText();
+    this.setTokens(JSON.parse(text));
   }
 
   fetchTokensFromCode(code: string): Promise<void> {

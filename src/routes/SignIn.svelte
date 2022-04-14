@@ -26,7 +26,12 @@
     updateView({ dataStatus: DataStatus.Loaded });
   });
 
-  function signin() {
+  async function signinCode() {
+    await new Auth().fetchTokensFromQRCode();
+    replace('/home');
+  }
+
+  function signinWeb() {
     const url = new URL('https://api.soundcloud.com/connect');
     url.searchParams.append('response_type', 'code');
     url.searchParams.append('client_id', 'Gbv3N4cjTjVMwfaHVbCdEB7W5Y3JQM28');
@@ -53,12 +58,19 @@
     <Card>
       <CardHeader title="Sign In" />
       <CardContent>
-        <Typography>Hey! Click the button below to sign in to SoundCloud.</Typography>
+        <Typography>Hey! Click the one of the buttons below to sign in to SoundCloud.</Typography>
         <Button
-          title="Sign In"
+          title="Sign In via QR Code"
           navi={{
-            itemId: `signin`,
-            onSelect: async () => signin(),
+            itemId: `signinCode`,
+            onSelect: async () => signinCode(),
+          }}
+        />
+        <Button
+          title="Sign In via Website"
+          navi={{
+            itemId: `signinWeb`,
+            onSelect: async () => signinWeb(),
           }}
         />
       </CardContent>

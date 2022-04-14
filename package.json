@@ -32,6 +32,7 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
+    "kaios-lib": "^1.6.0",
     "lodash": "^4.17.21",
     "onyx-ui": "^0.3.0",
     "sirv-cli": "^1.0.0",
