@@ -1,4 +1,5 @@
 import type { Track, User } from '../models';
+import type { Playlist } from '../models/Playlist';
 import { Auth } from './auth';
 
 type Options = {};
@@ -20,6 +21,12 @@ export class SoundCloud {
     getLikedTracks: async (): Promise<Track[]> => {
       const res: any = await this.httpGet<Track[]>(
         'me/likes/tracks?limit=40&linked_partitioning=true&access=playable'
+      );
+      return res.collection;
+    },
+    getLikedPlaylists: async (): Promise<Playlist[]> => {
+      const res: any = await this.httpGet<Playlist[]>(
+        'me/likes/playlists?limit=40&linked_partitioning=true'
       );
       return res.collection;
     },
