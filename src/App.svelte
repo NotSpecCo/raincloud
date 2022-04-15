@@ -17,6 +17,8 @@
   import MyPlaylists from './routes/MyPlaylists.svelte';
   import MyTracks from './routes/MyTracks.svelte';
   import Player from './routes/Player.svelte';
+  import Playlist from './routes/Playlist.svelte';
+  import PlaylistDescription from './routes/PlaylistDescription.svelte';
   import Redirect from './routes/Redirect.svelte';
   import SignIn from './routes/SignIn.svelte';
   import Stream from './routes/Stream.svelte';
@@ -38,6 +40,8 @@
     '/library/following': MyFollowing,
     '/library/mytracks': MyTracks,
     '/library/myplaylists': MyPlaylists,
+    '/playlist/:playlistId': Playlist,
+    '/playlist/:playlistId/description': PlaylistDescription,
     '*': Redirect,
   };
 

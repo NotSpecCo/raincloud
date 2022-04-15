@@ -43,6 +43,15 @@ export class SoundCloud {
     },
   };
 
+  playlist = {
+    get: async (playlistId: number, showTracks = true): Promise<Playlist> => {
+      const res: any = await this.httpGet(
+        `playlists/${playlistId}?access=playable&show_tracks=${showTracks}`
+      );
+      return res;
+    },
+  };
+
   private async httpGet<T>(url: string): Promise<T> {
     const tokens = await new Auth().getTokens();
     console.log('tokens', tokens);

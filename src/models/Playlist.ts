@@ -1,3 +1,4 @@
+import type { Track } from './Track';
 import type { User } from './User';
 
 export type Playlist = {
@@ -15,7 +16,7 @@ export type Playlist = {
   streamable: boolean;
   artwork_url: string;
   permalink_url: string;
-
+  tracks?: Track[];
   track_count: number;
   last_modified: string; // Date
   created_at: string; // Date
