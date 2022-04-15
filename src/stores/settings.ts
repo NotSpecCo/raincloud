@@ -10,7 +10,7 @@ const defaultSettings: Settings = {
   textWeight: TextWeight.Medium,
   displayDensity: Density.Normal,
   borderRadius: 6,
-  animationSpeed: Animations.Fast,
+  animationSpeed: Animations.Normal,
   showHelpText: true,
   // Shortcuts
   enableShortcutKeys: true,
