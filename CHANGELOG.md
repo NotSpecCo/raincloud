@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/garredow/raincloud/compare/v1.1.0...v1.1.1) (2022-04-14)
+
+
+### Bug Fixes
+
+* **dashboard:** fix typo ([351e719](https://github.com/garredow/raincloud/commit/351e7191e53e1de87910962377e8fd9269a06c70))
+
 # [1.1.0](https://github.com/garredow/raincloud/compare/v1.0.0...v1.1.0) (2022-04-14)
 
 
