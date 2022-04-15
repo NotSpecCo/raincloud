@@ -1,3 +1,11 @@
+# [1.4.0](https://github.com/garredow/raincloud/compare/v1.3.1...v1.4.0) (2022-04-15)
+
+
+### Features
+
+* add user profile view ([130b30e](https://github.com/garredow/raincloud/commit/130b30e42a3f13dd10e7f2bbbb425f7e0a13205c))
+* **images:** optimize size based on usage ([47bda05](https://github.com/garredow/raincloud/commit/47bda05b523d1a53ff4b76f732e99c042460b665))
+
 ## [1.3.1](https://github.com/garredow/raincloud/compare/v1.3.0...v1.3.1) (2022-04-15)
 
 
