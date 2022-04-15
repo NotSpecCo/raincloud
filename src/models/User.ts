@@ -18,4 +18,6 @@ export type User = {
   comments_count: number;
   likes_count: number;
   playlist_count: number;
+  created_at: string;
+  plan: string;
 };

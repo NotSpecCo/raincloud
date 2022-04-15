@@ -36,6 +36,13 @@ export class SoundCloud {
     },
   };
 
+  user = {
+    get: async (userId: number): Promise<User> => {
+      const res = await this.httpGet<User>(`users/${userId}`);
+      return res;
+    },
+  };
+
   track = {
     get: async (trackId: number): Promise<Track> => {
       const res: any = await this.httpGet(`tracks/${trackId}`);
