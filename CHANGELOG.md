@@ -1,3 +1,19 @@
+# [1.2.0](https://github.com/garredow/raincloud/compare/v1.1.1...v1.2.0) (2022-04-15)
+
+
+### Bug Fixes
+
+* view track from liked tracks ([be8a22d](https://github.com/garredow/raincloud/commit/be8a22dce2944cece0473757cd29036b3a630e14))
+
+
+### Features
+
+* add library view ([1f0ea5a](https://github.com/garredow/raincloud/commit/1f0ea5ab8b0d326cab7dd00d4ce1715bd064c8f4))
+* add liked playlists view ([8209302](https://github.com/garredow/raincloud/commit/8209302e60eb4a6aa79e8a65bd80e60367ff2ee7))
+* add playlist view ([c65c220](https://github.com/garredow/raincloud/commit/c65c220e48395917cae039b49cab87c90c36f840))
+* add track view ([442c0f6](https://github.com/garredow/raincloud/commit/442c0f6b6e6403f8a291e440af1437d6af55df89))
+* **settings:** change default animation speed to normal ([ed5db83](https://github.com/garredow/raincloud/commit/ed5db833f528aa6b5c11300a46dbe3b4dc561db0))
+
 ## [1.1.1](https://github.com/garredow/raincloud/compare/v1.1.0...v1.1.1) (2022-04-14)
 
 
