@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/garredow/raincloud/compare/v1.2.0...v1.3.0) (2022-04-15)
+
+
+### Features
+
+* populate following view ([c9a9f46](https://github.com/garredow/raincloud/commit/c9a9f46c3ae9342641e9781db626e8d58c0846ab))
+
 # [1.2.0](https://github.com/garredow/raincloud/compare/v1.1.1...v1.2.0) (2022-04-15)
 
 
