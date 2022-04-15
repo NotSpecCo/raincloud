@@ -30,6 +30,10 @@ export class SoundCloud {
       );
       return res.collection;
     },
+    getFollowing: async (): Promise<User[]> => {
+      const res: any = await this.httpGet<User[]>('me/followings?limit=50');
+      return res.collection;
+    },
   };
 
   track = {
