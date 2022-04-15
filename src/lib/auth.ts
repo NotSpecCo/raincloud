@@ -1,4 +1,5 @@
 import KaiOS from 'kaios-lib';
+import { push } from 'svelte-spa-router';
 import type { Tokens } from '../models';
 
 type Options = {
@@ -27,6 +28,7 @@ export class Auth {
     let tokens: Tokens = JSON.parse(window.localStorage.getItem('tokens') as string);
 
     if (!tokens) {
+      push('/signin');
       throw new Error('No tokens found! You must sign in first.');
     }
 

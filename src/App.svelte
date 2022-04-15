@@ -2,11 +2,10 @@
   import OnyxApp from 'onyx-ui/components/app/OnyxApp.svelte';
   import { Priority } from 'onyx-ui/enums';
   import { KeyManager, Onyx } from 'onyx-ui/services';
-  import Router, { location, pop, replace } from 'svelte-spa-router';
+  import Router, { location, pop } from 'svelte-spa-router';
   import AppMenu from './components/AppMenu.svelte';
   import AudioPlayer from './components/AudioPlayer.svelte';
   import Dashboard from './components/Dashboard.svelte';
-  import { Auth } from './lib/auth';
   import Home from './routes/Home.svelte';
   import Library from './routes/Library.svelte';
   import LikedAlbums from './routes/LikedAlbums.svelte';
@@ -48,11 +47,6 @@
     '/playlist/:playlistId/description': PlaylistDescription,
     '*': Redirect,
   };
-
-  new Auth().getTokens().catch(() => {
-    console.log('Not signed in. Redirecting...');
-    replace('/signin');
-  });
 
   let dashboardOpen = false;
 
