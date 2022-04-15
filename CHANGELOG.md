@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/garredow/raincloud/compare/v1.3.0...v1.3.1) (2022-04-15)
+
+
+### Bug Fixes
+
+* test cicd ([a6d9e7c](https://github.com/garredow/raincloud/commit/a6d9e7c5d3a9d883d6fbbd605937d25ec5a69dd4))
+
 # [1.3.0](https://github.com/garredow/raincloud/compare/v1.2.0...v1.3.0) (2022-04-15)
 
 
