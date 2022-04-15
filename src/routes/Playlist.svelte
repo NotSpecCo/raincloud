@@ -102,7 +102,6 @@
                     {
                       label: 'Play',
                       onSelect: async () => {
-                        console.log('play', track.title);
                         load(track.id);
                         Onyx.contextMenu.close();
                       },
