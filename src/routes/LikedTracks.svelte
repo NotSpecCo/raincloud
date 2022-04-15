@@ -10,6 +10,7 @@
   import { Onyx } from 'onyx-ui/services';
   import { registerView, updateView } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
+  import { push } from 'svelte-spa-router';
   import { load } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Track } from '../models';
@@ -18,8 +19,8 @@
 
   let tracks: Track[] = null;
   onMount(async () => {
-    updateView({ dataStatus: DataStatus.Loaded });
     tracks = await new SoundCloud({}).me.getLikedTracks();
+    updateView({ dataStatus: DataStatus.Loaded });
   });
 </script>
 
@@ -40,6 +41,7 @@
               secondaryText={track.user.username}
               navi={{
                 itemId: `${i + 1}`,
+                onSelect: () => push(`/track/${track.id}`),
               }}
               contextMenu={{
                 title: track.title,
