@@ -4,10 +4,11 @@ module.exports = {
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
     '@semantic-release/changelog',
+    '@semantic-release/npm',
     [
       '@semantic-release/exec',
       {
-        publishCmd: 'cd public && zip -r ../RainCloud_v${nextRelease.version}.zip * && cd ..',
+        publishCmd: './deploy/package.sh ${nextRelease.version}',
       },
     ],
     [
@@ -23,5 +24,8 @@ module.exports = {
       },
     ],
     '@semantic-release/git',
+    {
+      assets: ['CHANGELOG.md', 'package.json', 'package-lock.json', 'public/manifest.*'],
+    },
   ],
 };

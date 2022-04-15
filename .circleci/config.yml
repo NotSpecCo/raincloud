@@ -2,9 +2,13 @@ version: 2.1
 executors:
   node-lts:
     docker:
-      - image: cimg/node:lts
+      - image: circleci/node:16.13.1
 
 jobs:
+  setup:
+    executor: node-lts
+    steps:
+      - run: sudo apt-get install jq
   install:
     executor: node-lts
     steps:
