@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/garredow/raincloud/compare/v1.4.0...v1.4.1) (2022-04-15)
+
+
+### Bug Fixes
+
+* **auth:** fix token refresh ([67467c3](https://github.com/garredow/raincloud/commit/67467c36ebade9a7c2799865f888ad055e6554fc))
+* fix double render issue ([9475838](https://github.com/garredow/raincloud/commit/94758380d2f14e75a930f4fb441adcb822ea6626))
+
 # [1.4.0](https://github.com/garredow/raincloud/compare/v1.3.1...v1.4.0) (2022-04-15)
 
 
