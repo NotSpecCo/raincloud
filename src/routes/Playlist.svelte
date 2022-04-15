@@ -9,7 +9,7 @@
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { Color, DataStatus } from 'onyx-ui/enums';
   import { Onyx } from 'onyx-ui/services';
-  import { registerView, updateView } from 'onyx-ui/stores/view';
+  import { registerView, updateView, view } from 'onyx-ui/stores/view';
   import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
   import MdInfoOutline from 'svelte-icons/md/MdInfoOutline.svelte';
   import MdPlayarrow from 'svelte-icons/md/MdPlayarrow.svelte';
@@ -21,36 +21,28 @@
 
   export let params: { playlistId: string };
 
-  registerView({});
+  registerView({ dataStatus: DataStatus.Loading });
 
-  let status = DataStatus.Init;
   let playlist: Playlist = null;
+  new SoundCloud({}).playlist
+    .get(Number(params.playlistId))
+    .then((res) => {
+      playlist = res;
+      updateView({ dataStatus: DataStatus.Loaded });
+    })
+    .catch(() => updateView({ dataStatus: DataStatus.Error }));
 
-  async function getPlaylist(playlistId: number | null) {
-    if (!playlistId) return;
-
-    status = DataStatus.Loading;
-    try {
-      playlist = await new SoundCloud().playlist.get(Number(params.playlistId));
-      status = DataStatus.Loaded;
-    } catch (err) {
-      status = DataStatus.Error;
-    }
-
-    updateView({ dataStatus: DataStatus.Loaded });
-  }
-
-  $: getPlaylist(Number(params?.playlistId));
+  registerView({});
 </script>
 
 <View>
   <ViewContent>
     <Card>
       <CardContent>
-        {#if status <= DataStatus.Loading}
-          <Typography>Loading...</Typography>
-        {:else if status === DataStatus.Error}
-          <Typography>Failed to load playlist</Typography>
+        {#if $view.dataStatus <= DataStatus.Loading}
+          <Typography align="center">Loading...</Typography>
+        {:else if $view.dataStatus === DataStatus.Error}
+          <Typography align="center">Failed to load playlist</Typography>
         {:else}
           <div class="artwork">
             <img src={getImage(playlist.artwork_url, 240)} alt="" />

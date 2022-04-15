@@ -6,29 +6,24 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { DataStatus } from 'onyx-ui/enums';
-  import { registerView, updateView } from 'onyx-ui/stores/view';
-  import { onMount } from 'svelte';
+  import { registerView, updateView, view } from 'onyx-ui/stores/view';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Playlist } from '../models/Playlist';
 
   export let params: { playlistId: string };
 
-  registerView({});
+  registerView({ dataStatus: DataStatus.Loading });
 
-  let status = DataStatus.Init;
   let playlist: Playlist = null;
+  new SoundCloud({}).playlist
+    .get(Number(params.playlistId))
+    .then((res) => {
+      playlist = res;
+      updateView({ dataStatus: DataStatus.Loaded });
+    })
+    .catch(() => updateView({ dataStatus: DataStatus.Error }));
 
-  onMount(async () => {
-    status = DataStatus.Loading;
-    try {
-      playlist = await new SoundCloud().playlist.get(Number(params.playlistId), false);
-      status = DataStatus.Loaded;
-    } catch (err) {
-      status = DataStatus.Error;
-    }
-
-    updateView({ dataStatus: DataStatus.Loaded });
-  });
+  registerView({});
 </script>
 
 <View>
@@ -36,10 +31,10 @@
     <Card>
       <CardHeader title="Playlist Description" />
       <CardContent>
-        {#if status <= DataStatus.Loading}
-          <Typography>Loading...</Typography>
-        {:else if status === DataStatus.Error}
-          <Typography>Failed to load playlist</Typography>
+        {#if $view.dataStatus <= DataStatus.Loading}
+          <Typography align="center">Loading...</Typography>
+        {:else if $view.dataStatus === DataStatus.Error}
+          <Typography align="center">Failed to load data</Typography>
         {:else}
           <Typography type="title" align="center">{playlist.title}</Typography>
           <Typography type="titleSmall" color="accent" padding="none" align="center"

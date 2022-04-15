@@ -7,24 +7,22 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { DataStatus } from 'onyx-ui/enums';
-  import { registerView, updateView } from 'onyx-ui/stores/view';
-  import { onMount } from 'svelte';
+  import { registerView, updateView, view } from 'onyx-ui/stores/view';
   import { push } from 'svelte-spa-router';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Playlist } from '../models/Playlist';
   import { getImage } from '../utils/getImage';
 
-  registerView({});
-
-  let status = DataStatus.Init;
+  registerView({ dataStatus: DataStatus.Loading });
 
   let playlists: Playlist[] = [];
-  onMount(async () => {
-    status = DataStatus.Loading;
-    playlists = await new SoundCloud({}).me.getLikedPlaylists();
-    status = DataStatus.Loaded;
-    updateView({ dataStatus: DataStatus.Loaded });
-  });
+  new SoundCloud({}).me
+    .getLikedPlaylists()
+    .then((res) => {
+      playlists = res;
+      updateView({ dataStatus: DataStatus.Loaded });
+    })
+    .catch(() => updateView({ dataStatus: DataStatus.Error }));
 </script>
 
 <View>
@@ -32,8 +30,10 @@
     <Card>
       <CardHeader title="Liked Playlists" />
       <CardContent>
-        {#if status === DataStatus.Loading}
-          <Typography>Loading...</Typography>
+        {#if $view.dataStatus <= DataStatus.Loading}
+          <Typography align="center">Loading...</Typography>
+        {:else if $view.dataStatus === DataStatus.Error}
+          <Typography align="center">Failed to load data</Typography>
         {:else if playlists.length === 0}
           <Typography>No playlists</Typography>
         {:else}

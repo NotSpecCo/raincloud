@@ -7,47 +7,34 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { DataStatus } from 'onyx-ui/enums';
-  import { registerView, updateView } from 'onyx-ui/stores/view';
+  import { registerView, updateView, view } from 'onyx-ui/stores/view';
   import { SoundCloud } from '../lib/soundcloud';
   import type { User } from '../models';
+  import { formatLocation } from '../utils/formatLocation';
   import { getImage } from '../utils/getImage';
 
   export let params: { userId: string };
 
-  registerView({});
+  registerView({ dataStatus: DataStatus.Loading });
 
-  function getLocation(user: User) {
-    return [user.city, user.country].filter(Boolean).join(', ');
-  }
-
-  let status = DataStatus.Init;
   let user: User = null;
-
-  async function getUser(trackId: number | null) {
-    if (!trackId) return;
-
-    status = DataStatus.Loading;
-    try {
-      user = await new SoundCloud().user.get(Number(params.userId));
-      status = DataStatus.Loaded;
-    } catch (err) {
-      status = DataStatus.Error;
-    }
-
-    updateView({ dataStatus: DataStatus.Loaded });
-  }
-
-  $: getUser(Number(params?.userId));
+  new SoundCloud({}).user
+    .get(Number(params.userId))
+    .then((res) => {
+      user = res;
+      updateView({ dataStatus: DataStatus.Loaded });
+    })
+    .catch(() => updateView({ dataStatus: DataStatus.Error }));
 </script>
 
 <View>
   <ViewContent>
     <Card>
       <CardContent>
-        {#if status <= DataStatus.Loading}
-          <Typography>Loading...</Typography>
-        {:else if status === DataStatus.Error}
-          <Typography>Failed to load track</Typography>
+        {#if $view.dataStatus <= DataStatus.Loading}
+          <Typography align="center">Loading...</Typography>
+        {:else if $view.dataStatus === DataStatus.Error}
+          <Typography align="center">Failed to load data</Typography>
         {:else}
           <div class="artwork">
             <img src={getImage(user.avatar_url, 240)} alt="" />
@@ -57,7 +44,7 @@
               >{user.full_name || user.username}</Typography
             >
             <Typography align="center" color="secondary" padding="none"
-              >{getLocation(user)}</Typography
+              >{formatLocation(user)}</Typography
             >
           </section>
           <Divider title="content" />

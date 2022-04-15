@@ -6,8 +6,10 @@
   import ListItem from 'onyx-ui/components/list/ListItem.svelte';
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
-  import { registerView } from 'onyx-ui/stores/view';
+  import { DataStatus } from 'onyx-ui/enums';
+  import { registerView, updateView } from 'onyx-ui/stores/view';
   import { getShortcutFromIndex } from 'onyx-ui/utils/getShortcutFromIndex';
+  import { onMount } from 'svelte';
   import MdAlbum from 'svelte-icons/md/MdAlbum.svelte';
   import MdAudiotrack from 'svelte-icons/md/MdAudiotrack.svelte';
   import MdPerson from 'svelte-icons/md/MdPerson.svelte';
@@ -54,6 +56,10 @@
       title: 'Playlists',
     },
   ];
+
+  onMount(() => {
+    updateView({ dataStatus: DataStatus.Loaded });
+  });
 </script>
 
 <View>
@@ -79,7 +85,7 @@
             icon={item.icon}
             primaryText={item.title}
             navi={{
-              itemId: `${i + 5}`,
+              itemId: `${i + 6}`,
               shortcutKey: getShortcutFromIndex(i + 5),
               onSelect: () => push(`/library/${item.id}`),
             }}

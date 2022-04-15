@@ -8,48 +8,39 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { Color, DataStatus } from 'onyx-ui/enums';
-  import { registerView, updateView } from 'onyx-ui/stores/view';
+  import { registerView, updateView, view } from 'onyx-ui/stores/view';
   import MdPlayarrow from 'svelte-icons/md/MdPlayarrow.svelte';
   import { load } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Track } from '../models/Track';
   import { formatTime } from '../utils/formatTime';
+  import { getImage } from '../utils/getImage';
 
   export let params: { trackId: string };
 
-  registerView({});
+  registerView({ dataStatus: DataStatus.Loading });
 
-  let status = DataStatus.Init;
-  let track: Track = null;
-
-  async function getTrack(trackId: number | null) {
-    if (!trackId) return;
-
-    status = DataStatus.Loading;
-    try {
-      track = await new SoundCloud().track.get(Number(params.trackId));
-      status = DataStatus.Loaded;
-    } catch (err) {
-      status = DataStatus.Error;
-    }
-
-    updateView({ dataStatus: DataStatus.Loaded });
-  }
-
-  $: getTrack(Number(params?.trackId));
+  let track: Track;
+  new SoundCloud({}).track
+    .get(Number(params.trackId))
+    .then((res) => {
+      track = res;
+      updateView({ dataStatus: DataStatus.Loaded });
+    })
+    .catch(() => updateView({ dataStatus: DataStatus.Error }));
 </script>
 
 <View>
   <ViewContent>
     <Card>
       <CardContent>
-        {#if status <= DataStatus.Loading}
-          <Typography>Loading...</Typography>
-        {:else if status === DataStatus.Error}
-          <Typography>Failed to load track</Typography>
+        {#if $view.dataStatus <= DataStatus.Loading}
+          <Typography align="center">Loading...</Typography>
+        {:else if $view.dataStatus === DataStatus.Error}
+          <Typography align="center">Failed to load data</Typography>
         {:else}
           <div class="artwork">
-            <img src={track.artwork_url} alt="" />
+            <img src={getImage(track.artwork_url, 240)} alt="" />
           </div>
           <Typography type="title" align="center">{track.title}</Typography>
           <Typography type="titleSmall" color="accent" padding="none" align="center"
@@ -93,7 +84,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 15px;
+    padding: 5px;
+  }
+  .artwork > img {
+    border-radius: 6px;
+    width: 100%;
   }
   .artwork > img {
     border-radius: 6px;
