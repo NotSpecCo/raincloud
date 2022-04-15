@@ -33,7 +33,7 @@ export class SoundCloud {
   };
 
   track = {
-    getInfo: async (trackId: number): Promise<Track> => {
+    get: async (trackId: number): Promise<Track> => {
       const res: any = await this.httpGet(`tracks/${trackId}`);
       return res;
     },

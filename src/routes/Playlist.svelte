@@ -10,7 +10,6 @@
   import { Color, DataStatus } from 'onyx-ui/enums';
   import { Onyx } from 'onyx-ui/services';
   import { registerView, updateView } from 'onyx-ui/stores/view';
-  import { onMount } from 'svelte';
   import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
   import MdInfoOutline from 'svelte-icons/md/MdInfoOutline.svelte';
   import MdPlayarrow from 'svelte-icons/md/MdPlayarrow.svelte';
@@ -20,14 +19,15 @@
   import type { Playlist } from '../models/Playlist';
 
   export let params: { playlistId: string };
-  console.log('PARAMS', params);
 
   registerView({});
 
   let status = DataStatus.Init;
   let playlist: Playlist = null;
 
-  onMount(async () => {
+  async function getPlaylist(playlistId: number | null) {
+    if (!playlistId) return;
+
     status = DataStatus.Loading;
     try {
       playlist = await new SoundCloud().playlist.get(Number(params.playlistId));
@@ -37,7 +37,9 @@
     }
 
     updateView({ dataStatus: DataStatus.Loaded });
-  });
+  }
+
+  $: getPlaylist(Number(params?.playlistId));
 </script>
 
 <View>
@@ -92,6 +94,7 @@
                 secondaryText={track.user.username}
                 navi={{
                   itemId: `${i + 1}`,
+                  onSelect: () => push(`/track/${track.id}`),
                 }}
                 contextMenu={{
                   title: track.title,

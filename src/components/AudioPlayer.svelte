@@ -18,7 +18,7 @@
 
   export async function load(trackId: number) {
     const [track, streamUrl] = await Promise.all([
-      new SoundCloud().track.getInfo(trackId),
+      new SoundCloud().track.get(trackId),
       new SoundCloud().track.getStreamUrl(trackId),
     ]);
 

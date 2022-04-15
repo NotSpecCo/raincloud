@@ -22,6 +22,7 @@
   import Redirect from './routes/Redirect.svelte';
   import SignIn from './routes/SignIn.svelte';
   import Stream from './routes/Stream.svelte';
+  import Track from './routes/Track.svelte';
   import { player } from './stores/player';
   import { settings } from './stores/settings';
 
@@ -40,6 +41,7 @@
     '/library/following': MyFollowing,
     '/library/mytracks': MyTracks,
     '/library/myplaylists': MyPlaylists,
+    '/track/:trackId': Track,
     '/playlist/:playlistId': Playlist,
     '/playlist/:playlistId/description': PlaylistDescription,
     '*': Redirect,
