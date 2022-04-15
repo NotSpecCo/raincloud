@@ -44,6 +44,7 @@ export default {
   context: 'window',
   plugins: [
     replace({
+      preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development'),
     }),
     svelte({
