@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "kaios-lib": "^1.6.0",
-    "lodash": "^4.17.21",
+    "lodash.throttle": "^4.1.1",
     "onyx-ui": "^0.4.0",
     "sirv-cli": "^1.0.0",
     "svelte-icons": "^2.1.0",

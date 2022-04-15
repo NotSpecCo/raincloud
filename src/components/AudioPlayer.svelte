@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import _ from 'lodash';
+  import throttle from 'lodash.throttle';
   import { SoundCloud } from '../lib/soundcloud';
   import type { PlaybackProgress } from '../models/PlaybackProgress';
   import { player } from '../stores/player';
@@ -12,7 +12,7 @@
     updateStatus({ duration: audio.duration });
   };
 
-  audio.ontimeupdate = _.throttle(() => {
+  audio.ontimeupdate = throttle(() => {
     updateStatus({ currentTime: audio.currentTime });
   }, 1000);
 
