@@ -5,8 +5,8 @@
   import { Onyx } from 'onyx-ui/services';
   import { updateView } from 'onyx-ui/stores/view';
   import { getShortcutFromIndex } from 'onyx-ui/utils/getShortcutFromIndex';
-  import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
   import MdHome from 'svelte-icons/md/MdHome.svelte';
+  import MdLibraryMusic from 'svelte-icons/md/MdLibraryMusic.svelte';
   import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
   import { push } from 'svelte-spa-router';
 
@@ -18,7 +18,7 @@
   };
   const menuItems: MenuItem[] = [
     { id: 'home', text: 'Home', route: '/home', icon: MdHome },
-    { id: 'likedTracks', text: 'Liked Tracks', route: '/likes/tracks', icon: MdFavorite },
+    { id: 'library', text: 'Library', route: '/library', icon: MdLibraryMusic },
     { id: 'player', text: 'Player', route: '/player', icon: MdPlayArrow },
   ];
 </script>

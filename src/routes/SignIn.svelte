@@ -47,11 +47,7 @@
         : 'http://localhost:3000'
     );
 
-    const windowRef = window.open(url.toString());
-
-    // TODO: Why don't these work?
-    windowRef.addEventListener('close', () => console.log('window closed'));
-    windowRef.addEventListener('tokens', (ev) => console.log('got tokens listener', ev));
+    window.open(url.toString());
 
     const interval = setInterval(async () => {
       const tokens = await new Auth().getTokens();

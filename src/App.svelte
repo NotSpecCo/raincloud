@@ -8,7 +8,14 @@
   import Dashboard from './components/Dashboard.svelte';
   import { Auth } from './lib/auth';
   import Home from './routes/Home.svelte';
+  import Library from './routes/Library.svelte';
+  import LikedAlbums from './routes/LikedAlbums.svelte';
+  import LikedPlaylists from './routes/LikedPlaylists.svelte';
+  import LikedStations from './routes/LikedStations.svelte';
   import LikedTracks from './routes/LikedTracks.svelte';
+  import MyFollowing from './routes/MyFollowing.svelte';
+  import MyPlaylists from './routes/MyPlaylists.svelte';
+  import MyTracks from './routes/MyTracks.svelte';
   import Player from './routes/Player.svelte';
   import Redirect from './routes/Redirect.svelte';
   import SignIn from './routes/SignIn.svelte';
@@ -23,7 +30,14 @@
     '/signin': SignIn,
     '/stream': Stream,
     '/player': Player,
-    '/likes/tracks': LikedTracks,
+    '/library': Library,
+    '/library/tracks': LikedTracks,
+    '/library/playlists': LikedPlaylists,
+    '/library/albums': LikedAlbums,
+    '/library/stations': LikedStations,
+    '/library/following': MyFollowing,
+    '/library/mytracks': MyTracks,
+    '/library/myplaylists': MyPlaylists,
     '*': Redirect,
   };
 
