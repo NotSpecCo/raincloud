@@ -13,6 +13,7 @@
   import { push } from 'svelte-spa-router';
   import { SoundCloud } from '../lib/soundcloud';
   import type { User } from '../models';
+  import { getImage } from '../utils/getImage';
 
   registerView({});
 
@@ -44,7 +45,7 @@
         {:else}
           {#each users as user, i}
             <ListItem
-              imageUrl={user.avatar_url}
+              imageUrl={getImage(user.avatar_url, 60)}
               primaryText={user.full_name || user.username}
               secondaryText={`${user.followers_count.toLocaleString()} followers`}
               navi={{

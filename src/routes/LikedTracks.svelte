@@ -14,6 +14,7 @@
   import { load } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Track } from '../models';
+  import { getImage } from '../utils/getImage';
 
   registerView({});
 
@@ -36,7 +37,7 @@
         {:else}
           {#each tracks as track, i}
             <ListItem
-              imageUrl={track.artwork_url}
+              imageUrl={getImage(track.artwork_url, 60)}
               primaryText={track.title}
               secondaryText={track.user.username}
               navi={{

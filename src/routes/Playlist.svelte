@@ -17,6 +17,7 @@
   import { load } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Playlist } from '../models/Playlist';
+  import { getImage } from '../utils/getImage';
 
   export let params: { playlistId: string };
 
@@ -52,7 +53,7 @@
           <Typography>Failed to load playlist</Typography>
         {:else}
           <div class="artwork">
-            <img src={playlist.artwork_url} alt="" />
+            <img src={getImage(playlist.artwork_url, 240)} alt="" />
           </div>
           <Typography type="title" align="center">{playlist.title}</Typography>
           <Typography type="titleSmall" color="accent" padding="none" align="center"
@@ -122,7 +123,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 15px;
+    padding: 5px;
+  }
+  .artwork > img {
+    border-radius: 6px;
+    width: 100%;
   }
 
   section.actions {

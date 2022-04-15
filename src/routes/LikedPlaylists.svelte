@@ -12,6 +12,7 @@
   import { push } from 'svelte-spa-router';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Playlist } from '../models/Playlist';
+  import { getImage } from '../utils/getImage';
 
   registerView({});
 
@@ -38,7 +39,7 @@
         {:else}
           {#each playlists as playlist, i}
             <ListItem
-              imageUrl={playlist.artwork_url}
+              imageUrl={getImage(playlist.artwork_url, 60)}
               primaryText={playlist.title}
               secondaryText={playlist.user.username}
               accentText={`${playlist.track_count} tracks`}
