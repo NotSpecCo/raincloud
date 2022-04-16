@@ -21,6 +21,7 @@
   import PlaylistDescription from './routes/PlaylistDescription.svelte';
   import Redirect from './routes/Redirect.svelte';
   import RelatedTracks from './routes/RelatedTracks.svelte';
+  import Search from './routes/Search.svelte';
   import SignIn from './routes/SignIn.svelte';
   import Stream from './routes/Stream.svelte';
   import Track from './routes/Track.svelte';
@@ -49,6 +50,7 @@
     '/player': Player,
     '/playlist/:playlistId': Playlist,
     '/playlist/:playlistId/description': PlaylistDescription,
+    '/search': Search,
     '/settings/:cardId': AppSettings,
     '/signin': SignIn,
     '/stream': Stream,
@@ -68,7 +70,11 @@
 
   // TODO: Fix this in a better way
   document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Backspace' && $location !== '/home') {
+    if (
+      ev.key === 'Backspace' &&
+      $location !== '/home' &&
+      (ev.target as any).contentEditable !== 'true'
+    ) {
       ev.preventDefault();
     }
   });

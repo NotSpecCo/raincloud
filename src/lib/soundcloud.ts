@@ -94,6 +94,18 @@ export class SoundCloud {
       );
       return res.collection;
     },
+    search: async (query: string): Promise<User[]> => {
+      const res: any = await this.httpGet<User[]>(
+        `users?q=${query}&limit=50&linked_partitioning=true`
+      );
+      return res.collection
+        .sort((a, b) => {
+          if (a.followers_count > b.followers_count) return -1;
+          if (a.followers_count < b.followers_count) return 1;
+          return 0;
+        })
+        .slice(0, 25);
+    },
   };
 
   track = {
@@ -111,12 +123,24 @@ export class SoundCloud {
       );
       return res.collection;
     },
+    search: async (query: string): Promise<Track[]> => {
+      const res: any = await this.httpGet<Track[]>(
+        `tracks?q=${query}&limit=50&linked_partitioning=true`
+      );
+      return res.collection;
+    },
   };
 
   playlist = {
     get: async (playlistId: number, showTracks = true): Promise<Playlist> => {
       const res: any = await this.httpGet(`playlists/${playlistId}?show_tracks=${showTracks}`);
       return res;
+    },
+    search: async (query: string): Promise<Playlist[]> => {
+      const res: any = await this.httpGet<Playlist[]>(
+        `playlists?q=${query}&limit=50&linked_partitioning=true`
+      );
+      return res.collection;
     },
   };
 

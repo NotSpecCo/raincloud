@@ -8,6 +8,7 @@
   import MdHome from 'svelte-icons/md/MdHome.svelte';
   import MdLibraryMusic from 'svelte-icons/md/MdLibraryMusic.svelte';
   import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
+  import MdSearch from 'svelte-icons/md/MdSearch.svelte';
   import MdSettings from 'svelte-icons/md/MdSettings.svelte';
   import MdViewStream from 'svelte-icons/md/MdViewStream.svelte';
   import { push } from 'svelte-spa-router';
@@ -23,6 +24,7 @@
     { id: 'library', text: 'Library', route: '/library', icon: MdLibraryMusic },
     { id: 'stream', text: 'Stream', route: '/stream', icon: MdViewStream },
     { id: 'player', text: 'Player', route: '/player', icon: MdPlayArrow },
+    { id: 'search', text: 'Search', route: '/search', icon: MdSearch },
     { id: 'settings', text: 'Settings', route: '/settings/display', icon: MdSettings },
   ];
 </script>
