@@ -1,3 +1,18 @@
+# [1.6.0](https://github.com/garredow/raincloud/compare/v1.5.0...v1.6.0) (2022-04-16)
+
+
+### Bug Fixes
+
+* fix number key shortcuts ([4a533d6](https://github.com/garredow/raincloud/commit/4a533d6ed9d4900b6d3ddeb553450fa437763409))
+
+
+### Features
+
+* add related tracks view ([9bd2faa](https://github.com/garredow/raincloud/commit/9bd2faa2688c4c7f3e3e50bd9b67515540170751))
+* **contextmenu:** add options to view artist and related tracks ([5299db4](https://github.com/garredow/raincloud/commit/5299db49f952fdff30c29c1c664a85273d1731e4))
+* **user:** add my tracks and playlists views ([8a836d9](https://github.com/garredow/raincloud/commit/8a836d9e131f92f7d76053ba1e3d3a7a8823be2a))
+* **user:** add tracks, playlists, followers, and following views ([6ffddd6](https://github.com/garredow/raincloud/commit/6ffddd639a89fa22548a23e51836a3c0dfe43055))
+
 # [1.5.0](https://github.com/garredow/raincloud/compare/v1.4.1...v1.5.0) (2022-04-16)
 
 
