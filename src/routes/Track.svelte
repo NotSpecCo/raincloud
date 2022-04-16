@@ -52,20 +52,20 @@
             }}
           />
           <Divider title="stats" />
+          <FormRow label="Plays" navi={{ itemId: `plays` }}
+            >{data.playback_count.toLocaleString()}</FormRow
+          >
           <FormRow label="Duration" navi={{ itemId: `duration` }}
             >{formatTime(data.duration / 1000)}</FormRow
           >
           <FormRow label="Likes" navi={{ itemId: `likes` }}
             >{data.favoritings_count.toLocaleString()}</FormRow
           >
-          <FormRow label="Comments" navi={{ itemId: `comments` }}
-            >{data.comment_count.toLocaleString()}</FormRow
-          >
-          <FormRow label="Plays" navi={{ itemId: `plays` }}
-            >{data.playback_count.toLocaleString()}</FormRow
-          >
           <FormRow label="Reposts" navi={{ itemId: `reposts` }}
             >{data.reposts_count.toLocaleString()}</FormRow
+          >
+          <FormRow label="Comments" navi={{ itemId: `comments` }}
+            >{data.comment_count.toLocaleString()}</FormRow
           >
           <Divider title="description" />
           <Typography>{data.description}</Typography>

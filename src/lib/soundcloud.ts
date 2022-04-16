@@ -1,4 +1,4 @@
-import type { Track, User } from '../models';
+import type { StreamItem, Track, User } from '../models';
 import type { Playlist } from '../models/Playlist';
 import { Auth } from './auth';
 import { Cache } from './cache';
@@ -45,6 +45,10 @@ export class SoundCloud {
     },
     getFollowing: async (): Promise<User[]> => {
       const res: any = await this.httpGet<User[]>('me/followings?limit=50');
+      return res.collection;
+    },
+    getStream: async (): Promise<StreamItem[]> => {
+      const res: any = await this.httpGet<StreamItem[]>('me/activities/all/own?limit=50');
       return res.collection;
     },
   };

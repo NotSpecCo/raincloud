@@ -9,6 +9,7 @@
   import MdLibraryMusic from 'svelte-icons/md/MdLibraryMusic.svelte';
   import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
   import MdSettings from 'svelte-icons/md/MdSettings.svelte';
+  import MdViewStream from 'svelte-icons/md/MdViewStream.svelte';
   import { push } from 'svelte-spa-router';
 
   type MenuItem = {
@@ -20,6 +21,7 @@
   const menuItems: MenuItem[] = [
     { id: 'home', text: 'Home', route: '/home', icon: MdHome },
     { id: 'library', text: 'Library', route: '/library', icon: MdLibraryMusic },
+    { id: 'stream', text: 'Stream', route: '/stream', icon: MdViewStream },
     { id: 'player', text: 'Player', route: '/player', icon: MdPlayArrow },
     { id: 'settings', text: 'Settings', route: '/settings/display', icon: MdSettings },
   ];
