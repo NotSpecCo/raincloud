@@ -23,7 +23,7 @@ export class SoundCloud {
     },
     getLikedTracks: async (): Promise<Track[]> => {
       const res: any = await this.httpGet<Track[]>(
-        'me/likes/tracks?limit=40&linked_partitioning=true&access=playable'
+        'me/likes/tracks?limit=40&linked_partitioning=true'
       );
       return res.collection;
     },
@@ -44,6 +44,42 @@ export class SoundCloud {
       const res = await this.httpGet<User>(`users/${userId}`);
       return res;
     },
+    getFollowers: async (userId: number): Promise<User[]> => {
+      const res: any = await this.httpGet<User[]>(
+        `users/${userId}/followers?limit=50&linked_partitioning=true`
+      );
+      return res.collection;
+    },
+    getFollowings: async (userId: number): Promise<User[]> => {
+      const res: any = await this.httpGet<User[]>(
+        `users/${userId}/followings?limit=50&linked_partitioning=true`
+      );
+      return res.collection;
+    },
+    getPlaylists: async (userId: number): Promise<Playlist[]> => {
+      const res: any = await this.httpGet<Playlist[]>(
+        `users/${userId}/playlists?limit=50&linked_partitioning=true`
+      );
+      return res.collection;
+    },
+    getTracks: async (userId: number): Promise<Track[]> => {
+      const res: any = await this.httpGet<Track[]>(
+        `users/${userId}/tracks?limit=50&linked_partitioning=true`
+      );
+      return res.collection;
+    },
+    getLikedTracks: async (userId: number): Promise<Track[]> => {
+      const res: any = await this.httpGet<Track[]>(
+        `users/${userId}/likes/tracks?limit=50&linked_partitioning=true`
+      );
+      return res.collection;
+    },
+    getLikedPlaylists: async (userId: number): Promise<Playlist[]> => {
+      const res: any = await this.httpGet<Playlist[]>(
+        `users/${userId}/likes/playlists?limit=50&linked_partitioning=true`
+      );
+      return res.collection;
+    },
   };
 
   track = {
@@ -59,9 +95,7 @@ export class SoundCloud {
 
   playlist = {
     get: async (playlistId: number, showTracks = true): Promise<Playlist> => {
-      const res: any = await this.httpGet(
-        `playlists/${playlistId}?access=playable&show_tracks=${showTracks}`
-      );
+      const res: any = await this.httpGet(`playlists/${playlistId}?show_tracks=${showTracks}`);
       return res;
     },
   };

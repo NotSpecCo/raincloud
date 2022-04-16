@@ -24,6 +24,12 @@
   import Stream from './routes/Stream.svelte';
   import Track from './routes/Track.svelte';
   import User from './routes/User.svelte';
+  import UserFollowers from './routes/UserFollowers.svelte';
+  import UserFollowing from './routes/UserFollowing.svelte';
+  import UserLikedPlaylists from './routes/UserLikedPlaylists.svelte';
+  import UserLikedTracks from './routes/UserLikedTracks.svelte';
+  import UserPlaylists from './routes/UserPlaylists.svelte';
+  import UserTracks from './routes/UserTracks.svelte';
   import { player } from './stores/player';
   import { settings } from './stores/settings';
 
@@ -44,6 +50,12 @@
     '/library/myplaylists': MyPlaylists,
     '/track/:trackId': Track,
     '/user/:userId': User,
+    '/user/:userId/followers': UserFollowers,
+    '/user/:userId/following': UserFollowing,
+    '/user/:userId/playlists': UserPlaylists,
+    '/user/:userId/tracks': UserTracks,
+    '/user/:userId/liked-playlists': UserLikedPlaylists,
+    '/user/:userId/liked-tracks': UserLikedTracks,
     '/playlist/:playlistId': Playlist,
     '/playlist/:playlistId/description': PlaylistDescription,
     '/settings/:cardId': AppSettings,

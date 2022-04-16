@@ -9,6 +9,7 @@
   import { DataStatus } from 'onyx-ui/enums';
   import { registerView, updateView } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
+  import { push } from 'svelte-spa-router';
   import { SoundCloud } from '../lib/soundcloud';
   import { formatLocation } from '../utils/formatLocation';
   import { getImage } from '../utils/getImage';
@@ -44,37 +45,47 @@
             >
           </section>
           <Divider title="content" />
-          <FormRow label="Tracks" navi={{ itemId: `tracks` }}
+          <FormRow
+            label="Tracks"
+            navi={{ itemId: `tracks`, onSelect: () => push(`/user/${params.userId}/tracks`) }}
             >{data.track_count.toLocaleString()}</FormRow
           >
-          <FormRow label="Playlists" navi={{ itemId: `playlists` }}
+          <FormRow
+            label="Playlists"
+            navi={{ itemId: `playlists`, onSelect: () => push(`/user/${params.userId}/playlists`) }}
             >{data.playlist_count.toLocaleString()}</FormRow
           >
-          <FormRow label="Reposts" navi={{ itemId: `reposts` }}
+          <FormRow label="Reposts" navi={{ itemId: `reposts`, onSelect: () => {} }}
             >{data.reposts_count.toLocaleString()}</FormRow
           >
           <Divider title="social" />
-          <FormRow label="Followers" navi={{ itemId: `followers` }}
+          <FormRow
+            label="Followers"
+            navi={{ itemId: `followers`, onSelect: () => push(`/user/${params.userId}/followers`) }}
             >{data.followers_count.toLocaleString()}</FormRow
           >
-          <FormRow label="Following" navi={{ itemId: `following` }}
+          <FormRow
+            label="Following"
+            navi={{ itemId: `following`, onSelect: () => push(`/user/${params.userId}/following`) }}
             >{data.followings_count.toLocaleString()}</FormRow
           >
-          <FormRow label="Likes" navi={{ itemId: `likes` }}
+          <FormRow label="Likes" navi={{ itemId: `likes`, onSelect: () => {} }}
             >{data.likes_count.toLocaleString()}</FormRow
           >
-          <FormRow label="Liked" navi={{ itemId: `liked` }}
+          <FormRow label="Liked" navi={{ itemId: `liked`, onSelect: () => {} }}
             >{data.public_favorites_count.toLocaleString()}</FormRow
           >
-          <FormRow label="Comments" navi={{ itemId: `comments` }}
+          <FormRow label="Comments" navi={{ itemId: `comments`, onSelect: () => {} }}
             >{data.comments_count.toLocaleString()}</FormRow
           >
           <Divider title="stats" />
-          <FormRow label="User ID" navi={{ itemId: `userId` }}>{data.id}</FormRow>
-          <FormRow label="Joined" navi={{ itemId: `joined` }}
+          <FormRow label="User ID" navi={{ itemId: `userId`, onSelect: () => {} }}
+            >{data.id}</FormRow
+          >
+          <FormRow label="Joined" navi={{ itemId: `joined`, onSelect: () => {} }}
             >{new Date(data.created_at).toLocaleDateString()}</FormRow
           >
-          <FormRow label="Plan" navi={{ itemId: `plan` }}>{data.plan}</FormRow>
+          <FormRow label="Plan" navi={{ itemId: `plan`, onSelect: () => {} }}>{data.plan}</FormRow>
           <Divider title="description" />
           <Typography>{data.description || 'No description provided.'}</Typography>
         {:catch}
