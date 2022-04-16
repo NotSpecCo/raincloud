@@ -15,6 +15,8 @@ export class Database extends Dexie {
   }
 
   public async upsertQuery(query: QueryItem): Promise<void> {
+    await this.cleanUp();
+
     const existing = await this.queries.get({ key: query.key });
 
     if (existing) {
@@ -25,6 +27,7 @@ export class Database extends Dexie {
   }
 
   public async getQuery<T>(key: string): Promise<QueryItem<T> | null> {
+    await this.cleanUp();
     const result = await this.queries.get({ key });
     return result as QueryItem<T>;
   }
@@ -33,7 +36,16 @@ export class Database extends Dexie {
     await this.queries.delete(key);
   }
 
+  public async deleteQueryBy(prefix: string): Promise<void> {
+    await this.queries.where('key').startsWithIgnoreCase(prefix).delete();
+  }
+
   public async deleteAllQueries(): Promise<void> {
     await this.queries.clear();
+  }
+
+  private async cleanUp() {
+    const result = await this.queries.where('expiresAt').belowOrEqual(Date.now()).delete();
+    // console.log(`Cleaned up ${result} old cache items`);
   }
 }

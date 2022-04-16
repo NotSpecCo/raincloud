@@ -14,33 +14,36 @@ export class Cache {
   }
 
   async get<T>(queryKey: string): Promise<QueryItem<T> | null> {
-    const query = await this.db.getQuery<T>(queryKey);
-    if (!query) {
+    const query = await this.db.getQuery<T>(queryKey).catch((err) => {
+      console.log(`Failed to get query cache: ${queryKey}`, err.message);
       return null;
-    } else if (query.expiresAt <= Date.now()) {
-      await this.db.deleteQuery(query.key);
-      return null;
-    } else {
-      return query;
-    }
+    });
+
+    return query;
   }
 
   set(queryKey: string, data: unknown, options: Partial<QueryOptions> = {}): Promise<void> {
     const opts: QueryOptions = {
-      expiresIn: 3_600_000,
+      expiresIn: 1_800_000,
       backgroundRefresh: false,
       ...options,
     };
 
-    return this.db.upsertQuery({
-      key: queryKey,
-      data,
-      expiresAt: Date.now() + opts.expiresIn,
-      refresh: opts.backgroundRefresh,
-    });
+    return this.db
+      .upsertQuery({
+        key: queryKey,
+        data,
+        expiresAt: Date.now() + opts.expiresIn,
+        refresh: opts.backgroundRefresh,
+      })
+      .catch((err) => console.log(`Failed to set query cache: ${queryKey}`, err.message));
   }
 
-  invalidate(): Promise<void> {
-    return this.db.deleteAllQueries();
+  async invalidate(prefix?: string): Promise<void> {
+    if (prefix) {
+      await this.db.deleteQueryBy(prefix);
+    } else {
+      await this.db.deleteAllQueries();
+    }
   }
 }
