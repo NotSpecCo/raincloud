@@ -8,43 +8,39 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { Color, DataStatus } from 'onyx-ui/enums';
-  import { registerView, updateView, view } from 'onyx-ui/stores/view';
+  import { registerView, updateView } from 'onyx-ui/stores/view';
+  import { onMount } from 'svelte';
   import MdPlayarrow from 'svelte-icons/md/MdPlayarrow.svelte';
   import { load } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
-  import type { Track } from '../models/Track';
   import { formatTime } from '../utils/formatTime';
   import { getImage } from '../utils/getImage';
 
   export let params: { trackId: string };
 
-  registerView({ dataStatus: DataStatus.Loading });
+  registerView({});
 
-  let track: Track;
-  new SoundCloud({}).track
-    .get(Number(params.trackId))
-    .then((res) => {
-      track = res;
-      updateView({ dataStatus: DataStatus.Loaded });
-    })
-    .catch(() => updateView({ dataStatus: DataStatus.Error }));
+  const getData = new SoundCloud({}).track.get(Number(params.trackId));
+
+  onMount(async () => {
+    await getData;
+    updateView({ dataStatus: DataStatus.Loaded });
+  });
 </script>
 
 <View>
   <ViewContent>
     <Card>
       <CardContent>
-        {#if $view.dataStatus <= DataStatus.Loading}
+        {#await getData}
           <Typography align="center">Loading...</Typography>
-        {:else if $view.dataStatus === DataStatus.Error}
-          <Typography align="center">Failed to load data</Typography>
-        {:else}
+        {:then data}
           <div class="artwork">
-            <img src={getImage(track.artwork_url, 240)} alt="" />
+            <img src={getImage(data.artwork_url, 240)} alt="" />
           </div>
-          <Typography type="title" align="center">{track.title}</Typography>
+          <Typography type="title" align="center">{data.title}</Typography>
           <Typography type="titleSmall" color="accent" padding="none" align="center"
-            >{track.user.username}</Typography
+            >{data.user.username}</Typography
           >
           <Button
             icon={MdPlayarrow}
@@ -52,28 +48,30 @@
             color={Color.Primary}
             navi={{
               itemId: `btnPlay`,
-              onSelect: async () => load(track.id),
+              onSelect: async () => load(data.id),
             }}
           />
           <Divider title="stats" />
           <FormRow label="Duration" navi={{ itemId: `duration` }}
-            >{formatTime(track.duration / 1000)}</FormRow
+            >{formatTime(data.duration / 1000)}</FormRow
           >
           <FormRow label="Likes" navi={{ itemId: `likes` }}
-            >{track.favoritings_count.toLocaleString()}</FormRow
+            >{data.favoritings_count.toLocaleString()}</FormRow
           >
           <FormRow label="Comments" navi={{ itemId: `comments` }}
-            >{track.comment_count.toLocaleString()}</FormRow
+            >{data.comment_count.toLocaleString()}</FormRow
           >
           <FormRow label="Plays" navi={{ itemId: `plays` }}
-            >{track.playback_count.toLocaleString()}</FormRow
+            >{data.playback_count.toLocaleString()}</FormRow
           >
           <FormRow label="Reposts" navi={{ itemId: `reposts` }}
-            >{track.reposts_count.toLocaleString()}</FormRow
+            >{data.reposts_count.toLocaleString()}</FormRow
           >
           <Divider title="description" />
-          <Typography>{track.description}</Typography>
-        {/if}
+          <Typography>{data.description}</Typography>
+        {:catch}
+          <Typography align="center">Failed to load data</Typography>
+        {/await}
       </CardContent>
     </Card>
   </ViewContent>

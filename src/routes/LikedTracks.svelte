@@ -8,23 +8,21 @@
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { DataStatus } from 'onyx-ui/enums';
   import { Onyx } from 'onyx-ui/services';
-  import { registerView, updateView, view } from 'onyx-ui/stores/view';
+  import { registerView, updateView } from 'onyx-ui/stores/view';
+  import { onMount } from 'svelte';
   import { push } from 'svelte-spa-router';
   import { load } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
-  import type { Track } from '../models';
   import { getImage } from '../utils/getImage';
 
-  registerView({ dataStatus: DataStatus.Loading });
+  registerView({});
 
-  let tracks: Track[] = [];
-  new SoundCloud({}).me
-    .getLikedTracks()
-    .then((res) => {
-      tracks = res;
-      updateView({ dataStatus: DataStatus.Loaded });
-    })
-    .catch(() => updateView({ dataStatus: DataStatus.Error }));
+  const getData = new SoundCloud({}).me.getLikedTracks();
+
+  onMount(async () => {
+    await getData;
+    updateView({ dataStatus: DataStatus.Loaded });
+  });
 </script>
 
 <View>
@@ -32,14 +30,10 @@
     <Card>
       <CardHeader title="Liked Tracks" />
       <CardContent>
-        {#if $view.dataStatus <= DataStatus.Loading}
+        {#await getData}
           <Typography align="center">Loading...</Typography>
-        {:else if $view.dataStatus === DataStatus.Error}
-          <Typography align="center">Failed to load data</Typography>
-        {:else if tracks.length === 0}
-          <Typography>No tracks</Typography>
-        {:else}
-          {#each tracks as track, i}
+        {:then data}
+          {#each data as track, i (track.id)}
             <ListItem
               imageUrl={getImage(track.artwork_url, 60)}
               primaryText={track.title}
@@ -61,8 +55,12 @@
                 ],
               }}
             />
+          {:else}
+            <Typography>No tracks</Typography>
           {/each}
-        {/if}
+        {:catch}
+          <Typography align="center">Failed to load data</Typography>
+        {/await}
       </CardContent>
     </Card>
   </ViewContent>

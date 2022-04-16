@@ -7,23 +7,21 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { DataStatus } from 'onyx-ui/enums';
-  import { registerView, updateView, view } from 'onyx-ui/stores/view';
+  import { registerView, updateView } from 'onyx-ui/stores/view';
   import { getShortcutFromIndex } from 'onyx-ui/utils/getShortcutFromIndex';
+  import { onMount } from 'svelte';
   import { push } from 'svelte-spa-router';
   import { SoundCloud } from '../lib/soundcloud';
-  import type { User } from '../models';
   import { getImage } from '../utils/getImage';
 
-  registerView({ dataStatus: DataStatus.Loading });
+  registerView({});
 
-  let users: User[] = [];
-  new SoundCloud({}).me
-    .getFollowing()
-    .then((res) => {
-      users = res;
-      updateView({ dataStatus: DataStatus.Loaded });
-    })
-    .catch(() => updateView({ dataStatus: DataStatus.Error }));
+  const getData = new SoundCloud({}).me.getFollowing();
+
+  onMount(async () => {
+    await getData;
+    updateView({ dataStatus: DataStatus.Loaded });
+  });
 </script>
 
 <View>
@@ -31,14 +29,10 @@
     <Card>
       <CardHeader title="Following" />
       <CardContent>
-        {#if $view.dataStatus <= DataStatus.Loading}
+        {#await getData}
           <Typography align="center">Loading...</Typography>
-        {:else if $view.dataStatus === DataStatus.Error}
-          <Typography align="center">Failed to load data</Typography>
-        {:else if users.length === 0}
-          <Typography align="center">You're not following anyone</Typography>
-        {:else}
-          {#each users as user, i}
+        {:then data}
+          {#each data as user, i (user.id)}
             <ListItem
               imageUrl={getImage(user.avatar_url, 60)}
               primaryText={user.full_name || user.username}
@@ -49,8 +43,12 @@
                 onSelect: () => push(`/user/${user.id}`),
               }}
             />
+          {:else}
+            <Typography align="center">You're not following anyone</Typography>
           {/each}
-        {/if}
+        {:catch}
+          <Typography align="center">Failed to load data</Typography>
+        {/await}
       </CardContent>
     </Card>
   </ViewContent>

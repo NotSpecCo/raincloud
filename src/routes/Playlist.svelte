@@ -9,47 +9,41 @@
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { Color, DataStatus } from 'onyx-ui/enums';
   import { Onyx } from 'onyx-ui/services';
-  import { registerView, updateView, view } from 'onyx-ui/stores/view';
+  import { registerView, updateView } from 'onyx-ui/stores/view';
+  import { onMount } from 'svelte';
   import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
   import MdInfoOutline from 'svelte-icons/md/MdInfoOutline.svelte';
   import MdPlayarrow from 'svelte-icons/md/MdPlayarrow.svelte';
   import { push } from 'svelte-spa-router';
   import { load } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
-  import type { Playlist } from '../models/Playlist';
   import { getImage } from '../utils/getImage';
 
   export let params: { playlistId: string };
 
-  registerView({ dataStatus: DataStatus.Loading });
-
-  let playlist: Playlist = null;
-  new SoundCloud({}).playlist
-    .get(Number(params.playlistId))
-    .then((res) => {
-      playlist = res;
-      updateView({ dataStatus: DataStatus.Loaded });
-    })
-    .catch(() => updateView({ dataStatus: DataStatus.Error }));
-
   registerView({});
+
+  const getData = new SoundCloud({}).playlist.get(Number(params.playlistId));
+
+  onMount(async () => {
+    await getData;
+    updateView({ dataStatus: DataStatus.Loaded });
+  });
 </script>
 
 <View>
   <ViewContent>
     <Card>
       <CardContent>
-        {#if $view.dataStatus <= DataStatus.Loading}
+        {#await getData}
           <Typography align="center">Loading...</Typography>
-        {:else if $view.dataStatus === DataStatus.Error}
-          <Typography align="center">Failed to load playlist</Typography>
-        {:else}
+        {:then data}
           <div class="artwork">
-            <img src={getImage(playlist.artwork_url, 240)} alt="" />
+            <img src={getImage(data.artwork_url, 240)} alt="" />
           </div>
-          <Typography type="title" align="center">{playlist.title}</Typography>
+          <Typography type="title" align="center">{data.title}</Typography>
           <Typography type="titleSmall" color="accent" padding="none" align="center"
-            >{playlist.user.username}</Typography
+            >{data.user.username}</Typography
           >
           <section class="actions">
             <IconButton
@@ -65,7 +59,7 @@
               color={Color.Primary}
               navi={{
                 itemId: `btnViewDesc`,
-                onSelect: async () => push(`/playlist/${playlist.id}/description`),
+                onSelect: async () => push(`/playlist/${data.id}/description`),
               }}
             />
             <IconButton
@@ -80,7 +74,7 @@
           </section>
           <Divider title="tracks" />
           <section class="tracks">
-            {#each playlist.tracks as track, i}
+            {#each data.tracks as track, i}
               <ListItem
                 imageUrl={track.artwork_url}
                 primaryText={track.title}
@@ -104,7 +98,9 @@
               />
             {/each}
           </section>
-        {/if}
+        {:catch}
+          <Typography align="center">Failed to load data</Typography>
+        {/await}
       </CardContent>
     </Card>
   </ViewContent>

@@ -7,81 +7,79 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { DataStatus } from 'onyx-ui/enums';
-  import { registerView, updateView, view } from 'onyx-ui/stores/view';
+  import { registerView, updateView } from 'onyx-ui/stores/view';
+  import { onMount } from 'svelte';
   import { SoundCloud } from '../lib/soundcloud';
-  import type { User } from '../models';
   import { formatLocation } from '../utils/formatLocation';
   import { getImage } from '../utils/getImage';
 
   export let params: { userId: string };
 
-  registerView({ dataStatus: DataStatus.Loading });
+  registerView({});
 
-  let user: User = null;
-  new SoundCloud({}).user
-    .get(Number(params.userId))
-    .then((res) => {
-      user = res;
-      updateView({ dataStatus: DataStatus.Loaded });
-    })
-    .catch(() => updateView({ dataStatus: DataStatus.Error }));
+  const getData = new SoundCloud({}).user.get(Number(params.userId));
+
+  onMount(async () => {
+    await getData;
+    updateView({ dataStatus: DataStatus.Loaded });
+  });
 </script>
 
 <View>
   <ViewContent>
     <Card>
       <CardContent>
-        {#if $view.dataStatus <= DataStatus.Loading}
+        {#await getData}
           <Typography align="center">Loading...</Typography>
-        {:else if $view.dataStatus === DataStatus.Error}
-          <Typography align="center">Failed to load data</Typography>
-        {:else}
+        {:then data}
           <div class="artwork">
-            <img src={getImage(user.avatar_url, 240)} alt="" />
+            <img src={getImage(data.avatar_url, 240)} alt="" />
           </div>
           <section class="bio">
             <Typography type="titleLarge" align="center" padding="none"
-              >{user.full_name || user.username}</Typography
+              >{data.full_name || data.username}</Typography
             >
             <Typography align="center" color="secondary" padding="none"
-              >{formatLocation(user)}</Typography
+              >{formatLocation(data)}</Typography
             >
           </section>
           <Divider title="content" />
           <FormRow label="Tracks" navi={{ itemId: `tracks` }}
-            >{user.track_count.toLocaleString()}</FormRow
+            >{data.track_count.toLocaleString()}</FormRow
           >
           <FormRow label="Playlists" navi={{ itemId: `playlists` }}
-            >{user.playlist_count.toLocaleString()}</FormRow
+            >{data.playlist_count.toLocaleString()}</FormRow
           >
           <FormRow label="Reposts" navi={{ itemId: `reposts` }}
-            >{user.reposts_count.toLocaleString()}</FormRow
+            >{data.reposts_count.toLocaleString()}</FormRow
           >
           <Divider title="social" />
           <FormRow label="Followers" navi={{ itemId: `followers` }}
-            >{user.followers_count.toLocaleString()}</FormRow
+            >{data.followers_count.toLocaleString()}</FormRow
           >
           <FormRow label="Following" navi={{ itemId: `following` }}
-            >{user.followings_count.toLocaleString()}</FormRow
+            >{data.followings_count.toLocaleString()}</FormRow
           >
           <FormRow label="Likes" navi={{ itemId: `likes` }}
-            >{user.likes_count.toLocaleString()}</FormRow
+            >{data.likes_count.toLocaleString()}</FormRow
           >
           <FormRow label="Liked" navi={{ itemId: `liked` }}
-            >{user.public_favorites_count.toLocaleString()}</FormRow
+            >{data.public_favorites_count.toLocaleString()}</FormRow
           >
           <FormRow label="Comments" navi={{ itemId: `comments` }}
-            >{user.comments_count.toLocaleString()}</FormRow
+            >{data.comments_count.toLocaleString()}</FormRow
           >
           <Divider title="stats" />
-          <FormRow label="User ID" navi={{ itemId: `userId` }}>{user.id}</FormRow>
+          <FormRow label="User ID" navi={{ itemId: `userId` }}>{data.id}</FormRow>
           <FormRow label="Joined" navi={{ itemId: `joined` }}
-            >{new Date(user.created_at).toLocaleDateString()}</FormRow
+            >{new Date(data.created_at).toLocaleDateString()}</FormRow
           >
-          <FormRow label="Plan" navi={{ itemId: `plan` }}>{user.plan}</FormRow>
+          <FormRow label="Plan" navi={{ itemId: `plan` }}>{data.plan}</FormRow>
           <Divider title="description" />
-          <Typography>{user.description || 'No description provided.'}</Typography>
-        {/if}
+          <Typography>{data.description || 'No description provided.'}</Typography>
+        {:catch}
+          <Typography align="center">Failed to load data</Typography>
+        {/await}
       </CardContent>
     </Card>
   </ViewContent>

@@ -7,22 +7,20 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { DataStatus } from 'onyx-ui/enums';
-  import { registerView, updateView, view } from 'onyx-ui/stores/view';
+  import { registerView, updateView } from 'onyx-ui/stores/view';
+  import { onMount } from 'svelte';
   import { push } from 'svelte-spa-router';
   import { SoundCloud } from '../lib/soundcloud';
-  import type { Playlist } from '../models/Playlist';
   import { getImage } from '../utils/getImage';
 
-  registerView({ dataStatus: DataStatus.Loading });
+  registerView({});
 
-  let playlists: Playlist[] = [];
-  new SoundCloud({}).me
-    .getLikedPlaylists()
-    .then((res) => {
-      playlists = res;
-      updateView({ dataStatus: DataStatus.Loaded });
-    })
-    .catch(() => updateView({ dataStatus: DataStatus.Error }));
+  const getData = new SoundCloud({}).me.getLikedPlaylists();
+
+  onMount(async () => {
+    await getData;
+    updateView({ dataStatus: DataStatus.Loaded });
+  });
 </script>
 
 <View>
@@ -30,14 +28,10 @@
     <Card>
       <CardHeader title="Liked Playlists" />
       <CardContent>
-        {#if $view.dataStatus <= DataStatus.Loading}
+        {#await getData}
           <Typography align="center">Loading...</Typography>
-        {:else if $view.dataStatus === DataStatus.Error}
-          <Typography align="center">Failed to load data</Typography>
-        {:else if playlists.length === 0}
-          <Typography>No playlists</Typography>
-        {:else}
-          {#each playlists as playlist, i}
+        {:then data}
+          {#each data as playlist, i (playlist.id)}
             <ListItem
               imageUrl={getImage(playlist.artwork_url, 60)}
               primaryText={playlist.title}
@@ -48,8 +42,12 @@
                 onSelect: () => push(`/playlist/${playlist.id}`),
               }}
             />
+          {:else}
+            <Typography>No playlists</Typography>
           {/each}
-        {/if}
+        {:catch}
+          <Typography align="center">Failed to load data</Typography>
+        {/await}
       </CardContent>
     </Card>
   </ViewContent>
