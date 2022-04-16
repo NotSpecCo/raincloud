@@ -20,6 +20,7 @@
   import Playlist from './routes/Playlist.svelte';
   import PlaylistDescription from './routes/PlaylistDescription.svelte';
   import Redirect from './routes/Redirect.svelte';
+  import RelatedTracks from './routes/RelatedTracks.svelte';
   import SignIn from './routes/SignIn.svelte';
   import Stream from './routes/Stream.svelte';
   import Track from './routes/Track.svelte';
@@ -37,28 +38,29 @@
 
   const routes = {
     '/home': Home,
-    '/signin': SignIn,
-    '/stream': Stream,
-    '/player': Player,
     '/library': Library,
-    '/library/tracks': LikedTracks,
-    '/library/playlists': LikedPlaylists,
     '/library/albums': LikedAlbums,
-    '/library/stations': LikedStations,
     '/library/following': MyFollowing,
     '/library/mytracks': MyTracks,
     '/library/myplaylists': MyPlaylists,
-    '/track/:trackId': Track,
-    '/user/:userId': User,
-    '/user/:userId/followers': UserFollowers,
-    '/user/:userId/following': UserFollowing,
-    '/user/:userId/playlists': UserPlaylists,
-    '/user/:userId/tracks': UserTracks,
-    '/user/:userId/liked-playlists': UserLikedPlaylists,
-    '/user/:userId/liked-tracks': UserLikedTracks,
+    '/library/playlists': LikedPlaylists,
+    '/library/stations': LikedStations,
+    '/library/tracks': LikedTracks,
+    '/player': Player,
     '/playlist/:playlistId': Playlist,
     '/playlist/:playlistId/description': PlaylistDescription,
     '/settings/:cardId': AppSettings,
+    '/signin': SignIn,
+    '/stream': Stream,
+    '/track/:trackId': Track,
+    '/track/:trackId/related': RelatedTracks,
+    '/user/:userId': User,
+    '/user/:userId/followers': UserFollowers,
+    '/user/:userId/following': UserFollowing,
+    '/user/:userId/liked-playlists': UserLikedPlaylists,
+    '/user/:userId/liked-tracks': UserLikedTracks,
+    '/user/:userId/playlists': UserPlaylists,
+    '/user/:userId/tracks': UserTracks,
     '*': Redirect,
   };
 
