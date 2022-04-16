@@ -6,6 +6,7 @@
   import AppMenu from './components/AppMenu.svelte';
   import AudioPlayer from './components/AudioPlayer.svelte';
   import Dashboard from './components/Dashboard.svelte';
+  import AppSettings from './routes/AppSettings.svelte';
   import Home from './routes/Home.svelte';
   import Library from './routes/Library.svelte';
   import LikedAlbums from './routes/LikedAlbums.svelte';
@@ -45,6 +46,7 @@
     '/user/:userId': User,
     '/playlist/:playlistId': Playlist,
     '/playlist/:playlistId/description': PlaylistDescription,
+    '/settings/:cardId': AppSettings,
     '*': Redirect,
   };
 
