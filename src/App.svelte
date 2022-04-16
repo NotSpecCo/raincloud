@@ -50,11 +50,18 @@
 
   let dashboardOpen = false;
 
+  // TODO: Fix this in a better way
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Backspace' && $location !== '/home') {
+      ev.preventDefault();
+    }
+  });
+
   const keyMan = KeyManager.subscribe(
     {
       onBackspace: () => {
         // If on the main screen, let KaiOS minimize the app
-        if ($location === '/') {
+        if ($location === '/home') {
           console.log('exit app');
           return false;
         }
