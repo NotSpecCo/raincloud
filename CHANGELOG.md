@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/garredow/raincloud/compare/v1.6.0...v1.7.0) (2022-04-16)
+
+
+### Features
+
+* add stream view ([31e4f9d](https://github.com/garredow/raincloud/commit/31e4f9d17a08a6904e405becba5d6a5e865e31b2))
+* add user search view ([b054762](https://github.com/garredow/raincloud/commit/b05476204c7a31f3411c6219bd40d089b6c4175e))
+
 # [1.6.0](https://github.com/garredow/raincloud/compare/v1.5.0...v1.6.0) (2022-04-16)
 
 
