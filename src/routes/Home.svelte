@@ -15,7 +15,7 @@
   let me = null;
   onMount(async () => {
     updateView({ dataStatus: DataStatus.Loaded });
-    me = await new SoundCloud({}).me.getInfo();
+    me = await new SoundCloud({}).me.get();
   });
 </script>
 

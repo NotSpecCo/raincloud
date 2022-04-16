@@ -1,20 +1,23 @@
 import type { Track, User } from '../models';
 import type { Playlist } from '../models/Playlist';
 import { Auth } from './auth';
+import { Cache } from './cache';
 
 type Options = {};
 
 export class SoundCloud {
   private options: Options;
+  private cache: Cache;
 
   constructor(options: Partial<Options> = {}) {
     this.options = {
       ...options,
     };
+    this.cache = new Cache();
   }
 
   me = {
-    getInfo: async (): Promise<User> => {
+    get: async (): Promise<User> => {
       const me = await this.httpGet<User>('me');
       return me;
     },
@@ -49,7 +52,7 @@ export class SoundCloud {
       return res;
     },
     getStreamUrl: async (trackId: number): Promise<string> => {
-      const res: any = await this.httpGet(`tracks/${trackId}/streams`);
+      const res: any = await this.httpGet(`tracks/${trackId}/streams`, false);
       return res.http_mp3_128_url;
     },
   };
@@ -63,11 +66,22 @@ export class SoundCloud {
     },
   };
 
-  private async httpGet<T>(url: string): Promise<T> {
+  private async httpGet<T>(url: string, useCache = true): Promise<T> {
     const tokens = await new Auth().getTokens();
     console.log('tokens', tokens);
 
-    return new Promise((resolve, reject) => {
+    if (useCache) {
+      const cached = await this.cache.get<T>(url);
+
+      if (cached) {
+        // console.log(`Cache hit: ${url}`, cached);
+        return cached.data;
+      } else {
+        // console.log(`Cache miss: ${url}`);
+      }
+    }
+
+    const data = await new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
       xhr.addEventListener('load', () => resolve(JSON.parse(xhr.responseText)));
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
@@ -76,5 +90,11 @@ export class SoundCloud {
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();
     });
+
+    if (useCache) {
+      await this.cache.set(url, data);
+    }
+
+    return data as T;
   }
 }
