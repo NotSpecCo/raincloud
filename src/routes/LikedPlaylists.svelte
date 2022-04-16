@@ -56,7 +56,7 @@
               }}
             />
           {:else}
-            <Typography>No playlists</Typography>
+            <Typography align="center">No playlists</Typography>
           {/each}
         {:catch}
           <Typography align="center">Failed to load data</Typography>

@@ -21,15 +21,25 @@ export class SoundCloud {
       const me = await this.httpGet<User>('me');
       return me;
     },
+    getTracks: async (): Promise<Track[]> => {
+      const res: any = await this.httpGet<Track[]>('me/tracks?limit=50&linked_partitioning=true');
+      return res.collection;
+    },
+    getPlaylists: async (): Promise<Playlist[]> => {
+      const res: any = await this.httpGet<Playlist[]>(
+        'me/playlists?limit=50&linked_partitioning=true'
+      );
+      return res.collection;
+    },
     getLikedTracks: async (): Promise<Track[]> => {
       const res: any = await this.httpGet<Track[]>(
-        'me/likes/tracks?limit=40&linked_partitioning=true'
+        'me/likes/tracks?limit=50&linked_partitioning=true'
       );
       return res.collection;
     },
     getLikedPlaylists: async (): Promise<Playlist[]> => {
       const res: any = await this.httpGet<Playlist[]>(
-        'me/likes/playlists?limit=40&linked_partitioning=true'
+        'me/likes/playlists?limit=50&linked_partitioning=true'
       );
       return res.collection;
     },
@@ -90,6 +100,12 @@ export class SoundCloud {
     getStreamUrl: async (trackId: number): Promise<string> => {
       const res: any = await this.httpGet(`tracks/${trackId}/streams`, false);
       return res.http_mp3_128_url;
+    },
+    getRelated: async (trackId: number): Promise<Track[]> => {
+      const res: any = await this.httpGet(
+        `tracks/${trackId}/related?limit=50&linked_partitioning=true`
+      );
+      return res.collection;
     },
   };
 

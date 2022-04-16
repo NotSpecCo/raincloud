@@ -70,7 +70,7 @@
               }}
             />
           {:else}
-            <Typography>No tracks</Typography>
+            <Typography align="center">No tracks</Typography>
           {/each}
         {:catch}
           <Typography align="center">Failed to load data</Typography>
