@@ -1,3 +1,16 @@
+# [1.5.0](https://github.com/garredow/raincloud/compare/v1.4.1...v1.5.0) (2022-04-16)
+
+
+### Bug Fixes
+
+* prevent app exiting when navigating back ([df370a2](https://github.com/garredow/raincloud/commit/df370a2c72dfefff6d550069e2963b8d8fd4dc84))
+
+
+### Features
+
+* add app settings view ([1442b8c](https://github.com/garredow/raincloud/commit/1442b8c6ce5ecf163f71274e926c07d853e28ca1))
+* **cache:** add http request caching ([bc84a87](https://github.com/garredow/raincloud/commit/bc84a875ae2a9360fbb40374659559938bc81810))
+
 ## [1.4.1](https://github.com/garredow/raincloud/compare/v1.4.0...v1.4.1) (2022-04-15)
 
 
