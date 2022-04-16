@@ -7,6 +7,7 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { DataStatus } from 'onyx-ui/enums';
+  import { Onyx } from 'onyx-ui/services';
   import { registerView, updateView } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
   import { push } from 'svelte-spa-router';
@@ -40,6 +41,18 @@
               navi={{
                 itemId: `${i + 1}`,
                 onSelect: () => push(`/playlist/${playlist.id}`),
+              }}
+              contextMenu={{
+                title: playlist.title,
+                items: [
+                  {
+                    label: 'View artist',
+                    onSelect: async () => {
+                      push(`/user/${playlist.user.id}`);
+                      Onyx.contextMenu.close();
+                    },
+                  },
+                ],
               }}
             />
           {:else}

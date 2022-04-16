@@ -55,7 +55,7 @@
                     },
                   },
                   {
-                    label: 'Go to user',
+                    label: 'View artist',
                     onSelect: async () => {
                       push(`/user/${track.user.id}`);
                       Onyx.contextMenu.close();

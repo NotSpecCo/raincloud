@@ -93,6 +93,20 @@
                         Onyx.contextMenu.close();
                       },
                     },
+                    {
+                      label: 'View artist',
+                      onSelect: async () => {
+                        push(`/user/${track.user.id}`);
+                        Onyx.contextMenu.close();
+                      },
+                    },
+                    {
+                      label: 'View related tracks',
+                      onSelect: async () => {
+                        push(`/track/${track.id}/related`);
+                        Onyx.contextMenu.close();
+                      },
+                    },
                   ],
                 }}
               />
