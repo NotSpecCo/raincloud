@@ -1,3 +1,17 @@
+# [1.8.0](https://github.com/garredow/raincloud/compare/v1.7.0...v1.8.0) (2022-04-18)
+
+
+### Bug Fixes
+
+* **stream:** fix event item spacing ([20d0653](https://github.com/garredow/raincloud/commit/20d0653308b51cfaf8a4c135be8cd23febad97af))
+
+
+### Features
+
+* **playlist:** add context menu options to like and repost ([ad0f502](https://github.com/garredow/raincloud/commit/ad0f502d55f8679b7d84f45d43f820ff964491e0))
+* **track:** add context menu option to like/unlike ([3bae32f](https://github.com/garredow/raincloud/commit/3bae32f9134520a440a2bc79086dc3456009050a))
+* **track:** add context menu option to repost ([d48382c](https://github.com/garredow/raincloud/commit/d48382c769a24491c6f93ba177a6a8dfd2d00d7f))
+
 # [1.7.0](https://github.com/garredow/raincloud/compare/v1.6.0...v1.7.0) (2022-04-16)
 
 
