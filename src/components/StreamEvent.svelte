@@ -81,6 +81,7 @@
     margin-bottom: 5px;
     display: flex;
     align-items: center;
+    padding-left: 10px;
   }
   section .artwork {
     height: 38px;
@@ -92,11 +93,5 @@
     overflow: hidden;
     max-height: 38px;
     line-height: 1.3;
-  }
-
-  footer {
-    display: flex;
-    justify-content: space-between;
-    color: var(--secondary-text-color);
   }
 </style>
