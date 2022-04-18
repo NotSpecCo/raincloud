@@ -128,24 +128,20 @@ export class SoundCloud {
       return res.collection;
     },
     like: async (trackId: number): Promise<void> => {
-      const res: any = await this.httpPost(`likes/tracks/${trackId}`);
+      await this.httpPost(`likes/tracks/${trackId}`);
       await Cache.invalidate();
-      return res;
     },
     unlike: async (trackId: number): Promise<void> => {
-      const res: any = await this.httpDelete(`likes/tracks/${trackId}`);
+      await this.httpDelete(`likes/tracks/${trackId}`);
       await Cache.invalidate();
-      return res;
     },
     repost: async (trackId: number): Promise<void> => {
-      const res: any = await this.httpPost(`reposts/tracks/${trackId}`);
+      await this.httpPost(`reposts/tracks/${trackId}`);
       await Cache.invalidate('me/activities/all/own');
-      return res;
     },
     removeRepost: async (trackId: number): Promise<void> => {
-      const res: any = await this.httpDelete(`reposts/tracks/${trackId}`);
+      await this.httpDelete(`reposts/tracks/${trackId}`);
       await Cache.invalidate('me/activities/all/own');
-      return res;
     },
   };
 
@@ -159,6 +155,22 @@ export class SoundCloud {
         `playlists?q=${query}&limit=50&linked_partitioning=true`
       );
       return res.collection;
+    },
+    like: async (playlistId: number): Promise<void> => {
+      await this.httpPost(`likes/playlists/${playlistId}`);
+      await Cache.invalidate('me/likes/playlists');
+    },
+    unlike: async (playlistId: number): Promise<void> => {
+      await this.httpDelete(`likes/playlists/${playlistId}`);
+      await Cache.invalidate('me/likes/playlists');
+    },
+    repost: async (playlistId: number): Promise<void> => {
+      await this.httpPost(`reposts/playlists/${playlistId}`);
+      await Cache.invalidate('me/activities/all/own');
+    },
+    removeRepost: async (playlistId: number): Promise<void> => {
+      await this.httpDelete(`reposts/playlists/${playlistId}`);
+      await Cache.invalidate('me/activities/all/own');
     },
   };
 

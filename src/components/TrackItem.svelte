@@ -52,7 +52,6 @@
       {
         label: 'Repost',
         onSelect: async () => {
-          track.user_favorite = true;
           await new SoundCloud().track.repost(track.id);
           Onyx.contextMenu.close();
         },
