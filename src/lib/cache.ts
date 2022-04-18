@@ -7,13 +7,9 @@ type QueryOptions = {
 };
 
 export class Cache {
-  db: Database;
+  static db = new Database('raincloud');
 
-  constructor() {
-    this.db = new Database('raincloud');
-  }
-
-  async get<T>(queryKey: string): Promise<QueryItem<T> | null> {
+  static async get<T>(queryKey: string): Promise<QueryItem<T> | null> {
     const query = await this.db.getQuery<T>(queryKey).catch((err) => {
       console.log(`Failed to get query cache: ${queryKey}`, err.message);
       return null;
@@ -22,7 +18,7 @@ export class Cache {
     return query;
   }
 
-  set(queryKey: string, data: unknown, options: Partial<QueryOptions> = {}): Promise<void> {
+  static set(queryKey: string, data: unknown, options: Partial<QueryOptions> = {}): Promise<void> {
     const opts: QueryOptions = {
       expiresIn: 1_800_000,
       backgroundRefresh: false,
@@ -39,7 +35,7 @@ export class Cache {
       .catch((err) => console.log(`Failed to set query cache: ${queryKey}`, err.message));
   }
 
-  async invalidate(prefix?: string): Promise<void> {
+  static async invalidate(prefix?: string): Promise<void> {
     if (prefix) {
       await this.db.deleteQueryBy(prefix);
     } else {

@@ -175,7 +175,7 @@
             title="Clear Cache"
             navi={{
               itemId: `btnClearCache`,
-              onSelect: () => new Cache().invalidate(),
+              onSelect: () => Cache.invalidate(),
             }}
           />
         </CardContent>

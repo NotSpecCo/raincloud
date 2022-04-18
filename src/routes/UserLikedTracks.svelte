@@ -54,6 +54,23 @@
                       Onyx.contextMenu.close();
                     },
                   },
+                  track.user_favorite
+                    ? {
+                        label: 'Unlike',
+                        onSelect: async () => {
+                          track.user_favorite = false;
+                          await new SoundCloud().track.unlike(track.id);
+                          Onyx.contextMenu.close();
+                        },
+                      }
+                    : {
+                        label: 'Like',
+                        onSelect: async () => {
+                          track.user_favorite = true;
+                          await new SoundCloud().track.like(track.id);
+                          Onyx.contextMenu.close();
+                        },
+                      },
                   {
                     label: 'View artist',
                     onSelect: async () => {
