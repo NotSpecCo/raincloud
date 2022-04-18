@@ -3,19 +3,17 @@
   import Card from 'onyx-ui/components/card/Card.svelte';
   import CardContent from 'onyx-ui/components/card/CardContent.svelte';
   import Divider from 'onyx-ui/components/divider/Divider.svelte';
-  import ListItem from 'onyx-ui/components/list/ListItem.svelte';
   import Typography from 'onyx-ui/components/Typography.svelte';
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { Color, DataStatus } from 'onyx-ui/enums';
-  import { Onyx } from 'onyx-ui/services';
   import { registerView, updateView } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
   import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
   import MdInfoOutline from 'svelte-icons/md/MdInfoOutline.svelte';
   import MdPlayarrow from 'svelte-icons/md/MdPlayarrow.svelte';
   import { push } from 'svelte-spa-router';
-  import { load } from '../components/AudioPlayer.svelte';
+  import TrackItem from '../components/TrackItem.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import { getImage } from '../utils/getImage';
 
@@ -74,59 +72,8 @@
           </section>
           <Divider title="tracks" />
           <section class="tracks">
-            {#each data.tracks as track, i}
-              <ListItem
-                imageUrl={track.artwork_url}
-                primaryText={track.title}
-                secondaryText={track.user.username}
-                navi={{
-                  itemId: `${i + 1}`,
-                  onSelect: () => push(`/track/${track.id}`),
-                }}
-                contextMenu={{
-                  title: track.title,
-                  items: [
-                    {
-                      label: 'Play',
-                      onSelect: async () => {
-                        load(track.id);
-                        Onyx.contextMenu.close();
-                      },
-                    },
-                    track.user_favorite
-                      ? {
-                          label: 'Unlike',
-                          onSelect: async () => {
-                            track.user_favorite = false;
-                            await new SoundCloud().track.unlike(track.id);
-                            Onyx.contextMenu.close();
-                          },
-                        }
-                      : {
-                          label: 'Like',
-                          onSelect: async () => {
-                            track.user_favorite = true;
-                            await new SoundCloud().track.like(track.id);
-                            Onyx.contextMenu.close();
-                          },
-                        },
-                    {
-                      label: 'View artist',
-                      onSelect: async () => {
-                        push(`/user/${track.user.id}`);
-                        Onyx.contextMenu.close();
-                      },
-                    },
-                    {
-                      label: 'View related tracks',
-                      onSelect: async () => {
-                        push(`/track/${track.id}/related`);
-                        Onyx.contextMenu.close();
-                      },
-                    },
-                  ],
-                }}
-              />
+            {#each data.tracks as track (track.id)}
+              <TrackItem {track} primaryText={track.title} secondaryText={track.user.username} />
             {/each}
           </section>
         {:catch}

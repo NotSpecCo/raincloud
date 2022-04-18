@@ -137,6 +137,16 @@ export class SoundCloud {
       await Cache.invalidate();
       return res;
     },
+    repost: async (trackId: number): Promise<void> => {
+      const res: any = await this.httpPost(`reposts/tracks/${trackId}`);
+      await Cache.invalidate('me/activities/all/own');
+      return res;
+    },
+    removeRepost: async (trackId: number): Promise<void> => {
+      const res: any = await this.httpDelete(`reposts/tracks/${trackId}`);
+      await Cache.invalidate('me/activities/all/own');
+      return res;
+    },
   };
 
   playlist = {
@@ -184,37 +194,33 @@ export class SoundCloud {
     return data as T;
   }
 
-  private async httpPost<T>(url: string): Promise<T> {
+  private async httpPost(url: string): Promise<void> {
     const tokens = await new Auth().getTokens();
     console.log('tokens', tokens);
 
-    const data = await new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
-      xhr.addEventListener('load', () => resolve(JSON.parse(xhr.responseText)));
+      xhr.addEventListener('load', () => resolve(null));
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
       xhr.open('POST', `https://api.soundcloud.com/${url}`);
       xhr.setRequestHeader('Authorization', `Bearer ${tokens.access_token}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();
     });
-
-    return data as T;
   }
 
-  private async httpDelete<T>(url: string): Promise<T> {
+  private async httpDelete(url: string): Promise<void> {
     const tokens = await new Auth().getTokens();
     console.log('tokens', tokens);
 
-    const data = await new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
-      xhr.addEventListener('load', () => resolve(JSON.parse(xhr.responseText)));
+      xhr.addEventListener('load', () => resolve(null));
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
       xhr.open('DELETE', `https://api.soundcloud.com/${url}`);
       xhr.setRequestHeader('Authorization', `Bearer ${tokens.access_token}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();
     });
-
-    return data as T;
   }
 }
