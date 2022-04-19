@@ -1,8 +1,10 @@
 <script lang="ts">
   import KaiOS from 'kaios-lib';
+  import numeral from 'numeral';
   import Card from 'onyx-ui/components/card/Card.svelte';
   import CardContent from 'onyx-ui/components/card/CardContent.svelte';
   import CardHeader from 'onyx-ui/components/card/CardHeader.svelte';
+  import Icon from 'onyx-ui/components/icon/Icon.svelte';
   import Typography from 'onyx-ui/components/Typography.svelte';
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
@@ -10,6 +12,10 @@
   import { KeyManager } from 'onyx-ui/services';
   import { registerView, view } from 'onyx-ui/stores/view';
   import { onDestroy } from 'svelte';
+  import MdComment from 'svelte-icons/md/MdComment.svelte';
+  import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
+  import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
+  import MdRepeat from 'svelte-icons/md/MdRepeat.svelte';
   import { replace } from 'svelte-spa-router';
   import { pause, play, skip, skipTo } from '../components/AudioPlayer.svelte';
   import Waveform from '../components/Waveform.svelte';
@@ -96,6 +102,20 @@
           <Typography type="titleSmall" align="center"
             >{$player.track.user.full_name || $player.track.user.username}</Typography
           >
+          <div class="stats">
+            <div class="item">
+              <Icon><MdPlayArrow /></Icon>{numeral($player.track.playback_count).format('0.0a')}
+            </div>
+            <div class="item">
+              <Icon><MdFavorite /></Icon>{numeral($player.track.favoritings_count).format('0.0a')}
+            </div>
+            <div class="item">
+              <Icon><MdRepeat /></Icon>{numeral($player.track.reposts_count).format('0a')}
+            </div>
+            <div class="item">
+              <Icon><MdComment /></Icon>{numeral($player.track.comment_count).format('0a')}
+            </div>
+          </div>
         </CardContent>
       </Card>
     {/if}
@@ -108,5 +128,16 @@
     justify-content: space-between;
     font-weight: 600;
     color: var(--accent-color);
+  }
+
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  .stats > .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>

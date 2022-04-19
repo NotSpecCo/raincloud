@@ -5,7 +5,7 @@ export type Track = {
   id: number;
   duration: number;
   commentable: true;
-  comment_count: 3;
+  comment_count: number;
   sharing: 'public';
   tag_list: string;
   streamable: boolean;
