@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Divider from 'onyx-ui/components/divider/Divider.svelte';
   import ListItem from 'onyx-ui/components/list/ListItem.svelte';
   import NavGroup from 'onyx-ui/components/nav/NavGroup.svelte';
   import { ViewState } from 'onyx-ui/enums';
@@ -6,6 +7,7 @@
   import { updateView } from 'onyx-ui/stores/view';
   import { getShortcutFromIndex } from 'onyx-ui/utils/getShortcutFromIndex';
   import MdHome from 'svelte-icons/md/MdHome.svelte';
+  import MdInfoOutline from 'svelte-icons/md/MdInfoOutline.svelte';
   import MdLibraryMusic from 'svelte-icons/md/MdLibraryMusic.svelte';
   import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
   import MdSearch from 'svelte-icons/md/MdSearch.svelte';
@@ -23,14 +25,20 @@
     { id: 'home', text: 'Home', route: '/home', icon: MdHome },
     { id: 'library', text: 'Library', route: '/library', icon: MdLibraryMusic },
     { id: 'stream', text: 'Stream', route: '/stream', icon: MdViewStream },
-    { id: 'player', text: 'Player', route: '/player/info', icon: MdPlayArrow },
     { id: 'search', text: 'Search', route: '/search', icon: MdSearch },
+    { id: 'player', text: 'Player', route: '/player/info', icon: MdPlayArrow },
+  ];
+  const appItems: MenuItem[] = [
     { id: 'settings', text: 'Settings', route: '/settings/display', icon: MdSettings },
+    { id: 'about', text: 'About', route: '/about', icon: MdInfoOutline },
   ];
 </script>
 
 <NavGroup groupId="app-menu">
-  <div class="header">RainCloud</div>
+  <div class="header">
+    <img src="images/icon_56.png" alt="" class="logo" />
+    RainCloud
+  </div>
   <div class="scroller" data-nav-scroller>
     {#each menuItems as item, i}
       <ListItem
@@ -39,6 +47,25 @@
         navi={{
           itemId: item.id,
           shortcutKey: getShortcutFromIndex(i),
+          onSelect: () => {
+            Onyx.appMenu.close();
+            if (location.hash.startsWith(`#${item.route}`)) {
+              updateView({ viewing: ViewState.Card });
+              return;
+            }
+            push(item.route);
+          },
+        }}
+      />
+    {/each}
+    <Divider title="App" />
+    {#each appItems as item, i}
+      <ListItem
+        icon={item.icon}
+        primaryText={item.text}
+        navi={{
+          itemId: item.id,
+          shortcutKey: getShortcutFromIndex(i + menuItems.length),
           onSelect: () => {
             Onyx.appMenu.close();
             if (location.hash.startsWith(`#${item.route}`)) {
@@ -66,7 +93,15 @@
     padding: 5px;
     font-weight: var(--bold-font-weight);
     color: var(--accent-color);
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+  }
+  .header > .logo {
+    height: 32px;
+    width: 32px;
+    margin-right: 5px;
   }
   .scroller {
     overflow-y: auto;
