@@ -16,6 +16,7 @@
 <style>
   .root {
     position: relative;
+    background-color: var(--focus-color);
   }
 
   .root > .progress {
