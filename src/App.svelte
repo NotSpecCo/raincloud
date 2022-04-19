@@ -6,6 +6,7 @@
   import AppMenu from './components/AppMenu.svelte';
   import AudioPlayer from './components/AudioPlayer.svelte';
   import Dashboard from './components/Dashboard.svelte';
+  import About from './routes/About.svelte';
   import AppSettings from './routes/AppSettings.svelte';
   import Home from './routes/Home.svelte';
   import Library from './routes/Library.svelte';
@@ -38,6 +39,7 @@
   console.log(`Env: ${process.env.NODE_ENV}`);
 
   const routes = {
+    '/about': About,
     '/home': Home,
     '/library': Library,
     '/library/albums': LikedAlbums,
