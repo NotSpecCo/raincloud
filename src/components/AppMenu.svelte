@@ -23,7 +23,7 @@
     { id: 'home', text: 'Home', route: '/home', icon: MdHome },
     { id: 'library', text: 'Library', route: '/library', icon: MdLibraryMusic },
     { id: 'stream', text: 'Stream', route: '/stream', icon: MdViewStream },
-    { id: 'player', text: 'Player', route: '/player', icon: MdPlayArrow },
+    { id: 'player', text: 'Player', route: '/player/info', icon: MdPlayArrow },
     { id: 'search', text: 'Search', route: '/search', icon: MdSearch },
     { id: 'settings', text: 'Settings', route: '/settings/display', icon: MdSettings },
   ];

@@ -47,7 +47,7 @@
     '/library/playlists': LikedPlaylists,
     '/library/stations': LikedStations,
     '/library/tracks': LikedTracks,
-    '/player': Player,
+    '/player/:cardId': Player,
     '/playlist/:playlistId': Playlist,
     '/playlist/:playlistId/description': PlaylistDescription,
     '/search': Search,
@@ -65,8 +65,6 @@
     '/user/:userId/tracks': UserTracks,
     '*': Redirect,
   };
-
-  let dashboardOpen = false;
 
   // TODO: Fix this in a better way
   document.addEventListener('keydown', (ev) => {
@@ -91,15 +89,6 @@
         pop();
         return true;
       },
-      onArrowUpLong: () => {
-        if (!$player.track) return true;
-        dashboardOpen = true;
-        return true;
-      },
-      onArrowDownLong: () => {
-        dashboardOpen = false;
-        return true;
-      },
     },
     Priority.High
   );
@@ -112,7 +101,7 @@
   <Router {routes} />
   <div slot="dashboard">
     {#if $player.track}
-      <Dashboard open={dashboardOpen} />
+      <Dashboard />
     {/if}
   </div>
   <AudioPlayer />
