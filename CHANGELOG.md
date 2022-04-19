@@ -1,3 +1,18 @@
+# [1.9.0](https://github.com/garredow/raincloud/compare/v1.8.0...v1.9.0) (2022-04-19)
+
+
+### Bug Fixes
+
+* **waveform:** change background color of unplayed section ([8b5f789](https://github.com/garredow/raincloud/commit/8b5f789c4ae25729f9021363265173c00fb70642))
+
+
+### Features
+
+* add about view ([50a31d5](https://github.com/garredow/raincloud/commit/50a31d5d3689308deac58f213aa24cef35aa5ba1))
+* **player:** add basic player view ([bd0493b](https://github.com/garredow/raincloud/commit/bd0493bfb509614efacd9ba548b299db367750f0))
+* **player:** redesign ([a916f27](https://github.com/garredow/raincloud/commit/a916f27a384406abb68486921151cc42c6142f09))
+* redesign app menu ([52bc1eb](https://github.com/garredow/raincloud/commit/52bc1ebed5ef92ff20b26b0b3350f81b948537a0))
+
 # [1.8.0](https://github.com/garredow/raincloud/compare/v1.7.0...v1.8.0) (2022-04-18)
 
 
