@@ -1,3 +1,11 @@
+# [1.10.0](https://github.com/garredow/raincloud/compare/v1.9.0...v1.10.0) (2022-04-20)
+
+
+### Features
+
+* add support for playing playlists ([aec884f](https://github.com/garredow/raincloud/commit/aec884fdf2a675317bce70cf8a68eef862220755))
+* improve signin instructions ([422a01e](https://github.com/garredow/raincloud/commit/422a01e7833db0bffcdbbf803970772bfefdc781))
+
 # [1.9.0](https://github.com/garredow/raincloud/compare/v1.8.0...v1.9.0) (2022-04-19)
 
 
