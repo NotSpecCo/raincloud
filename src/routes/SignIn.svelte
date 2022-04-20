@@ -87,6 +87,9 @@
             onSelect: async () => signinCode(),
           }}
         />
+        <Typography
+          >In you're running RainCloud in a browser, you can sign in via the SoundCloud website.</Typography
+        >
         <Button
           title="Sign In via Website"
           navi={{

@@ -2,13 +2,11 @@
   export let current: number;
   export let duration: number;
   export let url: string;
-
-  let waveformHeight;
 </script>
 
-<div class="root" style="height: {Math.floor(waveformHeight - 5)}px">
+<div class="root">
   <div class="progress" style="right: {`${100 - (current / duration) * 100}%`}" />
-  <div class="image" bind:clientHeight={waveformHeight}>
+  <div class="image">
     <img src={url.replace('m.png', 's.png')} alt="" />
   </div>
 </div>
@@ -19,6 +17,7 @@
     background-color: var(--tertiary-text-color);
     margin: 5px 0;
     overflow: hidden;
+    height: 83px;
   }
 
   .root > .progress {

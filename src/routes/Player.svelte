@@ -50,8 +50,6 @@
         return true;
       },
       onArrowLeftLong: () => {
-        console.log('time', $player.currentTime);
-
         if ($player.currentTime < 10) {
           previousTrack();
         } else {
