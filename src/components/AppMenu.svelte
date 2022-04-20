@@ -13,7 +13,9 @@
   import MdSearch from 'svelte-icons/md/MdSearch.svelte';
   import MdSettings from 'svelte-icons/md/MdSettings.svelte';
   import MdViewStream from 'svelte-icons/md/MdViewStream.svelte';
-  import { push } from 'svelte-spa-router';
+  import { location, push } from 'svelte-spa-router';
+
+  console.log('location', $location);
 
   type MenuItem = {
     id: string;
@@ -49,7 +51,7 @@
           shortcutKey: getShortcutFromIndex(i),
           onSelect: () => {
             Onyx.appMenu.close();
-            if (location.hash.startsWith(`#${item.route}`)) {
+            if ($location === item.route) {
               updateView({ viewing: ViewState.Card });
               return;
             }
@@ -68,7 +70,7 @@
           shortcutKey: getShortcutFromIndex(i + menuItems.length),
           onSelect: () => {
             Onyx.appMenu.close();
-            if (location.hash.startsWith(`#${item.route}`)) {
+            if ($location === item.route) {
               updateView({ viewing: ViewState.Card });
               return;
             }
