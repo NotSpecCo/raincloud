@@ -2,7 +2,7 @@
   import ListItem from 'onyx-ui/components/list/ListItem.svelte';
   import { Onyx } from 'onyx-ui/services';
   import { push } from 'svelte-spa-router';
-  import { load } from '../components/AudioPlayer.svelte';
+  import { loadTrack } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Track } from '../models';
   import { getImage } from '../utils/getImage';
@@ -28,7 +28,7 @@
       {
         label: 'Play',
         onSelect: async () => {
-          load(track.id);
+          loadTrack(track.id);
           Onyx.contextMenu.close();
         },
       },

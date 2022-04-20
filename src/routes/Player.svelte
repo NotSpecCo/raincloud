@@ -17,7 +17,7 @@
   import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
   import MdRepeat from 'svelte-icons/md/MdRepeat.svelte';
   import { replace } from 'svelte-spa-router';
-  import { pause, play, skip, skipTo } from '../components/AudioPlayer.svelte';
+  import { pause, play, previousTrack, skip, skipTo } from '../components/AudioPlayer.svelte';
   import Waveform from '../components/Waveform.svelte';
   import { player } from '../stores/player';
   import { formatTime } from '../utils/formatTime';
@@ -50,7 +50,13 @@
         return true;
       },
       onArrowLeftLong: () => {
-        skipTo(0);
+        console.log('time', $player.currentTime);
+
+        if ($player.currentTime < 10) {
+          previousTrack();
+        } else {
+          skipTo(0);
+        }
         return true;
       },
       onArrowLeft: () => {

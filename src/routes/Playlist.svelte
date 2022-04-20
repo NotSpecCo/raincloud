@@ -13,6 +13,7 @@
   import MdInfoOutline from 'svelte-icons/md/MdInfoOutline.svelte';
   import MdPlayarrow from 'svelte-icons/md/MdPlayarrow.svelte';
   import { push } from 'svelte-spa-router';
+  import { loadPlaylist } from '../components/AudioPlayer.svelte';
   import TrackItem from '../components/TrackItem.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import { getImage } from '../utils/getImage';
@@ -49,7 +50,7 @@
               color={Color.Primary}
               navi={{
                 itemId: `btnPlayAll`,
-                onSelect: async () => console.log('play all'),
+                onSelect: async () => loadPlaylist(data.id),
               }}
             />
             <IconButton

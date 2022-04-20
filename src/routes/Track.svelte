@@ -11,7 +11,7 @@
   import { registerView, updateView } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
   import MdPlayarrow from 'svelte-icons/md/MdPlayarrow.svelte';
-  import { load } from '../components/AudioPlayer.svelte';
+  import { loadTrack } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import { formatTime } from '../utils/formatTime';
   import { getImage } from '../utils/getImage';
@@ -48,7 +48,7 @@
             color={Color.Primary}
             navi={{
               itemId: `btnPlay`,
-              onSelect: async () => load(data.id),
+              onSelect: async () => loadTrack(data.id),
             }}
           />
           <Divider title="stats" />
