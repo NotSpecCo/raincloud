@@ -5,6 +5,11 @@ import { Cache } from './cache';
 
 type Options = {};
 
+type CollectionResult<T> = {
+  collection: T[];
+  next_href: string;
+};
+
 export class SoundCloud {
   private options: Options;
 
@@ -20,33 +25,43 @@ export class SoundCloud {
       return me;
     },
     getTracks: async (): Promise<Track[]> => {
-      const res: any = await this.httpGet<Track[]>('me/tracks?limit=50&linked_partitioning=true');
+      const res = await this.httpGet<CollectionResult<Track>>(
+        'me/tracks?limit=50&linked_partitioning=true'
+      );
       return res.collection;
     },
     getPlaylists: async (): Promise<Playlist[]> => {
-      const res: any = await this.httpGet<Playlist[]>(
+      const res = await this.httpGet<CollectionResult<Playlist>>(
         'me/playlists?limit=50&linked_partitioning=true'
       );
       return res.collection;
     },
     getLikedTracks: async (): Promise<Track[]> => {
-      const res: any = await this.httpGet<Track[]>(
+      const res = await this.httpGet<CollectionResult<Track>>(
         'me/likes/tracks?limit=50&linked_partitioning=true'
       );
       return res.collection;
     },
     getLikedPlaylists: async (): Promise<Playlist[]> => {
-      const res: any = await this.httpGet<Playlist[]>(
+      const res = await this.httpGet<CollectionResult<Playlist>>(
         'me/likes/playlists?limit=50&linked_partitioning=true'
       );
-      return res.collection;
+      return res.collection.filter((a) => a.playlist_type === '');
+    },
+    getLikedAlbums: async (): Promise<Playlist[]> => {
+      const res = await this.httpGet<CollectionResult<Playlist>>(
+        'me/likes/playlists?limit=50&linked_partitioning=true'
+      );
+      return res.collection.filter((a) => a.playlist_type === 'album');
     },
     getFollowing: async (): Promise<User[]> => {
-      const res: any = await this.httpGet<User[]>('me/followings?limit=50');
+      const res = await this.httpGet<CollectionResult<User>>('me/followings?limit=50');
       return res.collection;
     },
     getStream: async (): Promise<StreamItem[]> => {
-      const res: any = await this.httpGet<StreamItem[]>('me/activities/all/own?limit=50');
+      const res = await this.httpGet<CollectionResult<StreamItem>>(
+        'me/activities/all/own?limit=50'
+      );
       return res.collection;
     },
   };
@@ -57,43 +72,43 @@ export class SoundCloud {
       return res;
     },
     getFollowers: async (userId: number): Promise<User[]> => {
-      const res: any = await this.httpGet<User[]>(
+      const res = await this.httpGet<CollectionResult<User>>(
         `users/${userId}/followers?limit=50&linked_partitioning=true`
       );
       return res.collection;
     },
     getFollowings: async (userId: number): Promise<User[]> => {
-      const res: any = await this.httpGet<User[]>(
+      const res = await this.httpGet<CollectionResult<User>>(
         `users/${userId}/followings?limit=50&linked_partitioning=true`
       );
       return res.collection;
     },
     getPlaylists: async (userId: number): Promise<Playlist[]> => {
-      const res: any = await this.httpGet<Playlist[]>(
+      const res = await this.httpGet<CollectionResult<Playlist>>(
         `users/${userId}/playlists?limit=50&linked_partitioning=true`
       );
       return res.collection;
     },
     getTracks: async (userId: number): Promise<Track[]> => {
-      const res: any = await this.httpGet<Track[]>(
+      const res = await this.httpGet<CollectionResult<Track>>(
         `users/${userId}/tracks?limit=50&linked_partitioning=true`
       );
       return res.collection;
     },
     getLikedTracks: async (userId: number): Promise<Track[]> => {
-      const res: any = await this.httpGet<Track[]>(
+      const res = await this.httpGet<CollectionResult<Track>>(
         `users/${userId}/likes/tracks?limit=50&linked_partitioning=true`
       );
       return res.collection;
     },
     getLikedPlaylists: async (userId: number): Promise<Playlist[]> => {
-      const res: any = await this.httpGet<Playlist[]>(
+      const res = await this.httpGet<CollectionResult<Playlist>>(
         `users/${userId}/likes/playlists?limit=50&linked_partitioning=true`
       );
       return res.collection;
     },
     search: async (query: string): Promise<User[]> => {
-      const res: any = await this.httpGet<User[]>(
+      const res = await this.httpGet<CollectionResult<User>>(
         `users?q=${query}&limit=50&linked_partitioning=true`
       );
       return res.collection
@@ -108,7 +123,7 @@ export class SoundCloud {
 
   track = {
     get: async (trackId: number): Promise<Track> => {
-      const res: any = await this.httpGet(`tracks/${trackId}`);
+      const res = await this.httpGet<Track>(`tracks/${trackId}`);
       return res;
     },
     getStreamUrl: async (trackId: number): Promise<string> => {
@@ -116,13 +131,13 @@ export class SoundCloud {
       return res.http_mp3_128_url;
     },
     getRelated: async (trackId: number): Promise<Track[]> => {
-      const res: any = await this.httpGet(
+      const res = await this.httpGet<CollectionResult<Track>>(
         `tracks/${trackId}/related?limit=50&linked_partitioning=true`
       );
       return res.collection;
     },
     search: async (query: string): Promise<Track[]> => {
-      const res: any = await this.httpGet<Track[]>(
+      const res = await this.httpGet<CollectionResult<Track>>(
         `tracks?q=${query}&limit=50&linked_partitioning=true`
       );
       return res.collection;
@@ -147,11 +162,11 @@ export class SoundCloud {
 
   playlist = {
     get: async (playlistId: number, showTracks = true): Promise<Playlist> => {
-      const res: any = await this.httpGet(`playlists/${playlistId}?show_tracks=${showTracks}`);
+      const res = await this.httpGet<Playlist>(`playlists/${playlistId}?show_tracks=${showTracks}`);
       return res;
     },
     search: async (query: string): Promise<Playlist[]> => {
-      const res: any = await this.httpGet<Playlist[]>(
+      const res = await this.httpGet<CollectionResult<Playlist>>(
         `playlists?q=${query}&limit=50&linked_partitioning=true`
       );
       return res.collection;

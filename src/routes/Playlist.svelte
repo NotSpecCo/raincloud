@@ -75,6 +75,8 @@
           <section class="tracks">
             {#each data.tracks as track (track.id)}
               <TrackItem {track} primaryText={track.title} secondaryText={track.user.username} />
+            {:else}
+              <Typography align="center">No playable tracks found</Typography>
             {/each}
           </section>
         {:catch}
