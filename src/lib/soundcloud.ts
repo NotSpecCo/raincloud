@@ -40,7 +40,7 @@ export class SoundCloud {
       const res = await this.httpGet<CollectionResult<Track>>(
         'me/likes/tracks?limit=50&linked_partitioning=true'
       );
-      return res.collection;
+      return res.collection.filter((a) => a.access !== 'blocked');
     },
     getLikedPlaylists: async (): Promise<Playlist[]> => {
       const res = await this.httpGet<CollectionResult<Playlist>>(
