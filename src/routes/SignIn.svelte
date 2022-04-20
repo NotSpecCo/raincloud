@@ -64,7 +64,22 @@
     <Card>
       <CardHeader title="Sign In" />
       <CardContent>
-        <Typography>Hey! Click the one of the buttons below to sign in to SoundCloud.</Typography>
+        <Typography>Hey, welcome to RainCloud!</Typography>
+        <Typography
+          >Sorry for the odd sign in process. The SoundCloud signin form is too modern for KaiOS and
+          doesn't work.</Typography
+        >
+        <Typography
+          >1. Visit <Typography display="inline" padding="none" color="accent"
+            >https://app.vulpine.fm/</Typography
+          > on another device.</Typography
+        >
+        <Typography>2. Sign into SoundCloud.</Typography>
+        <Typography
+          >3. Click the button below to scan the QR code. If you're having issues scanning, try
+          closing an reopening the app.</Typography
+        >
+
         <Button
           title="Sign In via QR Code"
           navi={{
