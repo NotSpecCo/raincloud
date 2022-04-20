@@ -1,3 +1,16 @@
+# [1.11.0](https://github.com/garredow/raincloud/compare/v1.10.0...v1.11.0) (2022-04-20)
+
+
+### Bug Fixes
+
+* **appmenu:** fix library navigation issue ([01911e6](https://github.com/garredow/raincloud/commit/01911e64e7a9f858b995fd6cf2f8474156fc6251))
+
+
+### Features
+
+* add liked albums view ([5ca32d3](https://github.com/garredow/raincloud/commit/5ca32d3e009cdc20b38e0f690cbdba185931bb23))
+* hide unplayable liked tracks ([e9fa8a8](https://github.com/garredow/raincloud/commit/e9fa8a8cc8af1b8bd070facdba5ec6afd8979e66))
+
 # [1.10.0](https://github.com/garredow/raincloud/compare/v1.9.0...v1.10.0) (2022-04-20)
 
 
