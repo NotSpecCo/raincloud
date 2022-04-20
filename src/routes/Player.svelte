@@ -128,6 +128,7 @@
     justify-content: space-between;
     font-weight: 600;
     color: var(--accent-color);
+    padding: 0 5px;
   }
 
   .stats {

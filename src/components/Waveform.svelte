@@ -16,7 +16,9 @@
 <style>
   .root {
     position: relative;
-    background-color: var(--focus-color);
+    background-color: var(--tertiary-text-color);
+    margin: 5px 0;
+    overflow: hidden;
   }
 
   .root > .progress {
@@ -39,5 +41,6 @@
   }
   .root > .image > img {
     width: 100%;
+    filter: brightness(10);
   }
 </style>

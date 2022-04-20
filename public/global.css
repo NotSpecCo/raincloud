@@ -27,6 +27,7 @@
   --default-a: 1;
   --primary-text-a: 0.88;
   --secondary-text-a: 0.5;
+  --tertiary-text-a: 0.3;
 
   --app-bg-color: hsla(0, 0%, 0%, 1);
   --app-text-color: hsla(0, 0%, 100%, 0.88);
@@ -42,6 +43,12 @@
     var(--text-color-s),
     var(--text-color-l),
     var(--secondary-text-a)
+  );
+  --tertiary-text-color: hsla(
+    var(--text-color-h),
+    var(--text-color-s),
+    var(--text-color-l),
+    var(--tertiary-text-a)
   );
   --divider-color: hsla(
     var(--text-color-h),
