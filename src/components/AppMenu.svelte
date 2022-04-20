@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Divider from 'onyx-ui/components/divider/Divider.svelte';
   import ListItem from 'onyx-ui/components/list/ListItem.svelte';
   import NavGroup from 'onyx-ui/components/nav/NavGroup.svelte';
   import { ViewState } from 'onyx-ui/enums';
@@ -15,8 +14,6 @@
   import MdViewStream from 'svelte-icons/md/MdViewStream.svelte';
   import { location, push } from 'svelte-spa-router';
 
-  console.log('location', $location);
-
   type MenuItem = {
     id: string;
     text: string;
@@ -29,8 +26,6 @@
     { id: 'stream', text: 'Stream', route: '/stream', icon: MdViewStream },
     { id: 'search', text: 'Search', route: '/search', icon: MdSearch },
     { id: 'player', text: 'Player', route: '/player/info', icon: MdPlayArrow },
-  ];
-  const appItems: MenuItem[] = [
     { id: 'settings', text: 'Settings', route: '/settings/display', icon: MdSettings },
     { id: 'about', text: 'About', route: '/about', icon: MdInfoOutline },
   ];
@@ -49,25 +44,6 @@
         navi={{
           itemId: item.id,
           shortcutKey: getShortcutFromIndex(i),
-          onSelect: () => {
-            Onyx.appMenu.close();
-            if ($location === item.route) {
-              updateView({ viewing: ViewState.Card });
-              return;
-            }
-            push(item.route);
-          },
-        }}
-      />
-    {/each}
-    <Divider title="App" />
-    {#each appItems as item, i}
-      <ListItem
-        icon={item.icon}
-        primaryText={item.text}
-        navi={{
-          itemId: item.id,
-          shortcutKey: getShortcutFromIndex(i + menuItems.length),
           onSelect: () => {
             Onyx.appMenu.close();
             if ($location === item.route) {
