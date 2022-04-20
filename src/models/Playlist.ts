@@ -20,7 +20,7 @@ export type Playlist = {
   track_count: number;
   last_modified: string; // Date
   created_at: string; // Date
-  playlist_type?: string;
+  playlist_type?: '' | 'album';
   type?: string;
   likes_count: number;
   tags?: string;
