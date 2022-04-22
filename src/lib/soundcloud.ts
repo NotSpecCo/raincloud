@@ -120,6 +120,14 @@ export class SoundCloud {
         })
         .slice(0, 25);
     },
+    follow: async (userId: number): Promise<void> => {
+      await this.httpPost(`me/followings/${userId}`);
+      await Cache.invalidate('me/followings');
+    },
+    unfollow: async (userId: number): Promise<void> => {
+      await this.httpDelete(`me/followings/${userId}`);
+      await Cache.invalidate('me/followings');
+    },
   };
 
   track = {
@@ -141,6 +149,8 @@ export class SoundCloud {
       const res = await this.httpGet<CollectionResult<Track>>(
         `tracks?q=${query}&limit=50&linked_partitioning=true`
       );
+      console.log('track search', res);
+
       return res.collection;
     },
     like: async (trackId: number): Promise<void> => {

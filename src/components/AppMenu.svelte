@@ -25,7 +25,7 @@
   const menuItems: MenuItem[] = [
     { id: 'library', text: 'Library', route: '/library', icon: MdLibraryMusic },
     { id: 'stream', text: 'Stream', route: '/stream', icon: MdViewStream },
-    { id: 'search', text: 'Search', route: '/search', icon: MdSearch },
+    { id: 'search', text: 'Search', route: '/search/users', icon: MdSearch },
     { id: 'player', text: 'Player', route: '/player/info', icon: MdPlayArrow },
     { id: 'settings', text: 'Settings', route: '/settings/display', icon: MdSettings },
     { id: 'about', text: 'About', route: '/about', icon: MdInfoOutline },
@@ -47,8 +47,8 @@
       <ListItem
         imageUrl={session.user_avatar_url}
         imageStyle="circle"
-        primaryText="Profile"
-        secondaryText={session.user_name}
+        imageSize={IconSize.Small}
+        primaryText="My Profile"
         navi={{
           itemId: 'profile',
           shortcutKey: getShortcutFromIndex(0),

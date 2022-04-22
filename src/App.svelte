@@ -62,7 +62,7 @@
     '/playlist/:playlistId': Playlist,
     '/playlist/:playlistId/description': PlaylistDescription,
     '/profile': Profile,
-    '/search': Search,
+    '/search/:cardId': Search,
     '/settings/:cardId': AppSettings,
     '/signin': SignIn,
     '/stream': Stream,
