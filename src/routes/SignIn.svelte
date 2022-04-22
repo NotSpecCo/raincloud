@@ -53,7 +53,7 @@
       const tokens = await new Auth().getTokens();
       if (tokens) {
         clearInterval(interval);
-        replace('/home');
+        replace('/library');
       }
     }, 500);
   }
