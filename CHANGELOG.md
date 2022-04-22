@@ -1,3 +1,15 @@
+# [1.12.0](https://github.com/garredow/raincloud/compare/v1.11.0...v1.12.0) (2022-04-22)
+
+
+### Features
+
+* add profile view ([17ec697](https://github.com/garredow/raincloud/commit/17ec697be2b08466f9e42d7f9031ab962433ff5f))
+* add user profile view ([580ebda](https://github.com/garredow/raincloud/commit/580ebdaa011f2d44ec646ad74296a7d58beaa0d0))
+* **auth:** store basic user info with tokens ([668e8c0](https://github.com/garredow/raincloud/commit/668e8c0e57f0c8eb7b2daf2ffb3ad90c27be3c83))
+* **following:** use round images for users ([6ffe61d](https://github.com/garredow/raincloud/commit/6ffe61d11a3642e106019c894cd970fd814d964e))
+* **signin:** redirect to library after sign in ([b610561](https://github.com/garredow/raincloud/commit/b6105619c686e183d4dd0c654d565daaa3ef39c6))
+* use round images for users ([97e5d93](https://github.com/garredow/raincloud/commit/97e5d9332a909b846ba9118675ceebd8e7960932))
+
 # [1.11.0](https://github.com/garredow/raincloud/compare/v1.10.0...v1.11.0) (2022-04-20)
 
 
