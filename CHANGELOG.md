@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/garredow/raincloud/compare/v1.12.0...v1.13.0) (2022-04-22)
+
+
+### Features
+
+* add user and track search ([01214f6](https://github.com/garredow/raincloud/commit/01214f6742868aee06ae17b14aec3da5add679fc))
+
 # [1.12.0](https://github.com/garredow/raincloud/compare/v1.11.0...v1.12.0) (2022-04-22)
 
 
