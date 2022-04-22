@@ -1,18 +1,20 @@
 <script lang="ts">
   import ListItem from 'onyx-ui/components/list/ListItem.svelte';
   import NavGroup from 'onyx-ui/components/nav/NavGroup.svelte';
-  import { ViewState } from 'onyx-ui/enums';
+  import { IconSize, ViewState } from 'onyx-ui/enums';
   import { Onyx } from 'onyx-ui/services';
   import { updateView } from 'onyx-ui/stores/view';
   import { getShortcutFromIndex } from 'onyx-ui/utils/getShortcutFromIndex';
+  import { onMount } from 'svelte';
   import MdInfoOutline from 'svelte-icons/md/MdInfoOutline.svelte';
   import MdLibraryMusic from 'svelte-icons/md/MdLibraryMusic.svelte';
-  import MdPerson from 'svelte-icons/md/MdPerson.svelte';
   import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
   import MdSearch from 'svelte-icons/md/MdSearch.svelte';
   import MdSettings from 'svelte-icons/md/MdSettings.svelte';
   import MdViewStream from 'svelte-icons/md/MdViewStream.svelte';
   import { location, push } from 'svelte-spa-router';
+  import { SoundCloud } from '../lib/soundcloud';
+  import type { User } from '../models';
 
   type MenuItem = {
     id: string;
@@ -21,7 +23,6 @@
     icon: any | null;
   };
   const menuItems: MenuItem[] = [
-    { id: 'profile', text: 'Profile', route: '/profile', icon: MdPerson },
     { id: 'library', text: 'Library', route: '/library', icon: MdLibraryMusic },
     { id: 'stream', text: 'Stream', route: '/stream', icon: MdViewStream },
     { id: 'search', text: 'Search', route: '/search', icon: MdSearch },
@@ -29,6 +30,11 @@
     { id: 'settings', text: 'Settings', route: '/settings/display', icon: MdSettings },
     { id: 'about', text: 'About', route: '/about', icon: MdInfoOutline },
   ];
+
+  let user: User;
+  onMount(() => {
+    new SoundCloud().me.get().then((res) => (user = res));
+  });
 </script>
 
 <NavGroup groupId="app-menu">
@@ -37,13 +43,34 @@
     RainCloud
   </div>
   <div class="scroller" data-nav-scroller>
+    {#if user}
+      <ListItem
+        imageUrl={user.avatar_url}
+        imageStyle="circle"
+        primaryText="Profile"
+        secondaryText={user.full_name || user.username}
+        navi={{
+          itemId: 'profile',
+          shortcutKey: getShortcutFromIndex(0),
+          onSelect: () => {
+            Onyx.appMenu.close();
+            if ($location === '/profile') {
+              updateView({ viewing: ViewState.Card });
+              return;
+            }
+            push('/profile');
+          },
+        }}
+      />
+    {/if}
     {#each menuItems as item, i}
       <ListItem
         icon={item.icon}
+        imageSize={IconSize.Small}
         primaryText={item.text}
         navi={{
           itemId: item.id,
-          shortcutKey: getShortcutFromIndex(i),
+          shortcutKey: getShortcutFromIndex(i + 1),
           onSelect: () => {
             Onyx.appMenu.close();
             if ($location === item.route) {

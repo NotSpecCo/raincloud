@@ -6,7 +6,7 @@
   import ListItem from 'onyx-ui/components/list/ListItem.svelte';
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
-  import { DataStatus } from 'onyx-ui/enums';
+  import { DataStatus, IconSize } from 'onyx-ui/enums';
   import { registerView, updateView } from 'onyx-ui/stores/view';
   import { getShortcutFromIndex } from 'onyx-ui/utils/getShortcutFromIndex';
   import { onMount } from 'svelte';
@@ -71,6 +71,7 @@
         {#each items.slice(0, 5) as item, i}
           <ListItem
             icon={item.icon}
+            imageSize={IconSize.Small}
             primaryText={item.title}
             navi={{
               itemId: `${i + 1}`,
@@ -83,6 +84,7 @@
         {#each items.slice(5) as item, i}
           <ListItem
             icon={item.icon}
+            imageSize={IconSize.Small}
             primaryText={item.title}
             navi={{
               itemId: `${i + 6}`,
