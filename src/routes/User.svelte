@@ -101,10 +101,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 5px;
+    padding: 10px;
   }
   .artwork > img {
-    border-radius: 6px;
-    width: 100%;
+    border-radius: 50%;
+    width: 96px;
+    height: 96px;
   }
 </style>

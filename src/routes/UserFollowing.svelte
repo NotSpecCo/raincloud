@@ -36,6 +36,7 @@
           {#each data as user, i (user.id)}
             <ListItem
               imageUrl={getImage(user.avatar_url, 60)}
+              imageStyle="circle"
               primaryText={user.full_name || user.username}
               secondaryText={`${user.followers_count.toLocaleString()} followers`}
               navi={{
