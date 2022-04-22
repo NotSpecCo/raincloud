@@ -20,6 +20,7 @@
   import Player from './routes/Player.svelte';
   import Playlist from './routes/Playlist.svelte';
   import PlaylistDescription from './routes/PlaylistDescription.svelte';
+  import Profile from './routes/Profile.svelte';
   import Redirect from './routes/Redirect.svelte';
   import RelatedTracks from './routes/RelatedTracks.svelte';
   import Search from './routes/Search.svelte';
@@ -52,6 +53,7 @@
     '/player/:cardId': Player,
     '/playlist/:playlistId': Playlist,
     '/playlist/:playlistId/description': PlaylistDescription,
+    '/profile': Profile,
     '/search': Search,
     '/settings/:cardId': AppSettings,
     '/signin': SignIn,

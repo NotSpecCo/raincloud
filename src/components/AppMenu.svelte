@@ -5,9 +5,9 @@
   import { Onyx } from 'onyx-ui/services';
   import { updateView } from 'onyx-ui/stores/view';
   import { getShortcutFromIndex } from 'onyx-ui/utils/getShortcutFromIndex';
-  import MdHome from 'svelte-icons/md/MdHome.svelte';
   import MdInfoOutline from 'svelte-icons/md/MdInfoOutline.svelte';
   import MdLibraryMusic from 'svelte-icons/md/MdLibraryMusic.svelte';
+  import MdPerson from 'svelte-icons/md/MdPerson.svelte';
   import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
   import MdSearch from 'svelte-icons/md/MdSearch.svelte';
   import MdSettings from 'svelte-icons/md/MdSettings.svelte';
@@ -21,7 +21,7 @@
     icon: any | null;
   };
   const menuItems: MenuItem[] = [
-    { id: 'home', text: 'Home', route: '/home', icon: MdHome },
+    { id: 'profile', text: 'Profile', route: '/profile', icon: MdPerson },
     { id: 'library', text: 'Library', route: '/library', icon: MdLibraryMusic },
     { id: 'stream', text: 'Stream', route: '/stream', icon: MdViewStream },
     { id: 'search', text: 'Search', route: '/search', icon: MdSearch },

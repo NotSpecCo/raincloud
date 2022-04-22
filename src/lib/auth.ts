@@ -43,6 +43,10 @@ export class Auth {
     return tokens;
   }
 
+  clearTokens(): void {
+    window.localStorage.removeItem('tokens');
+  }
+
   async fetchTokensFromQRCode(): Promise<void> {
     const qrCode = new KaiOS.QRCode();
     const text = await qrCode.readAsText();
