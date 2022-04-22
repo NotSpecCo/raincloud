@@ -93,7 +93,7 @@
             navi={{
               itemId: `btnSignOut`,
               onSelect: () => {
-                new Auth().clearTokens();
+                new Auth().clearSession();
                 push('/signin');
               },
             }}

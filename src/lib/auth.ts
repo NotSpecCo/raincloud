@@ -1,6 +1,8 @@
 import KaiOS from 'kaios-lib';
 import { push } from 'svelte-spa-router';
-import type { Tokens } from '../models';
+import type { AuthSession, Tokens, User } from '../models';
+
+const AUTH_STORAGE_KEY = 'auth_session';
 
 type Options = {
   apiBaseUrl: string;
@@ -20,41 +22,58 @@ export class Auth {
     };
   }
 
-  setTokens(tokens: Tokens): void {
-    window.localStorage.setItem('tokens', JSON.stringify(tokens));
+  setSession(session: AuthSession): void {
+    window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session));
   }
 
-  async getTokens(): Promise<Tokens> {
-    let tokens: Tokens = JSON.parse(window.localStorage.getItem('tokens') as string);
+  async getSession(): Promise<AuthSession> {
+    let session: AuthSession = JSON.parse(window.localStorage.getItem(AUTH_STORAGE_KEY) as string);
 
-    if (!tokens) {
+    if (!session) {
       push('/signin');
-      throw new Error('No tokens found! You must sign in first.');
+      throw new Error('No session found! You must sign in first.');
     }
 
-    if (tokens.expires_at < Date.now() + 600000) {
+    if (session.expires_at < Date.now() + 600000) {
       console.log(
-        `Token expires soon (${new Date(tokens.expires_at).toISOString()}), refreshing...`
+        `Session expiring (${new Date(session.expires_at).toISOString()}), refreshing...`
       );
-      await this.refresh(tokens.refresh_token);
-      tokens = JSON.parse(window.localStorage.getItem('tokens') as string);
+      await this.refreshSession(session);
+      session = JSON.parse(window.localStorage.getItem(AUTH_STORAGE_KEY) as string);
     }
 
-    return tokens;
+    return session;
   }
 
-  clearTokens(): void {
-    window.localStorage.removeItem('tokens');
+  async updateSessionUser(user: User): Promise<void> {
+    const session = await this.getSession();
+    this.setSession({
+      ...session,
+      user_id: user.id,
+      user_name: user.full_name || user.username,
+      user_avatar_url: user.avatar_url,
+    });
+  }
+
+  clearSession(): void {
+    window.localStorage.removeItem(AUTH_STORAGE_KEY);
   }
 
   async fetchTokensFromQRCode(): Promise<void> {
     const qrCode = new KaiOS.QRCode();
     const text = await qrCode.readAsText();
-    this.setTokens(JSON.parse(text));
+    const user: User = await this.fetchAuthUser(JSON.parse(text).access_token);
+
+    this.setSession({
+      ...JSON.parse(text),
+      user_id: user.id,
+      user_name: user.full_name || user.username,
+      user_avatar_url: user.avatar_url,
+    });
   }
 
-  fetchTokensFromCode(code: string): Promise<void> {
-    return new Promise((resolve, reject) => {
+  async fetchTokensFromCode(code: string): Promise<void> {
+    const tokens: Tokens = await new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
       xhr.addEventListener('load', () => {
         if (xhr.status >= 400) {
@@ -71,10 +90,35 @@ export class Auth {
           code,
         })
       );
-    }).then((tokens: Tokens) => this.setTokens(tokens));
+    });
+    const user: User = await this.fetchAuthUser(tokens.access_token);
+
+    this.setSession({
+      ...tokens,
+      user_id: user.id,
+      user_name: user.full_name || user.username,
+      user_avatar_url: user.avatar_url,
+    });
   }
 
-  private refresh(refreshToken: string): Promise<void> {
+  private async fetchAuthUser(accessToken: string): Promise<User> {
+    return new Promise((resolve, reject) => {
+      const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 400) {
+          return reject(new Error(`API call failed: ${xhr.statusText}`));
+        }
+        resolve(JSON.parse(xhr.responseText));
+      });
+      xhr.addEventListener('error', () => reject(new Error('Failed to call')));
+      xhr.open('GET', `https://api.soundcloud.com/me`);
+      xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send();
+    });
+  }
+
+  private refreshSession(session: AuthSession): Promise<void> {
     return new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
       xhr.addEventListener('load', () => {
@@ -89,9 +133,14 @@ export class Auth {
       xhr.send(
         JSON.stringify({
           clientId: this.options.clientId,
-          refreshToken,
+          refreshToken: session.refresh_token,
         })
       );
-    }).then((tokens: Tokens) => this.setTokens(tokens));
+    }).then((tokens: Tokens) =>
+      this.setSession({
+        ...session,
+        ...tokens,
+      })
+    );
   }
 }

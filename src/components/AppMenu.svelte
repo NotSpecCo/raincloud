@@ -13,8 +13,8 @@
   import MdSettings from 'svelte-icons/md/MdSettings.svelte';
   import MdViewStream from 'svelte-icons/md/MdViewStream.svelte';
   import { location, push } from 'svelte-spa-router';
-  import { SoundCloud } from '../lib/soundcloud';
-  import type { User } from '../models';
+  import { Auth } from '../lib/auth';
+  import type { AuthSession } from '../models';
 
   type MenuItem = {
     id: string;
@@ -31,9 +31,9 @@
     { id: 'about', text: 'About', route: '/about', icon: MdInfoOutline },
   ];
 
-  let user: User;
+  let session: AuthSession;
   onMount(() => {
-    new SoundCloud().me.get().then((res) => (user = res));
+    new Auth().getSession().then((res) => (session = res));
   });
 </script>
 
@@ -43,12 +43,12 @@
     RainCloud
   </div>
   <div class="scroller" data-nav-scroller>
-    {#if user}
+    {#if session}
       <ListItem
-        imageUrl={user.avatar_url}
+        imageUrl={session.user_avatar_url}
         imageStyle="circle"
         primaryText="Profile"
-        secondaryText={user.full_name || user.username}
+        secondaryText={session.user_name}
         navi={{
           itemId: 'profile',
           shortcutKey: getShortcutFromIndex(0),

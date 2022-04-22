@@ -15,7 +15,6 @@
   const code = location.href.match(/code=([A-Za-z0-9-_]+)/)?.[1];
   if (code) {
     new Auth().fetchTokensFromCode(code).then((tokens) => {
-      window.dispatchEvent(new CustomEvent('tokens'));
       window.close();
     });
   }
@@ -28,7 +27,7 @@
 
   async function signinCode() {
     await new Auth().fetchTokensFromQRCode();
-    replace('/home');
+    replace('/library');
   }
 
   function signinWeb() {
@@ -50,8 +49,8 @@
     window.open(url.toString());
 
     const interval = setInterval(async () => {
-      const tokens = await new Auth().getTokens();
-      if (tokens) {
+      const session = await new Auth().getSession();
+      if (session) {
         clearInterval(interval);
         replace('/library');
       }

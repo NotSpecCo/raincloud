@@ -1,3 +1,4 @@
+export * from './AuthSession';
 export * from './PlaybackProgress';
 export * from './Playlist';
 export * from './QueryItem';

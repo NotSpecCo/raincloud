@@ -6,6 +6,7 @@
   import AppMenu from './components/AppMenu.svelte';
   import AudioPlayer from './components/AudioPlayer.svelte';
   import Dashboard from './components/Dashboard.svelte';
+  import { Auth } from './lib/auth';
   import About from './routes/About.svelte';
   import AppSettings from './routes/AppSettings.svelte';
   import Home from './routes/Home.svelte';
@@ -38,6 +39,13 @@
   import { settings } from './stores/settings';
 
   console.log(`Env: ${process.env.NODE_ENV}`);
+
+  const code = window.location.href.match(/code=([A-Za-z0-9-_]+)/)?.[1];
+  if (code) {
+    new Auth().fetchTokensFromCode(code).then((tokens) => {
+      window.close();
+    });
+  }
 
   const routes = {
     '/about': About,
@@ -74,7 +82,7 @@
   document.addEventListener('keydown', (ev) => {
     if (
       ev.key === 'Backspace' &&
-      $location !== '/home' &&
+      $location !== '/library' &&
       (ev.target as any).contentEditable !== 'true'
     ) {
       ev.preventDefault();
@@ -85,7 +93,7 @@
     {
       onBackspace: () => {
         // If on the main screen, let KaiOS minimize the app
-        if ($location === '/home') {
+        if ($location === '/library') {
           console.log('exit app');
           return false;
         }

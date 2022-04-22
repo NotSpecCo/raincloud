@@ -22,6 +22,7 @@ export class SoundCloud {
   me = {
     get: async (): Promise<User> => {
       const me = await this.httpGet<User>('me');
+      await new Auth().updateSessionUser(me);
       return me;
     },
     getTracks: async (): Promise<Track[]> => {
@@ -190,8 +191,8 @@ export class SoundCloud {
   };
 
   private async httpGet<T>(url: string, useCache = true): Promise<T> {
-    const tokens = await new Auth().getTokens();
-    console.log('tokens', tokens);
+    const session = await new Auth().getSession();
+    console.log('session', session);
 
     if (useCache) {
       const cached = await Cache.get<T>(url);
@@ -209,7 +210,7 @@ export class SoundCloud {
       xhr.addEventListener('load', () => resolve(JSON.parse(xhr.responseText)));
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
       xhr.open('GET', `https://api.soundcloud.com/${url}`);
-      xhr.setRequestHeader('Authorization', `Bearer ${tokens.access_token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();
     });
@@ -222,30 +223,30 @@ export class SoundCloud {
   }
 
   private async httpPost(url: string): Promise<void> {
-    const tokens = await new Auth().getTokens();
-    console.log('tokens', tokens);
+    const session = await new Auth().getSession();
+    console.log('session', session);
 
     await new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
       xhr.addEventListener('load', () => resolve(null));
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
       xhr.open('POST', `https://api.soundcloud.com/${url}`);
-      xhr.setRequestHeader('Authorization', `Bearer ${tokens.access_token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();
     });
   }
 
   private async httpDelete(url: string): Promise<void> {
-    const tokens = await new Auth().getTokens();
-    console.log('tokens', tokens);
+    const session = await new Auth().getSession();
+    console.log('session', session);
 
     await new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
       xhr.addEventListener('load', () => resolve(null));
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
       xhr.open('DELETE', `https://api.soundcloud.com/${url}`);
-      xhr.setRequestHeader('Authorization', `Bearer ${tokens.access_token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();
     });
