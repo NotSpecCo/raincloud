@@ -76,6 +76,9 @@
   );
   --card-border-color: hsla(0, 0%, 100%, 0.2);
   --shortcut-color: var(--secondary-text-color);
+  --warning-color: hsl(48, 90%, 70%);
+  --error-color: hsl(0, 90%, 70%);
+  --success-color: hsl(131, 60%, 70%);
 
   font-size: var(--base-font-size);
 }

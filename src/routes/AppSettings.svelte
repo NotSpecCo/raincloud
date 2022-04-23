@@ -13,6 +13,7 @@
   import { Onyx } from 'onyx-ui/services';
   import { registerView, updateView, view } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
+  import MdCheck from 'svelte-icons/md/MdCheck.svelte';
   import { replace } from 'svelte-spa-router';
   import { Cache } from '../lib/cache';
   import type { Settings } from '../models';
@@ -298,7 +299,11 @@
               itemId: `btnClearCache`,
               onSelect: () => {
                 Cache.invalidate();
-                Onyx.toaster.show({ title: 'Cache cleared' });
+                Onyx.toaster.show({
+                  title: 'Cache cleared',
+                  icon: MdCheck,
+                  type: 'info',
+                });
               },
             }}
           />
