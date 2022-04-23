@@ -77,7 +77,10 @@
           <SelectRow
             label="Theme"
             value={$settings.themeId}
-            options={[{ id: 'light', label: 'Light' }]}
+            options={[
+              { id: 'light', label: 'Light' },
+              { id: 'dark', label: 'Dark' },
+            ]}
             onChange={(val) => handleChange('themeId', val)}
           />
           <ColorPickerRow

@@ -20,4 +20,23 @@ export const themes: ThemeConfig[] = [
       dividerColorA: 10,
     },
   },
+  {
+    id: 'dark',
+    values: {
+      cardColorH: 0,
+      cardColorS: 0,
+      cardColorL: 12,
+
+      accentColorH: 14,
+      accentColorS: 77,
+      accentColorL: 54,
+
+      textColorH: 0,
+      textColorS: 0,
+      textColorL: 100,
+
+      focusColorA: 50,
+      dividerColorA: 10,
+    },
+  },
 ];

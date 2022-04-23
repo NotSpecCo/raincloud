@@ -1,13 +1,17 @@
 <script lang="ts">
+  import { settings } from '../stores/settings';
+
   export let current: number;
   export let duration: number;
   export let url: string;
+
+  const brightness = $settings.themeId === 'dark' ? 0.13 : 10;
 </script>
 
 <div class="root">
   <div class="progress" style="right: {`${100 - (current / duration) * 100}%`}" />
   <div class="image">
-    <img src={url.replace('m.png', 's.png')} alt="" />
+    <img src={url.replace('m.png', 's.png')} alt="" style="filter: brightness({brightness})" />
   </div>
 </div>
 
