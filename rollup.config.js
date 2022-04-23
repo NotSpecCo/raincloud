@@ -9,6 +9,7 @@ import css from 'rollup-plugin-css-only';
 import babel from 'rollup-plugin-babel';
 import replace from '@rollup/plugin-replace';
 import json from '@rollup/plugin-json';
+import { svelteSVG } from 'rollup-plugin-svelte-svg';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -46,6 +47,9 @@ export default {
     replace({
       preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development'),
+    }),
+    svelteSVG({
+      svgo: {},
     }),
     svelte({
       preprocess: sveltePreprocess({

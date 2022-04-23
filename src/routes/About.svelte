@@ -7,6 +7,7 @@
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { registerView } from 'onyx-ui/stores/view';
   import pkg from '../../package.json';
+  import Logo from '../components/Logo.svelte';
 
   registerView({});
 </script>
@@ -17,7 +18,9 @@
       <CardHeader title="About" />
       <CardContent>
         <div class="info">
-          <img src="images/icon_128.png" alt="" class="logo" />
+          <div class="logo">
+            <Logo size={128} />
+          </div>
           <div class="name">RainCloud</div>
           <Typography color="secondary" padding="none">{`v${pkg.version}`}</Typography>
         </div>
@@ -33,8 +36,7 @@
     align-items: center;
   }
   .logo {
-    height: 96px;
-    width: 96px;
+    padding: 15px;
   }
   .name {
     font-size: 2rem;

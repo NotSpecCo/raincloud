@@ -15,6 +15,7 @@
   import { location, push } from 'svelte-spa-router';
   import { Auth } from '../lib/auth';
   import type { AuthSession } from '../models';
+  import Logo from './Logo.svelte';
 
   type MenuItem = {
     id: string;
@@ -39,8 +40,8 @@
 
 <NavGroup groupId="app-menu">
   <div class="header">
-    <img src="images/icon_56.png" alt="" class="logo" />
-    RainCloud
+    <Logo size={32} />
+    <div class="app-name">RainCloud</div>
   </div>
   <div class="scroller" data-nav-scroller>
     {#if session}
@@ -87,7 +88,7 @@
 
 <style>
   :global([data-nav-group-id='app-menu']) {
-    border-radius: var(--radius) var(--radius) 0 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
     background-color: var(--card-color);
     color: var(--text-color);
     display: flex;
@@ -95,18 +96,15 @@
     height: 100%;
   }
   .header {
-    padding: 5px;
+    padding: 10px;
     font-weight: var(--bold-font-weight);
     color: var(--accent-color);
     display: flex;
     align-items: center;
-    justify-content: center;
     font-size: 1.75rem;
   }
-  .header > .logo {
-    height: 32px;
-    width: 32px;
-    margin-right: 5px;
+  .header > .app-name {
+    margin-left: 5px;
   }
   .scroller {
     overflow-y: auto;
