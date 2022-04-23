@@ -74,7 +74,7 @@
           <Divider title="tracks" />
           <section class="tracks">
             {#each data.tracks as track (track.id)}
-              <TrackItem {track} primaryText={track.title} secondaryText={track.user.username} />
+              <TrackItem {track} />
             {:else}
               <Typography align="center">No playable tracks found</Typography>
             {/each}

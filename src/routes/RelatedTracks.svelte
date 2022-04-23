@@ -32,7 +32,7 @@
           <Typography align="center">Loading...</Typography>
         {:then data}
           {#each data as track (track.id)}
-            <TrackItem {track} primaryText={track.title} secondaryText={track.user.username} />
+            <TrackItem {track} />
           {:else}
             <Typography>No tracks</Typography>
           {/each}

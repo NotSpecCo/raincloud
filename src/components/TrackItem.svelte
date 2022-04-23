@@ -10,21 +10,40 @@
   import { push } from 'svelte-spa-router';
   import { loadTrack } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
-  import type { Track } from '../models';
+  import type { Track, TrackData } from '../models';
   import { settings } from '../stores/settings';
   import { getImage } from '../utils/getImage';
 
   export let track: Track;
-  export let primaryText: string;
+  export let primaryText: string = null;
   export let secondaryText: string = null;
   export let accentText: string = null;
+
+  function getText(track: Track, data: TrackData): string | null {
+    switch (data) {
+      case 'artist':
+        return track.user.username;
+      case 'comments':
+        return `${track.comment_count?.toLocaleString()} comments`;
+      case 'likes':
+        return `${track.favoritings_count?.toLocaleString()} likes`;
+      case 'plays':
+        return `${track.playback_count?.toLocaleString()} plays`;
+      case 'reposts':
+        return `${track.reposts_count?.toLocaleString()} reposts`;
+      case 'title':
+        return track.title;
+      default:
+        return null;
+    }
+  }
 </script>
 
 <ListItem
   imageUrl={getImage(track.artwork_url, 60)}
-  {primaryText}
-  {secondaryText}
-  {accentText}
+  primaryText={primaryText || getText(track, $settings.trackPrimaryText)}
+  secondaryText={secondaryText || getText(track, $settings.trackSecondaryText)}
+  accentText={accentText || getText(track, $settings.trackAccentText)}
   navi={{
     itemId: track.id.toString(),
     onSelect: () => push(`/track/${track.id}`),
@@ -81,7 +100,7 @@
   }}
 >
   <div slot="bottom">
-    {#if $settings.trackStatsInLists}
+    {#if $settings.trackStats}
       <div class="stats">
         <div class="item">
           <Icon size={IconSize.Smallest} color={Color.Secondary}><MdPlayArrow /></Icon>
