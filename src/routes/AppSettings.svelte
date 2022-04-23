@@ -10,6 +10,7 @@
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { Animations, DataStatus, TextSize, TextWeight } from 'onyx-ui/enums';
+  import { Onyx } from 'onyx-ui/services';
   import { registerView, updateView, view } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
   import { replace } from 'svelte-spa-router';
@@ -149,7 +150,10 @@
       <Card cardId={$view.cards[2].id}>
         <CardHeader />
         <CardContent>
-          <ListHeader title="Shortcut Keys" />
+          <ListHeader
+            title="Shortcut Keys"
+            helpText="Quickly access items in a list with the 1-9 keys."
+          />
           <ToggleRow
             label="Enable"
             value={$settings.enableShortcutKeys}
@@ -175,7 +179,7 @@
             ]}
             onChange={(val) => handleChange('shortcutKeyColor', val)}
           />
-          <ListHeader title="Tracks" />
+          <ListHeader title="Tracks" helpText="Customize how tracks are displayed in lists." />
           <SelectRow
             label="Primary Text"
             value={$settings.trackPrimaryText}
@@ -222,7 +226,10 @@
             value={$settings.trackStats}
             onChange={(val) => handleChange('trackStats', val)}
           />
-          <ListHeader title="Playlists" />
+          <ListHeader
+            title="Playlists"
+            helpText="Customize how playlists are displayed in lists."
+          />
           <SelectRow
             label="Primary Text"
             value={$settings.playlistPrimaryText}
@@ -230,7 +237,7 @@
               { id: 'artist', label: 'Artist' },
               { id: 'duration', label: 'Duration' },
               { id: 'title', label: 'Title' },
-              { id: 'trackCount', label: 'Track ount' },
+              { id: 'trackCount', label: 'Track Count' },
             ]}
             onChange={(val) => handleChange('playlistPrimaryText', val)}
           />
@@ -241,7 +248,7 @@
               { id: 'artist', label: 'Artist' },
               { id: 'duration', label: 'Duration' },
               { id: 'title', label: 'Title' },
-              { id: 'trackCount', label: 'Track ount' },
+              { id: 'trackCount', label: 'Track Count' },
               { id: 'none', label: 'None' },
             ]}
             onChange={(val) => handleChange('playlistSecondaryText', val)}
@@ -263,22 +270,36 @@
             value={$settings.playlistStats}
             onChange={(val) => handleChange('playlistStats', val)}
           />
+          <ListHeader title="Other" />
+          <ToggleRow
+            label="Context menu indicators"
+            value={$settings.contextMenuIndicators}
+            onChange={(val) => handleChange('contextMenuIndicators', val)}
+          />
         </CardContent>
       </Card>
     {:else if params.cardId === $view.cards[3].id}
       <Card cardId={$view.cards[3].id}>
         <CardHeader />
         <CardContent>
+          <ListHeader
+            title="Help Text"
+            helpText="In some places, extra information is shown to help the user know what's going on."
+          />
           <ToggleRow
-            label="Show Help Text"
+            label="Enabled"
             value={$settings.showHelpText}
             onChange={(val) => handleChange('showHelpText', val)}
           />
+          <ListHeader title="Actions" />
           <Button
             title="Clear Cache"
             navi={{
               itemId: `btnClearCache`,
-              onSelect: () => Cache.invalidate(),
+              onSelect: () => {
+                Cache.invalidate();
+                Onyx.toaster.show({ title: 'Cache cleared' });
+              },
             }}
           />
         </CardContent>
