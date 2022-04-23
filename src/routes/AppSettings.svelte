@@ -33,6 +33,11 @@
         onSelect: () => replace(`/settings/features`),
       },
       {
+        id: 'lists',
+        title: 'Lists',
+        onSelect: () => replace(`/settings/lists`),
+      },
+      {
         id: 'misc',
         title: 'Misc',
         onSelect: () => replace(`/settings/misc`),
@@ -137,6 +142,13 @@
       <Card cardId={$view.cards[1].id}>
         <CardHeader />
         <CardContent>
+          <div>features</div>
+        </CardContent>
+      </Card>
+    {:else if params.cardId === $view.cards[2].id}
+      <Card cardId={$view.cards[2].id}>
+        <CardHeader />
+        <CardContent>
           <ListHeader title="Shortcut Keys" />
           <ToggleRow
             label="Enable"
@@ -164,21 +176,97 @@
             onChange={(val) => handleChange('shortcutKeyColor', val)}
           />
           <ListHeader title="Tracks" />
+          <SelectRow
+            label="Primary Text"
+            value={$settings.trackPrimaryText}
+            options={[
+              { id: 'artist', label: 'Artist' },
+              { id: 'comments', label: 'Comments' },
+              { id: 'likes', label: 'Likes' },
+              { id: 'plays', label: 'Plays' },
+              { id: 'reposts', label: 'Reposts' },
+              { id: 'title', label: 'Title' },
+            ]}
+            onChange={(val) => handleChange('trackPrimaryText', val)}
+          />
+          <SelectRow
+            label="Secondary Text"
+            value={$settings.trackSecondaryText}
+            options={[
+              { id: 'artist', label: 'Artist' },
+              { id: 'comments', label: 'Comments' },
+              { id: 'likes', label: 'Likes' },
+              { id: 'plays', label: 'Plays' },
+              { id: 'reposts', label: 'Reposts' },
+              { id: 'title', label: 'Title' },
+              { id: 'none', label: 'None' },
+            ]}
+            onChange={(val) => handleChange('trackSecondaryText', val)}
+          />
+          <SelectRow
+            label="Accent Text"
+            value={$settings.trackAccentText}
+            options={[
+              { id: 'artist', label: 'Artist' },
+              { id: 'comments', label: 'Comments' },
+              { id: 'likes', label: 'Likes' },
+              { id: 'plays', label: 'Plays' },
+              { id: 'reposts', label: 'Reposts' },
+              { id: 'title', label: 'Title' },
+              { id: 'none', label: 'None' },
+            ]}
+            onChange={(val) => handleChange('trackAccentText', val)}
+          />
           <ToggleRow
-            label="Show stats in lists"
-            value={$settings.trackStatsInLists}
-            onChange={(val) => handleChange('trackStatsInLists', val)}
+            label="Show stats bar"
+            value={$settings.trackStats}
+            onChange={(val) => handleChange('trackStats', val)}
           />
           <ListHeader title="Playlists" />
+          <SelectRow
+            label="Primary Text"
+            value={$settings.playlistPrimaryText}
+            options={[
+              { id: 'artist', label: 'Artist' },
+              { id: 'duration', label: 'Duration' },
+              { id: 'title', label: 'Title' },
+              { id: 'trackCount', label: 'Track ount' },
+            ]}
+            onChange={(val) => handleChange('playlistPrimaryText', val)}
+          />
+          <SelectRow
+            label="Secondary Text"
+            value={$settings.playlistSecondaryText}
+            options={[
+              { id: 'artist', label: 'Artist' },
+              { id: 'duration', label: 'Duration' },
+              { id: 'title', label: 'Title' },
+              { id: 'trackCount', label: 'Track ount' },
+              { id: 'none', label: 'None' },
+            ]}
+            onChange={(val) => handleChange('playlistSecondaryText', val)}
+          />
+          <SelectRow
+            label="Accent Text"
+            value={$settings.playlistAccentText}
+            options={[
+              { id: 'artist', label: 'Artist' },
+              { id: 'duration', label: 'Duration' },
+              { id: 'title', label: 'Title' },
+              { id: 'trackCount', label: 'Track Count' },
+              { id: 'none', label: 'None' },
+            ]}
+            onChange={(val) => handleChange('playlistAccentText', val)}
+          />
           <ToggleRow
-            label="Show stats in lists"
-            value={$settings.playlistStatsInLists}
-            onChange={(val) => handleChange('playlistStatsInLists', val)}
+            label="Show stats bar"
+            value={$settings.playlistStats}
+            onChange={(val) => handleChange('playlistStats', val)}
           />
         </CardContent>
       </Card>
-    {:else if params.cardId === $view.cards[2].id}
-      <Card cardId={$view.cards[2].id}>
+    {:else if params.cardId === $view.cards[3].id}
+      <Card cardId={$view.cards[3].id}>
         <CardHeader />
         <CardContent>
           <ToggleRow

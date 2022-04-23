@@ -31,8 +31,14 @@ const defaultSettings: Settings = {
   toasterLocation: 'bottom',
   toasterDuration: 3000,
   // App
-  trackStatsInLists: true,
-  playlistStatsInLists: true,
+  trackPrimaryText: 'title',
+  trackSecondaryText: 'artist',
+  trackAccentText: 'none',
+  trackStats: true,
+  playlistPrimaryText: 'title',
+  playlistSecondaryText: 'artist',
+  playlistAccentText: 'none',
+  playlistStats: true,
 };
 
 const storedSettings = Storage.get<Settings>('settings');
