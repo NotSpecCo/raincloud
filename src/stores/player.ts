@@ -29,7 +29,9 @@ function createPlayer() {
       const [track, streamUrl] = await Promise.all([
         new SoundCloud().track.get(trackId),
         new SoundCloud().track.getStreamUrl(trackId),
-      ]);
+      ]).catch((err) => [null, null]);
+
+      if (!track || !streamUrl) return;
 
       set({
         track,

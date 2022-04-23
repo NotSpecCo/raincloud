@@ -3,6 +3,7 @@ import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
 import MdFavoriteBorder from 'svelte-icons/md/MdFavoriteBorder.svelte';
 import MdPerson from 'svelte-icons/md/MdPerson.svelte';
 import MdPersonAdd from 'svelte-icons/md/MdPersonAdd.svelte';
+import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
 import MdRepeat from 'svelte-icons/md/MdRepeat.svelte';
 import type { StreamItem, Track, User } from '../models';
 import type { Playlist } from '../models/Playlist';
@@ -161,9 +162,15 @@ export class SoundCloud {
       const res = await this.httpGet<Track>(`tracks/${trackId}`);
       return res;
     },
-    getStreamUrl: async (trackId: number): Promise<string> => {
-      const res: any = await this.httpGet(`tracks/${trackId}/streams`, false);
-      return res.http_mp3_128_url;
+    getStreamUrl: async (trackId: number): Promise<string | null> => {
+      const res: any = await this.httpGet(`tracks/${trackId}/streams`, false).catch((err) => {
+        Onyx.toaster.show({
+          type: 'error',
+          icon: MdPlayArrow,
+          title: `Failed to load track: ${err.code}`,
+        });
+      });
+      return res?.http_mp3_128_url;
     },
     getRelated: async (trackId: number): Promise<Track[]> => {
       const res = await this.httpGet<CollectionResult<Track>>(
@@ -301,8 +308,15 @@ export class SoundCloud {
 
     const data = await new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
-      xhr.addEventListener('load', () => resolve(JSON.parse(xhr.responseText)));
-      xhr.addEventListener('error', () => reject(new Error('Failed to call')));
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 400) {
+          return reject({
+            code: xhr.status,
+          });
+        }
+        resolve(JSON.parse(xhr.responseText));
+      });
+      xhr.addEventListener('error', () => reject(new Error(xhr.statusCode)));
       xhr.open('GET', `https://api.soundcloud.com/${url}`);
       xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
@@ -322,7 +336,14 @@ export class SoundCloud {
 
     await new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
-      xhr.addEventListener('load', () => resolve(null));
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 400) {
+          return reject({
+            code: xhr.status,
+          });
+        }
+        resolve(null);
+      });
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
       xhr.open('POST', `https://api.soundcloud.com/${url}`);
       xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
@@ -337,7 +358,14 @@ export class SoundCloud {
 
     await new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
-      xhr.addEventListener('load', () => resolve(null));
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 400) {
+          return reject({
+            code: xhr.status,
+          });
+        }
+        resolve(null);
+      });
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
       xhr.open('DELETE', `https://api.soundcloud.com/${url}`);
       xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
