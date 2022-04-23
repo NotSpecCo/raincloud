@@ -84,11 +84,10 @@
     align-items: center;
     padding: 5px;
   }
+
   .artwork > img {
     border-radius: 6px;
-    width: 100%;
-  }
-  .artwork > img {
-    border-radius: 6px;
+    width: 128px;
+    height: 128px;
   }
 </style>

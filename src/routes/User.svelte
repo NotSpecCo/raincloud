@@ -105,7 +105,7 @@
   }
   .artwork > img {
     border-radius: 50%;
-    width: 96px;
-    height: 96px;
+    width: 128px;
+    height: 128px;
   }
 </style>

@@ -96,7 +96,8 @@
   }
   .artwork > img {
     border-radius: 6px;
-    width: 100%;
+    width: 128px;
+    height: 128px;
   }
 
   section.actions {
