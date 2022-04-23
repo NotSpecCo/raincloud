@@ -32,11 +32,7 @@
           <Typography align="center">Loading...</Typography>
         {:then data}
           {#each data as playlist (playlist.id)}
-            <PlaylistItem
-              {playlist}
-              primaryText={playlist.title}
-              secondaryText={playlist.user.username}
-            />
+            <PlaylistItem {playlist} />
           {:else}
             <Typography align="center">No playlists</Typography>
           {/each}
