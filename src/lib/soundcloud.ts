@@ -1,3 +1,9 @@
+import { Onyx } from 'onyx-ui/services';
+import MdFavorite from 'svelte-icons/md/MdFavorite.svelte';
+import MdFavoriteBorder from 'svelte-icons/md/MdFavoriteBorder.svelte';
+import MdPerson from 'svelte-icons/md/MdPerson.svelte';
+import MdPersonAdd from 'svelte-icons/md/MdPersonAdd.svelte';
+import MdRepeat from 'svelte-icons/md/MdRepeat.svelte';
 import type { StreamItem, Track, User } from '../models';
 import type { Playlist } from '../models/Playlist';
 import { Auth } from './auth';
@@ -121,12 +127,32 @@ export class SoundCloud {
         .slice(0, 25);
     },
     follow: async (userId: number): Promise<void> => {
-      await this.httpPost(`me/followings/${userId}`);
-      await Cache.invalidate('me/followings');
+      try {
+        await this.httpPost(`me/followings/${userId}`);
+        await Cache.invalidate('me/followings');
+        Onyx.toaster.show({ type: 'success', icon: MdPersonAdd, title: 'Followed user' });
+      } catch (err) {
+        Onyx.toaster.show({
+          type: 'error',
+          icon: MdPersonAdd,
+          title: 'Failed to follow user',
+        });
+        console.error('Failed to follow user', err);
+      }
     },
     unfollow: async (userId: number): Promise<void> => {
-      await this.httpDelete(`me/followings/${userId}`);
-      await Cache.invalidate('me/followings');
+      try {
+        await this.httpDelete(`me/followings/${userId}`);
+        await Cache.invalidate('me/followings');
+        Onyx.toaster.show({ type: 'success', icon: MdPerson, title: 'Unfollowed user' });
+      } catch (err) {
+        Onyx.toaster.show({
+          type: 'error',
+          icon: MdPerson,
+          title: 'Failed to unfollow user',
+        });
+        console.error('Failed to unfollow user', err);
+      }
     },
   };
 
@@ -152,20 +178,48 @@ export class SoundCloud {
       return res.collection;
     },
     like: async (trackId: number): Promise<void> => {
-      await this.httpPost(`likes/tracks/${trackId}`);
-      await Cache.invalidate();
+      try {
+        await this.httpPost(`likes/tracks/${trackId}`);
+        await Cache.invalidate();
+        Onyx.toaster.show({ type: 'success', icon: MdFavorite, title: 'Liked track' });
+      } catch (err) {
+        Onyx.toaster.show({ type: 'error', icon: MdFavorite, title: 'Failed to like track' });
+        console.error('Failed to like track', err);
+      }
     },
     unlike: async (trackId: number): Promise<void> => {
-      await this.httpDelete(`likes/tracks/${trackId}`);
-      await Cache.invalidate();
+      try {
+        await this.httpDelete(`likes/tracks/${trackId}`);
+        await Cache.invalidate();
+        Onyx.toaster.show({ type: 'success', icon: MdFavoriteBorder, title: 'Unliked track' });
+      } catch (err) {
+        Onyx.toaster.show({
+          type: 'error',
+          icon: MdFavoriteBorder,
+          title: 'Failed to unlike track',
+        });
+        console.error('Failed to unlike track', err);
+      }
     },
     repost: async (trackId: number): Promise<void> => {
-      await this.httpPost(`reposts/tracks/${trackId}`);
-      await Cache.invalidate('me/activities/all/own');
+      try {
+        await this.httpPost(`reposts/tracks/${trackId}`);
+        await Cache.invalidate('me/activities/all/own');
+        Onyx.toaster.show({ type: 'success', icon: MdRepeat, title: 'Reposted track' });
+      } catch (err) {
+        Onyx.toaster.show({ type: 'error', icon: MdRepeat, title: 'Failed to repost track' });
+        console.error('Failed to repost track', err);
+      }
     },
     removeRepost: async (trackId: number): Promise<void> => {
-      await this.httpDelete(`reposts/tracks/${trackId}`);
-      await Cache.invalidate('me/activities/all/own');
+      try {
+        await this.httpDelete(`reposts/tracks/${trackId}`);
+        await Cache.invalidate('me/activities/all/own');
+        Onyx.toaster.show({ type: 'success', icon: MdRepeat, title: 'Removed repost' });
+      } catch (err) {
+        Onyx.toaster.show({ type: 'error', icon: MdRepeat, title: 'Failed to remove repost' });
+        console.error('Failed to remove repost', err);
+      }
     },
   };
 
@@ -181,20 +235,52 @@ export class SoundCloud {
       return res.collection;
     },
     like: async (playlistId: number): Promise<void> => {
-      await this.httpPost(`likes/playlists/${playlistId}`);
-      await Cache.invalidate('me/likes/playlists');
+      try {
+        await this.httpPost(`likes/playlists/${playlistId}`);
+        await Cache.invalidate();
+        Onyx.toaster.show({ type: 'success', icon: MdFavorite, title: 'Liked playlist' });
+      } catch (err) {
+        Onyx.toaster.show({
+          type: 'error',
+          icon: MdFavorite,
+          title: 'Failed to like playlist',
+        });
+        console.error('Failed to like playlist', err);
+      }
     },
     unlike: async (playlistId: number): Promise<void> => {
-      await this.httpDelete(`likes/playlists/${playlistId}`);
-      await Cache.invalidate('me/likes/playlists');
+      try {
+        await this.httpDelete(`likes/playlists/${playlistId}`);
+        await Cache.invalidate();
+        Onyx.toaster.show({ type: 'success', icon: MdFavoriteBorder, title: 'Unliked playlist' });
+      } catch (err) {
+        Onyx.toaster.show({
+          type: 'error',
+          icon: MdFavoriteBorder,
+          title: 'Failed to unlike playlist',
+        });
+        console.error('Failed to unlike playlist', err);
+      }
     },
     repost: async (playlistId: number): Promise<void> => {
-      await this.httpPost(`reposts/playlists/${playlistId}`);
-      await Cache.invalidate('me/activities/all/own');
+      try {
+        await this.httpPost(`reposts/playlists/${playlistId}`);
+        await Cache.invalidate('me/activities/all/own');
+        Onyx.toaster.show({ type: 'success', icon: MdRepeat, title: 'Reposted playlist' });
+      } catch (err) {
+        Onyx.toaster.show({ type: 'error', icon: MdRepeat, title: 'Failed to repost playlist' });
+        console.error('Failed to repost playlist', err);
+      }
     },
     removeRepost: async (playlistId: number): Promise<void> => {
-      await this.httpDelete(`reposts/playlists/${playlistId}`);
-      await Cache.invalidate('me/activities/all/own');
+      try {
+        await this.httpDelete(`reposts/playlists/${playlistId}`);
+        await Cache.invalidate('me/activities/all/own');
+        Onyx.toaster.show({ type: 'success', icon: MdRepeat, title: 'Removed repost' });
+      } catch (err) {
+        Onyx.toaster.show({ type: 'error', icon: MdRepeat, title: 'Failed to remove repost' });
+        console.error('Failed to remove repost', err);
+      }
     },
   };
 
