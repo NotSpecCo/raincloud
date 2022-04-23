@@ -1,3 +1,20 @@
+# [1.14.0](https://github.com/garredow/raincloud/compare/v1.13.0...v1.14.0) (2022-04-23)
+
+
+### Features
+
+* add list settings ([c0f62d5](https://github.com/garredow/raincloud/commit/c0f62d54f025fdd4d6a8936f3a257a30472e354b))
+* add search playlists view ([e933ed8](https://github.com/garredow/raincloud/commit/e933ed8204aec036caffd48302e52a43505aa2f2))
+* add sign out button to settings view ([7a4acac](https://github.com/garredow/raincloud/commit/7a4acacbfa0a5e0d8c9bfc07d0d89cbc5c5903f7))
+* customize playlists in lists ([83e949d](https://github.com/garredow/raincloud/commit/83e949d47a80f4209e1130e231826d908abfc207))
+* customize tracks in lists ([87530fb](https://github.com/garredow/raincloud/commit/87530fb1961c10d03e606797a4c8bdea3c611c39))
+* **playlist:** add option to view stats in lists ([474d3cb](https://github.com/garredow/raincloud/commit/474d3cb249720f3e2592226475dfa28f4df2b387))
+* **profile:** confirm before signing out ([f604405](https://github.com/garredow/raincloud/commit/f6044052edb856b988e74cd9a231aaf04e6051e1))
+* redesign search bar ([1c4918f](https://github.com/garredow/raincloud/commit/1c4918f604e045f8e6dac0eddc5f97d3744416f6))
+* show toast on cache clear ([6aa57a1](https://github.com/garredow/raincloud/commit/6aa57a18460440eb67aad112045f6e576462a260))
+* **theme:** add dark theme ([a1dafe9](https://github.com/garredow/raincloud/commit/a1dafe9bbd3691829e5db703a9566134d4266432))
+* **track:** add option to show stats in lists ([d3ad28f](https://github.com/garredow/raincloud/commit/d3ad28f6dc688655395e403abd1991e59fc3b26d))
+
 # [1.13.0](https://github.com/garredow/raincloud/compare/v1.12.0...v1.13.0) (2022-04-22)
 
 
