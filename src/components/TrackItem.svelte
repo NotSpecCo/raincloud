@@ -105,6 +105,7 @@
     display: flex;
     color: var(--secondary-text-color);
     font-size: 1.2rem;
+    margin-top: 1px;
   }
 
   .stats > .item {
