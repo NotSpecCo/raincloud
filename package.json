@@ -49,7 +49,7 @@
     "kaios-lib": "^1.6.0",
     "lodash.throttle": "^4.1.1",
     "numeral": "^2.0.6",
-    "onyx-ui": "^0.8.0",
+    "onyx-ui": "^0.9.0",
     "sirv-cli": "^1.0.0",
     "svelte-icons": "^2.1.0",
     "svelte-spa-router": "^3.2.0"
