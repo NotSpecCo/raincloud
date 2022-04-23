@@ -1,7 +1,4 @@
 <script lang="ts">
-  import Divider from 'onyx-ui/components/divider/Divider.svelte';
-  import InputRow from 'onyx-ui/components/form/InputRow.svelte';
-  import SelectRow from 'onyx-ui/components/form/SelectRow.svelte';
   import ListItem from 'onyx-ui/components/list/ListItem.svelte';
   import Typography from 'onyx-ui/components/Typography.svelte';
   import { DataStatus } from 'onyx-ui/enums';
@@ -14,6 +11,7 @@
   import type { User } from '../models';
   import { formatLocation } from '../utils/formatLocation';
   import { getImage } from '../utils/getImage';
+  import Searchbox from './Searchbox.svelte';
 
   let getData: Promise<User[]> = Promise.resolve([]);
 
@@ -36,20 +34,17 @@
   $: sort = new URLSearchParams($querystring).get('sort') || 'followers';
 </script>
 
-<InputRow
-  label="Query"
+<Searchbox
   value={query}
-  placeholder="Enter text..."
   onChange={(val) => replace(`/search/users?q=${val}&sort=${sort}`)}
   onSubmit={() => search()}
 />
-<SelectRow
+<!-- <SelectRow
   label="Sort"
   value={sort}
   options={[{ id: 'followers', label: 'Followers' }]}
   onChange={(val) => replace(`/search/users?q=${query}&sort=${val}`)}
-/>
-<Divider title="Results" />
+/> -->
 {#await getData}
   <Typography align="center">Loading...</Typography>
 {:then data}

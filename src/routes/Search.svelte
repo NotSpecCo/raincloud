@@ -6,6 +6,7 @@
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
   import { registerView, view } from 'onyx-ui/stores/view';
   import { replace } from 'svelte-spa-router';
+  import SearchPlaylists from '../components/SearchPlaylists.svelte';
   import SearchTracks from '../components/SearchTracks.svelte';
   import SearchUsers from '../components/SearchUsers.svelte';
 
@@ -53,7 +54,7 @@
       <Card cardId={$view.cards[2].id}>
         <CardHeader />
         <CardContent>
-          <div>search playlists</div>
+          <SearchPlaylists />
         </CardContent>
       </Card>
     {/if}

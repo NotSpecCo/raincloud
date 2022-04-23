@@ -1,7 +1,4 @@
 <script lang="ts">
-  import Divider from 'onyx-ui/components/divider/Divider.svelte';
-  import InputRow from 'onyx-ui/components/form/InputRow.svelte';
-  import SelectRow from 'onyx-ui/components/form/SelectRow.svelte';
   import Typography from 'onyx-ui/components/Typography.svelte';
   import { DataStatus } from 'onyx-ui/enums';
   import { updateView } from 'onyx-ui/stores/view';
@@ -9,6 +6,7 @@
   import { querystring, replace } from 'svelte-spa-router';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Track } from '../models';
+  import Searchbox from './Searchbox.svelte';
   import TrackItem from './TrackItem.svelte';
 
   type SortBy = 'plays' | 'favorites' | 'comments';
@@ -70,14 +68,12 @@
   }
 </script>
 
-<InputRow
-  label="Query"
+<Searchbox
   value={query}
-  placeholder="Enter text..."
   onChange={(val) => replace(`/search/tracks?q=${val}&sort=${sort}`)}
   onSubmit={() => search()}
 />
-<SelectRow
+<!-- <SelectRow
   label="Sort"
   value={sort}
   options={[
@@ -86,8 +82,7 @@
     { id: 'comments', label: 'Comments' },
   ]}
   onChange={(val) => replace(`/search/tracks?q=${query}&sort=${val}`)}
-/>
-<Divider title="Results" />
+/> -->
 {#await getData}
   <Typography align="center">Loading...</Typography>
 {:then data}
