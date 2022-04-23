@@ -1,3 +1,16 @@
+# [1.15.0](https://github.com/garredow/raincloud/compare/v1.14.0...v1.15.0) (2022-04-23)
+
+
+### Bug Fixes
+
+* better error handling ([703979d](https://github.com/garredow/raincloud/commit/703979d5907550ae1bf288e400786b80669aa6bc))
+
+
+### Features
+
+* add success and error toasts for actions ([a3d5a6e](https://github.com/garredow/raincloud/commit/a3d5a6ee8205ce1a9aef4b11a10f1f5d4f12c55b))
+* use svg logo for dynamic coloring ([299e77c](https://github.com/garredow/raincloud/commit/299e77c760d2e7acb27185fa7b6fa095ead3f720))
+
 # [1.14.0](https://github.com/garredow/raincloud/compare/v1.13.0...v1.14.0) (2022-04-23)
 
 
