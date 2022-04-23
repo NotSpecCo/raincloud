@@ -1,10 +1,16 @@
 <script lang="ts">
+  import Icon from 'onyx-ui/components/icon/Icon.svelte';
   import ListItem from 'onyx-ui/components/list/ListItem.svelte';
+  import { Color, IconSize } from 'onyx-ui/enums';
   import { Onyx } from 'onyx-ui/services';
+  import MdAccessTime from 'svelte-icons/md/MdAccessTime.svelte';
+  import MdAudiotrack from 'svelte-icons/md/MdAudiotrack.svelte';
   import { push } from 'svelte-spa-router';
   import { loadPlaylist } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Playlist } from '../models';
+  import { settings } from '../stores/settings';
+  import { formatTime } from '../utils/formatTime';
   import { getImage } from '../utils/getImage';
 
   export let playlist: Playlist;
@@ -55,4 +61,33 @@
       },
     ],
   }}
-/>
+>
+  <div slot="bottom">
+    {#if $settings.playlistStatsInLists}
+      <div class="stats">
+        <div class="item">
+          <Icon size={IconSize.Smallest} color={Color.Secondary}><MdAccessTime /></Icon>
+          {formatTime(playlist.duration / 1000)}
+        </div>
+        <div class="item">
+          <Icon size={IconSize.Smallest} color={Color.Secondary}><MdAudiotrack /></Icon>
+          {playlist.track_count} tracks
+        </div>
+      </div>
+    {/if}
+  </div>
+</ListItem>
+
+<style>
+  .stats {
+    display: flex;
+    color: var(--secondary-text-color);
+    font-size: 1.2rem;
+  }
+
+  .stats > .item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+</style>

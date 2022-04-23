@@ -163,6 +163,18 @@
             ]}
             onChange={(val) => handleChange('shortcutKeyColor', val)}
           />
+          <ListHeader title="Tracks" />
+          <ToggleRow
+            label="Show stats in lists"
+            value={$settings.trackStatsInLists}
+            onChange={(val) => handleChange('trackStatsInLists', val)}
+          />
+          <ListHeader title="Playlists" />
+          <ToggleRow
+            label="Show stats in lists"
+            value={$settings.playlistStatsInLists}
+            onChange={(val) => handleChange('playlistStatsInLists', val)}
+          />
         </CardContent>
       </Card>
     {:else if params.cardId === $view.cards[2].id}

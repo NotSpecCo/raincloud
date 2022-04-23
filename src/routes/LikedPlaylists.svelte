@@ -34,7 +34,6 @@
               {playlist}
               primaryText={playlist.title}
               secondaryText={playlist.user.username}
-              accentText={`${playlist.track_count} tracks`}
             />
           {:else}
             <Typography align="center">No playlists</Typography>

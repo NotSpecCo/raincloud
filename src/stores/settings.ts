@@ -5,6 +5,7 @@ import type { Settings } from '../models';
 import { themes } from '../themes';
 
 const defaultSettings: Settings = {
+  // Onyx
   themeId: themes[0].id,
   textSize: TextSize.Medium,
   textWeight: TextWeight.Medium,
@@ -12,12 +13,10 @@ const defaultSettings: Settings = {
   borderRadius: 6,
   animationSpeed: Animations.Normal,
   showHelpText: true,
-  // Shortcuts
   enableShortcutKeys: true,
   shortcutKeyLocation: 'right',
   shortcutKeyColor: 'secondary',
   contextMenuIndicators: true,
-  // Theme
   accentColorH: themes[0].values.accentColorH,
   accentColorS: themes[0].values.accentColorS,
   accentColorL: themes[0].values.accentColorL,
@@ -29,9 +28,11 @@ const defaultSettings: Settings = {
   textColorL: themes[0].values.textColorL,
   focusColorA: themes[0].values.focusColorA,
   dividerColorA: themes[0].values.dividerColorA,
-  // Toaster
   toasterLocation: 'bottom',
   toasterDuration: 3000,
+  // App
+  trackStatsInLists: true,
+  playlistStatsInLists: true,
 };
 
 const storedSettings = Storage.get<Settings>('settings');

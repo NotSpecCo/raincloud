@@ -26,15 +26,6 @@
     });
   }
 
-  function getAccentText(playlist: Playlist, sortBy: SortBy): string {
-    switch (sortBy) {
-      case 'favorites':
-        return `${(playlist.likes_count || 0).toLocaleString()} favorites`;
-      default:
-        return '';
-    }
-  }
-
   function sortData(a: Playlist, b: Playlist, property: keyof Playlist) {
     if (a[property] > b[property]) return -1;
     if (a[property] < b[property]) return 1;
@@ -75,12 +66,7 @@
   <Typography align="center">Loading...</Typography>
 {:then data}
   {#each data as playlist (playlist.id)}
-    <PlaylistItem
-      {playlist}
-      primaryText={playlist.title}
-      secondaryText={playlist.user.username}
-      accentText={getAccentText(playlist, sort)}
-    />
+    <PlaylistItem {playlist} primaryText={playlist.title} secondaryText={playlist.user.username} />
   {:else}
     <Typography align="center">No results</Typography>
   {/each}
