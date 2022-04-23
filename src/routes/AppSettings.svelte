@@ -1,5 +1,6 @@
 <script lang="ts">
   import Button from 'onyx-ui/components/buttons/Button.svelte';
+  import ConfirmButton from 'onyx-ui/components/buttons/ConfirmButton.svelte';
   import Card from 'onyx-ui/components/card/Card.svelte';
   import CardContent from 'onyx-ui/components/card/CardContent.svelte';
   import CardHeader from 'onyx-ui/components/card/CardHeader.svelte';
@@ -9,12 +10,13 @@
   import ListHeader from 'onyx-ui/components/list/ListHeader.svelte';
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
-  import { Animations, DataStatus, TextSize, TextWeight } from 'onyx-ui/enums';
+  import { Animations, Color, DataStatus, TextSize, TextWeight } from 'onyx-ui/enums';
   import { Onyx } from 'onyx-ui/services';
   import { registerView, updateView, view } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
   import MdCheck from 'svelte-icons/md/MdCheck.svelte';
-  import { replace } from 'svelte-spa-router';
+  import { push, replace } from 'svelte-spa-router';
+  import { Auth } from '../lib/auth';
   import { Cache } from '../lib/cache';
   import type { Settings } from '../models';
   import { settings } from '../stores/settings';
@@ -306,6 +308,21 @@
                 });
               },
             }}
+          />
+          <ConfirmButton
+            title="Sign Out"
+            color={Color.Accent}
+            confirmText="Yes, sign out"
+            onConfirm={() => {
+              new Auth().clearSession();
+              push('/signin');
+              Onyx.toaster.show({
+                title: 'Successfully signed out',
+                icon: MdCheck,
+                type: 'info',
+              });
+            }}
+            onCancel={() => {}}
           />
         </CardContent>
       </Card>
