@@ -1,15 +1,22 @@
 <script lang="ts">
+  import numeral from 'numeral';
+  import Icon from 'onyx-ui/components/icon/Icon.svelte';
   import ListItem from 'onyx-ui/components/list/ListItem.svelte';
+  import { Color, IconSize } from 'onyx-ui/enums';
   import { Onyx } from 'onyx-ui/services';
+  import MdFavoriteBorder from 'svelte-icons/md/MdFavoriteBorder.svelte';
+  import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
+  import MdRepeat from 'svelte-icons/md/MdRepeat.svelte';
   import { push } from 'svelte-spa-router';
   import { loadTrack } from '../components/AudioPlayer.svelte';
   import { SoundCloud } from '../lib/soundcloud';
   import type { Track } from '../models';
+  import { settings } from '../stores/settings';
   import { getImage } from '../utils/getImage';
 
   export let track: Track;
   export let primaryText: string;
-  export let secondaryText: string;
+  export let secondaryText: string = null;
   export let accentText: string = null;
 </script>
 
@@ -72,4 +79,37 @@
       },
     ],
   }}
-/>
+>
+  <div slot="bottom">
+    {#if $settings.trackStatsInLists}
+      <div class="stats">
+        <div class="item">
+          <Icon size={IconSize.Smallest} color={Color.Secondary}><MdPlayArrow /></Icon>
+          {numeral(track.playback_count).format('0.[0]a')}
+        </div>
+        <div class="item">
+          <Icon size={IconSize.Smallest} color={Color.Secondary}><MdFavoriteBorder /></Icon>
+          {numeral(track.favoritings_count).format('0.[0]a')}
+        </div>
+        <div class="item">
+          <Icon size={IconSize.Smallest} color={Color.Secondary}><MdRepeat /></Icon>
+          {numeral(track.reposts_count).format('0.[0]a')}
+        </div>
+      </div>
+    {/if}
+  </div>
+</ListItem>
+
+<style>
+  .stats {
+    display: flex;
+    color: var(--secondary-text-color);
+    font-size: 1.2rem;
+  }
+
+  .stats > .item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+</style>

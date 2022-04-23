@@ -30,19 +30,6 @@
     });
   }
 
-  function getAccentText(track: Track, sortBy: SortBy): string {
-    switch (sortBy) {
-      case 'plays':
-        return `${(track.playback_count || 0).toLocaleString()} plays`;
-      case 'favorites':
-        return `${(track.favoritings_count || 0).toLocaleString()} favorites`;
-      case 'comments':
-        return `${(track.comment_count || 0).toLocaleString()} comments`;
-      default:
-        return '';
-    }
-  }
-
   function sortData(a: Track, b: Track, property: keyof Track) {
     if (a[property] > b[property]) return -1;
     if (a[property] < b[property]) return 1;
@@ -87,12 +74,7 @@
   <Typography align="center">Loading...</Typography>
 {:then data}
   {#each data as track (track.id)}
-    <TrackItem
-      {track}
-      primaryText={track.title}
-      secondaryText={track.user.username}
-      accentText={getAccentText(track, sort)}
-    />
+    <TrackItem {track} primaryText={track.title} secondaryText={track.user.username} />
   {:else}
     <Typography align="center">No results</Typography>
   {/each}
