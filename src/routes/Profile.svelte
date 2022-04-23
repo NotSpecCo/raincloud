@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from 'onyx-ui/components/buttons/Button.svelte';
+  import ConfirmButton from 'onyx-ui/components/buttons/ConfirmButton.svelte';
   import Card from 'onyx-ui/components/card/Card.svelte';
   import CardContent from 'onyx-ui/components/card/CardContent.svelte';
   import Divider from 'onyx-ui/components/divider/Divider.svelte';
@@ -7,7 +7,8 @@
   import Typography from 'onyx-ui/components/Typography.svelte';
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
-  import { DataStatus } from 'onyx-ui/enums';
+  import { Color, DataStatus } from 'onyx-ui/enums';
+  import { Onyx } from 'onyx-ui/services';
   import { registerView, updateView } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
   import { push } from 'svelte-spa-router';
@@ -88,15 +89,19 @@
           <FormRow label="Plan" navi={{ itemId: `plan`, onSelect: () => {} }}>{data.plan}</FormRow>
           <Divider title="description" />
           <Typography>{data.description || 'No description provided.'}</Typography>
-          <Button
+          <ConfirmButton
             title="Sign Out"
-            navi={{
-              itemId: `btnSignOut`,
-              onSelect: () => {
-                new Auth().clearSession();
-                push('/signin');
-              },
+            color={Color.Accent}
+            confirmText="Yes, sign out"
+            onConfirm={() => {
+              new Auth().clearSession();
+              push('/signin');
+              Onyx.toaster.show({
+                title: 'Successfully signed out',
+                type: 'success',
+              });
             }}
+            onCancel={() => {}}
           />
         {:catch}
           <Typography align="center">Failed to load data</Typography>

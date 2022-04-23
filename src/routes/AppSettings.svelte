@@ -14,7 +14,6 @@
   import { Onyx } from 'onyx-ui/services';
   import { registerView, updateView, view } from 'onyx-ui/stores/view';
   import { onMount } from 'svelte';
-  import MdCheck from 'svelte-icons/md/MdCheck.svelte';
   import { push, replace } from 'svelte-spa-router';
   import { Auth } from '../lib/auth';
   import { Cache } from '../lib/cache';
@@ -303,8 +302,7 @@
                 Cache.invalidate();
                 Onyx.toaster.show({
                   title: 'Cache cleared',
-                  icon: MdCheck,
-                  type: 'info',
+                  type: 'success',
                 });
               },
             }}
@@ -318,8 +316,7 @@
               push('/signin');
               Onyx.toaster.show({
                 title: 'Successfully signed out',
-                icon: MdCheck,
-                type: 'info',
+                type: 'success',
               });
             }}
             onCancel={() => {}}

@@ -78,7 +78,8 @@
   --shortcut-color: var(--secondary-text-color);
   --warning-color: hsl(48, 90%, 70%);
   --error-color: hsl(0, 90%, 70%);
-  --success-color: hsl(131, 60%, 70%);
+  --success-color: var(--app-text-color);
+  /* --success-color: hsl(131, 60%, 70%); */
 
   font-size: var(--base-font-size);
 }
