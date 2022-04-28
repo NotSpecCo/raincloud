@@ -74,7 +74,7 @@
     var(--card-color-l),
     var(--default-a)
   );
-  --card-border-color: hsla(0, 0%, 100%, 0.2);
+  --card-border-color: hsla(0, 0%, 100%, 0);
   --shortcut-color: var(--secondary-text-color);
   --warning-color: hsl(48, 90%, 70%);
   --error-color: hsl(0, 90%, 70%);

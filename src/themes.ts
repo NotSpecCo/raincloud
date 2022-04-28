@@ -23,8 +23,8 @@ export const themes: ThemeConfig[] = [
   {
     id: 'dark',
     values: {
-      cardColorH: 0,
-      cardColorS: 0,
+      cardColorH: 192,
+      cardColorS: 8,
       cardColorL: 12,
 
       accentColorH: 14,
@@ -35,7 +35,7 @@ export const themes: ThemeConfig[] = [
       textColorS: 0,
       textColorL: 100,
 
-      focusColorA: 50,
+      focusColorA: 70,
       dividerColorA: 10,
     },
   },
