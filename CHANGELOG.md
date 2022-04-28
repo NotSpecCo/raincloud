@@ -1,3 +1,17 @@
+# [1.16.0](https://github.com/garredow/raincloud/compare/v1.15.0...v1.16.0) (2022-04-28)
+
+
+### Bug Fixes
+
+* **player:** fix volume controls when app menu open ([1f0ea1d](https://github.com/garredow/raincloud/commit/1f0ea1d010cdb3de9409be16bfba04b10862c11a))
+* **theme:** improve dark theme ([ebcc74b](https://github.com/garredow/raincloud/commit/ebcc74bd507d88270dd80a4ce316fe2a3773238c))
+
+
+### Features
+
+* **dashboard:** only display times in player view ([6361914](https://github.com/garredow/raincloud/commit/63619149d205ce3d9a13f6e23455b106801228c8))
+* **player:** redesign ([086547c](https://github.com/garredow/raincloud/commit/086547c915559f40e5bab3442c43f5373c82b42a))
+
 # [1.15.0](https://github.com/garredow/raincloud/compare/v1.14.0...v1.15.0) (2022-04-23)
 
 
