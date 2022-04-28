@@ -22,7 +22,7 @@
           return acc;
         }, 0) / group.length;
 
-      condensed.push(average * 0.66666);
+      condensed.push(Math.round(average * 0.5));
     }
 
     return condensed;
@@ -43,11 +43,10 @@
 
 <style>
   .root {
-    height: 114px;
     padding-top: 40px;
     overflow: hidden;
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: center;
     background: linear-gradient(
       0deg,
