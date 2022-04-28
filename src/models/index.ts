@@ -9,3 +9,4 @@ export * from './Tokens';
 export * from './Track';
 export * from './TrackData';
 export * from './User';
+export * from './Waveform';

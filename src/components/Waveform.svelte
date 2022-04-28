@@ -1,49 +1,69 @@
 <script lang="ts">
-  import { settings } from '../stores/settings';
+  import { SoundCloud } from '../lib/soundcloud';
 
   export let current: number;
   export let duration: number;
   export let url: string;
+  export let barWidth: number = 3;
+  export let spacerWidth: number = 1;
 
-  const brightness = $settings.themeId === 'dark' ? 0.13 : 10;
+  const barCount = window.innerWidth / (barWidth + spacerWidth);
+  const secondsPerBar = duration / barCount;
+
+  let getData: Promise<number[]> = new SoundCloud().track.getWaveformData(url).then((res) => {
+    let samples = [...res.samples];
+
+    const condensed = [];
+    while (samples.length > 0) {
+      const group = samples.splice(0, Math.ceil(res.samples.length / barCount));
+      const average =
+        group.reduce((acc, val) => {
+          acc += val;
+          return acc;
+        }, 0) / group.length;
+
+      condensed.push(average * 0.66666);
+    }
+
+    return condensed;
+  });
 </script>
 
 <div class="root">
-  <div class="progress" style="right: {`${100 - (current / duration) * 100}%`}" />
-  <div class="image">
-    <img src={url.replace('m.png', 's.png')} alt="" style="filter: brightness({brightness})" />
-  </div>
+  {#await getData then data}
+    {#each data as sample, i}
+      <div
+        class="sample"
+        class:highlight={i * secondsPerBar < current}
+        style="height: {sample}px; width: {barWidth}px; min-width: {barWidth}px; margin-right: {spacerWidth}px;"
+      />
+    {/each}
+  {/await}
 </div>
 
 <style>
   .root {
-    position: relative;
-    background-color: var(--tertiary-text-color);
-    margin: 5px 0;
+    height: 114px;
+    padding-top: 40px;
     overflow: hidden;
-    height: 83px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.8085828081232493) 53%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 
-  .root > .progress {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    right: 100%;
+  .sample {
+    background-color: #bec0c6;
+  }
+  .sample:last-child {
+    margin-right: 0px;
+  }
+  .sample.highlight {
     background-color: var(--accent-color);
-    z-index: 1;
-    transition: right 1000ms;
-  }
-  .root > .image {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 2;
-    width: 100%;
-    transition: transform 1000ms;
-  }
-  .root > .image > img {
-    width: 100%;
-    filter: brightness(10);
   }
 </style>

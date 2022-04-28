@@ -5,8 +5,7 @@ import MdPerson from 'svelte-icons/md/MdPerson.svelte';
 import MdPersonAdd from 'svelte-icons/md/MdPersonAdd.svelte';
 import MdPlayArrow from 'svelte-icons/md/MdPlayArrow.svelte';
 import MdRepeat from 'svelte-icons/md/MdRepeat.svelte';
-import type { StreamItem, Track, User } from '../models';
-import type { Playlist } from '../models/Playlist';
+import type { Playlist, StreamItem, Track, User, Waveform } from '../models';
 import { Auth } from './auth';
 import { Cache } from './cache';
 
@@ -172,6 +171,15 @@ export class SoundCloud {
       });
       return res?.http_mp3_128_url;
     },
+    getWaveformData: async (waveformImageUrl: string): Promise<Waveform> => {
+      const parts = waveformImageUrl.match(/.com\/([A-Za-z0-9]+)_(s|m).png/);
+      const res = await this.httpGet<Waveform>(
+        `https://wave.sndcdn.com/${parts[1]}_s.json`,
+        true,
+        ''
+      );
+      return res;
+    },
     getRelated: async (trackId: number): Promise<Track[]> => {
       const res = await this.httpGet<CollectionResult<Track>>(
         `tracks/${trackId}/related?limit=50&linked_partitioning=true`
@@ -291,7 +299,7 @@ export class SoundCloud {
     },
   };
 
-  private async httpGet<T>(url: string, useCache = true): Promise<T> {
+  private async httpGet<T>(url: string, useCache = true, baseUrl: string = undefined): Promise<T> {
     const session = await new Auth().getSession();
     console.log('session', session);
 
@@ -317,7 +325,7 @@ export class SoundCloud {
         resolve(JSON.parse(xhr.responseText));
       });
       xhr.addEventListener('error', () => reject(new Error(xhr.statusCode)));
-      xhr.open('GET', `https://api.soundcloud.com/${url}`);
+      xhr.open('GET', `${baseUrl !== undefined ? baseUrl : 'https://api.soundcloud.com/'}${url}`);
       xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();

@@ -21,6 +21,7 @@
   import Waveform from '../components/Waveform.svelte';
   import { player } from '../stores/player';
   import { formatTime } from '../utils/formatTime';
+  import { getImage } from '../utils/getImage';
 
   export let params: { cardId: string };
 
@@ -91,54 +92,93 @@
         </CardContent>
       </Card>
     {:else if params.cardId === $view.cards[0].id}
-      <Card cardId={$view.cards[0].id}>
-        <CardContent>
-          <Waveform
-            current={$player.currentTime}
-            duration={$player.duration}
-            url={$player.track.waveform_url}
-          />
-          <div class="times">
-            <div class="current">{formatTime($player.currentTime)}</div>
-            <div class="duration">{formatTime($player.duration)}</div>
-          </div>
-          <Typography type="title" align="center">{$player.track.title}</Typography>
-          <Typography type="titleSmall" align="center"
-            >{$player.track.user.full_name || $player.track.user.username}</Typography
-          >
-          <div class="stats">
-            <div class="item">
-              <Icon><MdPlayArrow /></Icon>{numeral($player.track.playback_count).format('0.0a')}
-            </div>
-            <div class="item">
-              <Icon><MdFavorite /></Icon>{numeral($player.track.favoritings_count).format('0.0a')}
-            </div>
-            <div class="item">
-              <Icon><MdRepeat /></Icon>{numeral($player.track.reposts_count).format('0a')}
-            </div>
-            <div class="item">
-              <Icon><MdComment /></Icon>{numeral($player.track.comment_count).format('0a')}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <div class="player" style="background-image: url({getImage($player.track.artwork_url, 500)})">
+        <div class="title-contaner"><div class="title">{$player.track.title}</div></div>
+        <div class="artist-contaner"><div class="artist">{$player.track.user.username}</div></div>
+        <div class="spacer" />
+        <Waveform
+          current={$player.currentTime}
+          duration={$player.duration}
+          url={$player.track.waveform_url}
+        />
+        <div class="times">
+          <div class="current">{formatTime($player.currentTime)}</div>
+          <div class="duration">{formatTime($player.duration)}</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="item">
+          <Icon><MdPlayArrow /></Icon>{numeral($player.track.playback_count).format('0.0a')}
+        </div>
+        <div class="item">
+          <Icon><MdFavorite /></Icon>{numeral($player.track.favoritings_count).format('0.0a')}
+        </div>
+        <div class="item">
+          <Icon><MdRepeat /></Icon>{numeral($player.track.reposts_count).format('0a')}
+        </div>
+        <div class="item">
+          <Icon><MdComment /></Icon>{numeral($player.track.comment_count).format('0a')}
+        </div>
+      </div>
     {/if}
   </ViewContent>
 </View>
 
 <style>
+  .player {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 100%;
+    position: relative;
+    background-position: center top;
+    background-size: cover;
+  }
+  .spacer {
+    flex: 1;
+  }
+  .title-contaner {
+    padding: 10px;
+  }
+  .artist-contaner {
+    padding: 0 10px;
+  }
+  .title,
+  .artist {
+    display: inline;
+    background-color: black;
+    box-shadow: 5px 0 0 #000, -5px 0 0 #000;
+    padding: 5px 0;
+    line-height: 1.5;
+    color: white;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  .title {
+    font-size: 1.6rem;
+  }
+  .artist {
+    font-size: 1.4rem;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
   .times {
     display: flex;
     justify-content: space-between;
     font-weight: 600;
     color: var(--accent-color);
     padding: 0 5px;
+    display: none;
   }
 
   .stats {
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    display: none;
   }
   .stats > .item {
     display: flex;
