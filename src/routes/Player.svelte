@@ -8,8 +8,9 @@
   import Typography from 'onyx-ui/components/Typography.svelte';
   import View from 'onyx-ui/components/view/View.svelte';
   import ViewContent from 'onyx-ui/components/view/ViewContent.svelte';
-  import { Priority } from 'onyx-ui/enums';
+  import { Priority, RenderState } from 'onyx-ui/enums';
   import { KeyManager } from 'onyx-ui/services';
+  import { appMenu } from 'onyx-ui/stores';
   import { registerView, view } from 'onyx-ui/stores/view';
   import { onDestroy } from 'svelte';
   import MdComment from 'svelte-icons/md/MdComment.svelte';
@@ -75,7 +76,7 @@
   );
 
   $: {
-    if ($player.track) keyMan.enable();
+    if ($player.track && $appMenu.state === RenderState.Destroyed) keyMan.enable();
     else keyMan.disable();
   }
 
