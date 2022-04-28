@@ -26,10 +26,8 @@ function createPlayer() {
       });
     },
     loadTrack: async function (trackId: number): Promise<string> {
-      const [track, streamUrl] = await Promise.all([
-        new SoundCloud().track.get(trackId),
-        new SoundCloud().track.getStreamUrl(trackId),
-      ]).catch((err) => [null, null]);
+      const track = await new SoundCloud().track.get(trackId);
+      const streamUrl = await new SoundCloud().track.getStreamUrl(trackId);
 
       if (!track || !streamUrl) return;
 
@@ -48,10 +46,8 @@ function createPlayer() {
 
       if (playlist.tracks.length === 0) return;
 
-      const [track, streamUrl] = await Promise.all([
-        new SoundCloud().track.get(playlist.tracks[0].id),
-        new SoundCloud().track.getStreamUrl(playlist.tracks[0].id),
-      ]);
+      const track = await new SoundCloud().track.get(playlist.tracks[0].id);
+      const streamUrl = await new SoundCloud().track.getStreamUrl(playlist.tracks[0].id);
 
       set({
         track,
