@@ -6,15 +6,13 @@
 
 {#if $player.track && $location.startsWith('/player')}
   <div class="times">
-    <span class="time" style={`color: var(--accent-color);`}>{formatTime($player.currentTime)}</span
-    >
-    <span class="time" style={`color: var(--accent-color);`}>{formatTime($player.duration)}</span>
+    <span class="time">{formatTime($player.currentTime)}</span>
+    <span class="time">{formatTime($player.duration)}</span>
   </div>
 {:else if $player.track}
   <div class="miniplayer">
     <div class="track">{$player.track.title} - ${$player.track.user.username}</div>
-    <span class="time" style={`color: var(--accent-color);`}>{formatTime($player.currentTime)}</span
-    >
+    <span class="time">{formatTime($player.currentTime)}</span>
   </div>
 {/if}
 
@@ -22,6 +20,7 @@
   .times {
     display: flex;
     justify-content: space-between;
+    padding: 5px;
   }
   .miniplayer {
     display: flex;
@@ -38,5 +37,6 @@
   .time {
     font-weight: 600;
     margin: 0 3px;
+    color: var(--accent-color);
   }
 </style>
