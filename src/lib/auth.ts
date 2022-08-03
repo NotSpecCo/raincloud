@@ -118,8 +118,14 @@ export class Auth {
     });
   }
 
+  private refreshSessionRequest: Promise<void> | null = null;
+
   private refreshSession(session: AuthSession): Promise<void> {
-    return new Promise((resolve, reject) => {
+    if (this.refreshSessionRequest) {
+      return this.refreshSessionRequest;
+    }
+
+    this.refreshSessionRequest = new Promise((resolve, reject) => {
       const xhr = new (XMLHttpRequest as any)({ mozSystem: true });
       xhr.addEventListener('load', () => {
         if (xhr.status >= 400) {
@@ -136,11 +142,13 @@ export class Auth {
           refreshToken: session.refresh_token,
         })
       );
-    }).then((tokens: Tokens) =>
-      this.setSession({
-        ...session,
-        ...tokens,
-      })
-    );
+    })
+      .then((tokens: Tokens) =>
+        this.setSession({
+          ...session,
+          ...tokens,
+        })
+      )
+      .finally(() => (this.refreshSessionRequest = null));
   }
 }
