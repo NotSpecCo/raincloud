@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/garredow/raincloud/compare/v1.16.0...v1.16.1) (2022-08-03)
+
+
+### Bug Fixes
+
+* **auth:** improve token refresh flow ([a1b7de5](https://github.com/garredow/raincloud/commit/a1b7de5323715375aad311715b8cac74198352ab))
+
 # [1.16.0](https://github.com/garredow/raincloud/compare/v1.15.0...v1.16.0) (2022-04-28)
 
 
