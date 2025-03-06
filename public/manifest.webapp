@@ -2,7 +2,7 @@
   "id": "com.garredow.raincloud",
   "name": "RainCloud",
   "description": "A SoundCloud client for KaiOS",
-  "version": "0.1.0",
+  "version": "1.17.0",
   "launch_path": "/index.html",
   "icons": {
     "128": "/images/icon_128.png",

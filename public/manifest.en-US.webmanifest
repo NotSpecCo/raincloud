@@ -3,7 +3,9 @@
   "name": "RainCloud",
   "id": "raincloud",
   "short_name": "RainCloud",
-  "categories": ["entertainment"],
+  "categories": [
+    "entertainment"
+  ],
   "description": "A SoundCloud client for KaiOS",
   "theme_color": "#e4572e",
   "background_color": "#ffffff",
@@ -27,7 +29,7 @@
   "start_url": "/index.html",
   "orientation": "portrait-primary",
   "b2g_features": {
-    "version": "1.0.2",
+    "version": "1.17.0",
     "subtitle": "A SoundCloud client for KaiOS",
     "permissions": {
       "audio-channel-content": {

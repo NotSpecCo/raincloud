@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/garredow/raincloud/compare/v1.16.1...v1.17.0) (2025-03-06)
+
+
+### Features
+
+* use new api ([c745daa](https://github.com/garredow/raincloud/commit/c745daa04485eef718bc0c23da32dfeddea42ab1))
+
 ## [1.16.1](https://github.com/garredow/raincloud/compare/v1.16.0...v1.16.1) (2022-08-03)
 
 
