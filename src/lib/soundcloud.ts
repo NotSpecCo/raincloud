@@ -326,7 +326,7 @@ export class SoundCloud {
       });
       xhr.addEventListener('error', () => reject(new Error(xhr.statusCode)));
       xhr.open('GET', `${baseUrl !== undefined ? baseUrl : 'https://api.soundcloud.com/'}${url}`);
-      xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${session.accessToken}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();
     });
@@ -354,7 +354,7 @@ export class SoundCloud {
       });
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
       xhr.open('POST', `https://api.soundcloud.com/${url}`);
-      xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${session.accessToken}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();
     });
@@ -376,7 +376,7 @@ export class SoundCloud {
       });
       xhr.addEventListener('error', () => reject(new Error('Failed to call')));
       xhr.open('DELETE', `https://api.soundcloud.com/${url}`);
-      xhr.setRequestHeader('Authorization', `Bearer ${session.access_token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${session.accessToken}`);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send();
     });

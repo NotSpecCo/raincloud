@@ -51,6 +51,7 @@
     "lodash.throttle": "^4.1.1",
     "numeral": "^2.0.6",
     "onyx-ui": "^0.10.0",
+    "openid-client": "^6.3.3",
     "sirv-cli": "^1.0.0",
     "svelte-icons": "^2.1.0",
     "svelte-spa-router": "^3.2.0"

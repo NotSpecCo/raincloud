@@ -13,7 +13,7 @@ This is very much a work in progress. Keep your eye on the changelog to see what
 1. Connect your KaiOS device to your computer and make sure it appears in WebIDE (Waterfox Classic is recommended)
 2. Build the app with `npm run build`
 3. In WebIDE, load the `/public` folder as a packaged app
-4. On your computer, visit the [RainCloud website](https://app.vulpine.fm/) to sign into SoundCloud
+4. On your computer, visit the [RainCloud website](https://raincloud.fm/login/kaios) to sign into SoundCloud
 5. In the app, select 'Sign In via QR Code' and scan the code on your screen. \*You may have to exit and reopen the app to scan the code after giving permission
 6. When you scan the code, you're in!
 

@@ -40,7 +40,7 @@
   "default_locale": "en-US",
   "redirects": [
     {
-      "from": "https://app.vulpine.fm/oauth",
+      "from": "https://raincloud.fm/oauth",
       "to": "/index.html"
     }
   ]

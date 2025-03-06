@@ -2,7 +2,7 @@
   import OnyxApp from 'onyx-ui/components/app/OnyxApp.svelte';
   import { Priority } from 'onyx-ui/enums';
   import { KeyManager, Onyx } from 'onyx-ui/services';
-  import Router, { location, pop } from 'svelte-spa-router';
+  import Router, { location, pop, replace } from 'svelte-spa-router';
   import AppMenu from './components/AppMenu.svelte';
   import AudioPlayer from './components/AudioPlayer.svelte';
   import Dashboard from './components/Dashboard.svelte';
@@ -40,10 +40,10 @@
 
   console.log(`Env: ${process.env.NODE_ENV}`);
 
-  const code = window.location.href.match(/code=([A-Za-z0-9-_]+)/)?.[1];
+  const code = new URL(window.location.href).searchParams.get('code');
   if (code) {
     new Auth().fetchTokensFromCode(code).then((tokens) => {
-      window.close();
+      replace('/library');
     });
   }
 
@@ -102,7 +102,7 @@
         return true;
       },
     },
-    Priority.High
+    Priority.High,
   );
 
   $: Onyx.settings.update($settings);

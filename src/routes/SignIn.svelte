@@ -12,10 +12,10 @@
   import { replace } from 'svelte-spa-router';
   import { Auth } from '../lib/auth';
 
-  const code = location.href.match(/code=([A-Za-z0-9-_]+)/)?.[1];
+  const code = new URL(window.location.href).searchParams.get('code');
   if (code) {
     new Auth().fetchTokensFromCode(code).then((tokens) => {
-      window.close();
+      replace('/library');
     });
   }
 
@@ -31,30 +31,7 @@
   }
 
   function signinWeb() {
-    const url = new URL('https://api.soundcloud.com/connect');
-    url.searchParams.append('response_type', 'code');
-    url.searchParams.append(
-      'client_id',
-      process.env.NODE_ENV === 'production'
-        ? 'ttmRWSTGJ7pzm1s8znU3CSJ5mXSjtS0l'
-        : 'Gbv3N4cjTjVMwfaHVbCdEB7W5Y3JQM28'
-    );
-    url.searchParams.append(
-      'redirect_uri',
-      process.env.NODE_ENV === 'production'
-        ? 'https://app.vulpine.fm/oauth'
-        : 'http://localhost:3000'
-    );
-
-    window.open(url.toString());
-
-    const interval = setInterval(async () => {
-      const session = await new Auth().getSession();
-      if (session) {
-        clearInterval(interval);
-        replace('/library');
-      }
-    }, 500);
+    new Auth().initiateWebLogin();
   }
 </script>
 
@@ -70,7 +47,7 @@
         >
         <Typography
           >1. Visit <Typography display="inline" padding="none" color="accent"
-            >https://app.vulpine.fm/</Typography
+            >https://raincloud.fm/login/kaios</Typography
           > on another device.</Typography
         >
         <Typography>2. Sign into SoundCloud.</Typography>
